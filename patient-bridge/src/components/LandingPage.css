@@ -1,0 +1,134 @@
+/* src/components/LandingPage.css */
+.landing-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #ddd;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.title {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.help-btn, .login-btn, .signup-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.benefits {
+    max-width: 600px;
+}
+
+.benefits h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.benefits ul {
+    list-style: none;
+    padding: 0;
+}
+
+.benefits li {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer {
+    position: relative;
+    height: 200px;
+}
+
+.background-image {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+}
+/* src/components/LandingPage.css */
+.benefits {
+    background-color: #f5f5f5;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.benefits h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.benefit-item {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+.benefit-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+}
+
+.benefit-item h3 {
+    font-size: 20px;
+    margin: 15px 0;
+}
+
+.benefit-item p {
+    font-size: 16px;
+    color: #666;
+}
