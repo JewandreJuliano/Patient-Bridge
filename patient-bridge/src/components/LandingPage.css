@@ -1,4 +1,3 @@
-/* src/components/LandingPage.css */
 .landing-page {
     display: flex;
     flex-direction: column;
@@ -67,53 +66,73 @@
     background-color: #7b95a7;
 }
 
-
 .hero-section {
-
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background-color: rgba(26, 40, 85, 0.6);
-    padding: 20px;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #2c3e50, #abbaab); /* Gradient background */
+    padding: 40px;
+    border-radius: 12px;
     width: 80%;
-    height: 100%;
-    margin: 1%;
+    margin: 20px auto; /* Adjusted margin for spacing from the header */
     color: white;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
+    animation: fadeIn 1.5s ease-in-out; /* Fade-in animation */
 }
 
 .hero-tagline {
     font-size: 36px; 
     font-weight: bold; 
-    margin-bottom: 10px; /* Add space below the tagline */
+    color: #e0e9e5;
+    margin-bottom: 20px; /* More space below the tagline */
 }
 
 .hero-description {
-    font-size: 18px; /* Adjust the size of the description */
-    line-height: 1.5; /* Add some space between the lines */
+    font-size: 18px; /* Adjusted size of the description */
+    line-height: 1.5; /* Spaced lines for readability */
+    margin-bottom: 30px; /* Space below description for the button */
+    color: #e0e9e5;
 }
 
+.cta-button {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+    background-color: #e5554f;
+}
 
 .main-content {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 0;
+    
+    
 }
 
 .benefits {
-    background-color: #fff;
+    background-color: white;
     padding: 50px 20px;
     text-align: center;
+    margin-top: -11px;
 }
 
 .benefits h2 {
     font-size: 28px;
-    color: #4a6a8d;
-    margin-bottom: 20px;
+    color: #2c3e50;
+    margin-bottom: 2px;
+    
 }
 
 .benefits-grid {
@@ -125,7 +144,7 @@
 }
 
 .benefit-item {
-    background: #fff;
+    background: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -144,10 +163,18 @@
     border-radius: 8px;
     object-fit: cover;
 }
+.intro-text {
+    font-size: 22px;
+    color: #2c3e50; /* Same color as the section title for consistency */
+    margin-bottom: 10px; /* Space between the new text and the section title */
+    font-weight: normal;
+    text-align: center;
+    line-height: 1.4; /* Adjusted for readability */
+}
 
 .benefit-item h3 {
     font-size: 20px;
-    color: #4a6a8d;
+    color: #2c3e50;
     margin: 15px 0;
 }
 
@@ -184,4 +211,10 @@
 
 .footer-links a:hover {
     color: #9ab1c2;
+}
+
+/* Animation for the hero section */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
 }
