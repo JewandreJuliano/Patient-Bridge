@@ -2,8 +2,8 @@
 .landing-page {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    font-family: "Open Sans", sans-serif;
 }
 
 .header {
@@ -11,8 +11,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: #f5f5f5;
-    border-bottom: 2px solid #ddd;
+    background-color: #2c3e50;
+    border-bottom: 5px solid #9ab1c2;
 }
 
 .logo-title {
@@ -21,15 +21,15 @@
 }
 
 .icon {
-    width: 100;
-    height: 50;
-    
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
 }
 
 .title {
     margin: 0;
     font-size: 24px;
-    color: #333;
+    color: #f5f5f5;
 }
 
 .auth-buttons {
@@ -37,67 +37,82 @@
     gap: 10px;
 }
 
-.help-btn, .login-btn, .signup-btn {
+.login-btn, .signup-btn {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: #007bff;
+    background-color: #4a6a8d;
     color: #fff;
     font-size: 16px;
+    transition: background-color 0.3s ease;
 }
+
+.login-btn:hover, .signup-btn:hover {
+    background-color: #3b4e69;
+}
+
+.help-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #9ab1c2;
+    color: #fff;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.help-btn:hover {
+    background-color: #7b95a7;
+}
+
+
+.hero-section {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(26, 40, 85, 0.6);
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    height: 100%;
+    margin: 1%;
+    color: white;
+}
+
+.hero-tagline {
+    font-size: 36px; 
+    font-weight: bold; 
+    margin-bottom: 10px; /* Add space below the tagline */
+}
+
+.hero-description {
+    font-size: 18px; /* Adjust the size of the description */
+    line-height: 1.5; /* Add some space between the lines */
+}
+
 
 .main-content {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
     padding: 20px;
 }
 
 .benefits {
-    max-width: 600px;
-}
-
-.benefits h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
-}
-
-.benefits ul {
-    list-style: none;
-    padding: 0;
-}
-
-.benefits li {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.footer {
-    position: relative;
-    height: 200px;
-}
-
-.background-image {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.3;
-}
-/* src/components/LandingPage.css */
-.benefits {
-    background-color: #f5f5f5;
+    background-color: #fff;
     padding: 50px 20px;
     text-align: center;
 }
 
 .benefits h2 {
     font-size: 28px;
+    color: #4a6a8d;
     margin-bottom: 20px;
 }
 
@@ -115,20 +130,58 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.benefit-item:hover {
+    transform: translateY(-5px);
 }
 
 .benefit-icon {
-    width: 60px;
-    height: 60px;
+    width: 100%;
+    height: auto;
     margin-bottom: 15px;
+    border-radius: 8px;
+    object-fit: cover;
 }
 
 .benefit-item h3 {
     font-size: 20px;
+    color: #4a6a8d;
     margin: 15px 0;
 }
 
 .benefit-item p {
     font-size: 16px;
-    color: #666;
+    color: #6d6e71;
+}
+
+.footer {
+    background-color: #2c3e50;
+    color: #f5f5f5;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 5px solid #9ab1c2;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.footer-links a {
+    color: #f5f5f5;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #9ab1c2;
 }
