@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/LoginPage.css'; // Import CSS file for styling
 
 const LoginPage = () => {
@@ -47,8 +48,12 @@ const LoginPage = () => {
                         </div>
                         <button type="submit" className="login-btn">Login</button>
                         <div className="login-links">
-                            <a href="/forgot-password" className="forgot-password-link">Forgot Password?</a>
-                            <p>Don't have an account? <a href="/signup" className="signup-link">Sign Up</a></p>
+                            <Link to="/forgot-password" className="forgot-password-link">Forgot Password?</Link>
+                            <p>Don't have an account?</p>
+                            <p><Link to="/signup/patient" className="dropdown-item">Sign Up as Patient</Link></p>
+                            <p>or</p>
+                            <p><Link to="/signup/doctor" className="dropdown-item">Sign Up as Doctor/Practice</Link></p>
+
                         </div>
                     </form>
                 </div>

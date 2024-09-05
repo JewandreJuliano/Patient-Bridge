@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/LandingPage.css'; // Import CSS file for styling
+import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
     const [showDropdown, setShowDropdown] = useState(false);
@@ -17,7 +18,7 @@ const LandingPage = () => {
                 </div>
                 <div className="auth-buttons">
                     <button className="help-btn">Help</button>
-                    <button className="login-btn">Login</button>
+                    <Link to="/login" className="login-btn">Login</Link>
                     <div className="signup-dropdown">
                         <button 
                             className="signup-btn"
