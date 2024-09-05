@@ -1,7 +1,13 @@
-import React from 'react';
-import './LandingPage.css'; // Import CSS file for styling
+import React, { useState } from 'react';
+import '../styles/LandingPage.css'; // Import CSS file for styling
 
 const LandingPage = () => {
+    const [showDropdown, setShowDropdown] = useState(false);
+
+    const handleDropdownToggle = () => {
+        setShowDropdown(!showDropdown);
+    };
+
     return (
         <div className="landing-page">
             <header className="header">
@@ -12,7 +18,20 @@ const LandingPage = () => {
                 <div className="auth-buttons">
                     <button className="help-btn">Help</button>
                     <button className="login-btn">Login</button>
-                    <button className="signup-btn">Sign Up</button>
+                    <div className="signup-dropdown">
+                        <button 
+                            className="signup-btn"
+                            onClick={handleDropdownToggle}
+                        >
+                            Sign Up
+                        </button>
+                        {showDropdown && (
+                            <div className="dropdown-menu">
+                                <a href="/signup/patient" className="dropdown-item">Sign Up as Patient</a>
+                                <a href="/signup/doctor" className="dropdown-item">Sign Up as Doctor/Practice</a>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </header>
             
@@ -24,7 +43,7 @@ const LandingPage = () => {
                 communicate with your healthcare providers, and track your medication efficiently.
                 Start exploring our features today and take control of your health journey!
                 </p>
-                <a href="#" className="cta-button">Get Started</a>
+                {/*<a href="#" className="cta-button">Get Started</a>*/}
             </div>
 
             <main className="main-content">
