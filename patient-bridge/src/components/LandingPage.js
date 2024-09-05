@@ -1,4 +1,3 @@
-// src/components/LandingPage.js
 import React from 'react';
 import './LandingPage.css'; // Import CSS file for styling
 
@@ -17,18 +16,20 @@ const LandingPage = () => {
                 </div>
             </header>
             
-            
             <div className="hero-section">
-            <h2 className="hero-tagline">Your Health, in Your Hands</h2>
+                <h2 className="hero-tagline">Your Health, in Your Hands</h2>
                 <p className="hero-description">
-                    Take control of your healthcare journey with Patient Bridge. 
-                    Manage appointments, communicate with providers, and track your medication all in one place.
+                Welcome to Patient Bridge, your go-to platform for seamless healthcare management.
+                Our app offers an intuitive and user-friendly experience to help you manage appointments,
+                communicate with your healthcare providers, and track your medication efficiently.
+                Start exploring our features today and take control of your health journey!
                 </p>
-    
+                <a href="#" className="cta-button">Get Started</a>
             </div>
 
             <main className="main-content">
                 <section className="benefits">
+                <h3 className="intro-text">You may ask...</h3>
                     <h2>Why Use Patient Bridge?</h2>
                     <div className="benefits-grid">
                         <div className="benefit-item">
