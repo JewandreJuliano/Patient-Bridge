@@ -17,7 +17,7 @@ const LandingPage = () => {
                     <h1 className="title">Patient Bridge</h1>
                 </div>
                 <div className="auth-buttons">
-                    <button className="help-btn">Help</button>
+                    <Link to= "/dashboard" className="help-btn">Help</Link>
                     <Link to="/login" className="login-btn">Login</Link>
                     <div className="signup-dropdown">
                         <button 

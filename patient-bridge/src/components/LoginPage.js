@@ -8,7 +8,6 @@ const LoginPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Add login functionality here
         console.log('Email:', email);
         console.log('Password:', password);
     };
