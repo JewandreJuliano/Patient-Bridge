@@ -99,6 +99,9 @@ const PatientSignUpPage = () => {
             <footer className="signup-footer">
                 <p>Already have an account? <a href="/login">Log in here</a></p>
             </footer>
+            <footer className="footer">
+                <p>© 2024 Patient Bridge. All rights reserved.</p>
+            </footer>
         </div>
     );
 };
