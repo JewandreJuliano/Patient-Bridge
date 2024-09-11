@@ -20,12 +20,7 @@ const LandingPage = () => {
                     <Link to= "/dashboard" className="help-btn">Help</Link>
                     <Link to="/login" className="login-btn">Login</Link>
                     <div className="signup-dropdown">
-                        <button 
-                            className="signup-btn"
-                            onClick={handleDropdownToggle}
-                        >
-                            Sign Up
-                        </button>
+                        <button className="signup-btn"onClick={handleDropdownToggle}>Sign Up</button>
                         {showDropdown && (
                             <div className="dropdown-menu">
                                 <a href="/signup/patient" className="dropdown-item">Sign Up as Patient</a>

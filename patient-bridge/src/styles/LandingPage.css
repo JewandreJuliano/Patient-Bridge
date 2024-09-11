@@ -17,6 +17,7 @@
 .logo-title {
     display: flex;
     align-items: center;
+    flex-grow: 1;
 }
 
 .icon {
@@ -35,8 +36,19 @@
     display: flex;
     gap: 10px;
 }
+.auth-buttons .login-btn, 
+.auth-buttons .signup-btn, 
+.auth-buttons .help-btn {
+    padding: 12px 25px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px; 
+    transition: background-color 0.3s ease;
+}
 .signup-dropdown {
     position: relative;
+    width: auto;
 }
 
 .dropdown-menu {
@@ -100,27 +112,27 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: linear-gradient(135deg, #2c3e50, #abbaab); /* Gradient background */
+    background: linear-gradient(135deg, #2c3e50, #abbaab);
     padding: 40px;
     border-radius: 12px;
     width: 80%;
-    margin: 20px auto; /* Adjusted margin for spacing from the header */
+    margin: 20px auto; 
     color: white;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
-    animation: fadeIn 1.5s ease-in-out; /* Fade-in animation */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); 
+    animation: fadeIn 1.5s ease-in-out; 
 }
 
 .hero-tagline {
     font-size: 36px; 
     font-weight: bold; 
     color: #e0e9e5;
-    margin-bottom: 20px; /* More space below the tagline */
+    margin-bottom: 20px; 
 }
 
 .hero-description {
-    font-size: 18px; /* Adjusted size of the description */
-    line-height: 1.5; /* Spaced lines for readability */
-    margin-bottom: 30px; /* Space below description for the button */
+    font-size: 18px; 
+    line-height: 1.5;
+    margin-bottom: 30px;
     color: #e0e9e5;
 }
 
@@ -193,11 +205,11 @@
 }
 .intro-text {
     font-size: 22px;
-    color: #2c3e50; /* Same color as the section title for consistency */
-    margin-bottom: 10px; /* Space between the new text and the section title */
+    color: #2c3e50;
+    margin-bottom: 10px;
     font-weight: normal;
     text-align: center;
-    line-height: 1.4; /* Adjusted for readability */
+    line-height: 1.4;
 }
 
 .benefit-item h3 {
@@ -241,7 +253,6 @@
     color: #9ab1c2;
 }
 
-/* Animation for the hero section */
 @keyframes fadeIn {
     0% { opacity: 0; transform: translateY(20px); }
     100% { opacity: 1; transform: translateY(0); }
