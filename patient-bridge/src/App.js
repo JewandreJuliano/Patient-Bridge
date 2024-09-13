@@ -5,7 +5,7 @@ import PatientSignUpPage from './components/PatientSignUpPage';
 import DoctorSignUpPage from './components/DoctorSignUpPage';
 import LoginPage from './components/LoginPage';
 import PatientDashboard from './components/PatientDashboard';
-import PrescriptionPopup from './components/PrescriptionPopup';
+// import PrescriptionPopup from './components/PrescriptionPopup';
 
 
 const App = () => {
