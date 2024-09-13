@@ -28,7 +28,7 @@ connection.connect((err) => {
 });
 
 // Define a route to add a new patient
-app.post('/api/register', async (req, res) => {
+app.post('/api/patient-register', async (req, res) => {
     const { fullName, email, password, phoneNumber } = req.body;
 
     try {
@@ -36,22 +36,49 @@ app.post('/api/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Define the SQL query with the correct column names
-        const query = 'INSERT INTO patients (full_name, email, password, phone_number, created_at) VALUES (?, ?, ?, ?, NOW())';
+        const query = 'INSERT INTO patients (fullName, email, password, phoneNumber, created_at) VALUES (?, ?, ?, ?, NOW())';
 
         // Execute the query
         connection.query(query, [fullName, email, hashedPassword, phoneNumber], (err, results) => {
             if (err) {
                 console.error('Database query error:', err); // Log the error
-                return res.status(500).json({ error: 'Error saving user to the database' });
+                return res.status(500).json({ error: 'Error saving patient to the database' });
             }
             console.log('Query results:', results); // Log the results
-            res.status(201).json({ message: 'User registered successfully!' });
+            res.status(201).json({ message: 'Patient registered successfully!' });
         });
     } catch (error) {
         console.error('Error processing registration:', error); // Log the error
         res.status(500).json({ error: 'Error processing registration' });
     }
 });
+
+// Define a route to add a new doctor
+app.post('/api/doctor-register', async (req, res) => {
+    const { practiceName, practiceAddress, email, password, phoneNumber, specialty } = req.body;
+
+    try {
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Define the SQL query with the correct column names
+        const query = 'INSERT INTO doctors (practiceName, practiceAddress, email, password, phoneNumber, specialty, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())';
+
+        // Execute the query
+        connection.query(query, [practiceName, practiceAddress, email, hashedPassword, phoneNumber, specialty], (err, results) => {
+            if (err) {
+                console.error('Database query error:', err); // Log the error
+                return res.status(500).json({ error: 'Error saving doctor to the database' });
+            }
+            console.log('Query results:', results); // Log the results
+            res.status(201).json({ message: 'Doctor registered successfully!' });
+        });
+    } catch (error) {
+        console.error('Error processing registration:', error); // Log the error
+        res.status(500).json({ error: 'Error processing registration' });
+    }
+});
+
 // Define a route to fetch patients
 app.get('/api/patients', (req, res) => {
     // SQL query to select all patients from the `patients` table
@@ -67,7 +94,21 @@ app.get('/api/patients', (req, res) => {
     });
 });
 
-  
+// Define a route to fetch doctors
+app.get('/api/doctors', (req, res) => {
+    // SQL query to select all doctors from the `doctors` table
+    const query = 'SELECT * FROM doctors';
+
+    // Execute the query
+    connection.query(query, (err, results) => {
+        if (err) {
+            console.error('Error fetching doctors:', err);
+            return res.status(500).send('Server error');
+        }
+        res.json(results);  // Send the retrieved data as JSON
+    });
+});
+
 // Start the server on port 5432
 app.listen(5432, () => {
   console.log('Server is running on port 5432');

@@ -20,33 +20,37 @@ const PatientSignUpPage = () => {
     };
 
     const handleSubmit = (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
-        alert("Passwords do not match");
-        return;
-    }
+        if (formData.password !== formData.confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
 
-    // Send a POST request to the server with the form data
-    fetch('http://localhost:5432/api/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log('Success:', data);
-        alert('Account created successfully');
-        navigate('/dashboard');
-
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        alert('Error creating account');
-    });
-};
+        // Send a POST request to the server with the form data
+        fetch('http://localhost:5432/api/patient-register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                fullName: formData.fullName,
+                email: formData.email,
+                password: formData.password,
+                phoneNumber: formData.phoneNumber,
+            }),
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('Success:', data);
+            alert('Account created successfully');
+            navigate('/dashboard');
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Error creating account');
+        });
+    };
 
     return (
         <div className="patient-signup-page">
