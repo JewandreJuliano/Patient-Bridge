@@ -17,6 +17,10 @@ const PatientDashboard = () => {
   return (
     <div className="dashboard">
       <header className="dashboard-header">
+      <div className="logo-title">
+                    <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
+                    <h1 className="title">Patient Bridge</h1>
+                </div>
         <div className="header-actions">
           <button className="prescriptions-button" onClick={openPopup}>
             Prescriptions

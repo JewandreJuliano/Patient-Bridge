@@ -1,0 +1,175 @@
+/* General Layout */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal width columns */
+    grid-gap: 40px; /* More white space between left and right sections */
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between; /* Align logo on the left, settings on the right */
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #34495E;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.title {
+    margin-left: 15px;
+    color: white;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.settings-button {
+    background-color: #4A6A8D;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.settings-button:hover {
+    background-color: #3E5876;
+}
+
+h1, h2 {
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+    color: #34495E;
+    margin-bottom: 20px;
+}
+
+p, li {
+    font-family: 'Open Sans', sans-serif;
+    color: #555555;
+    line-height: 1.6;
+}
+
+/* Left Section Styling */
+.left-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start; /* Align items to the left */
+}
+
+.action-item {
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left; /* Align text to the left */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%; /* Ensure each item takes full width */
+    display: flex;
+    flex-direction: column; /* Ensure content is stacked vertically */
+    align-items: flex-start; /* Align items to the start (left) */
+}
+
+.action-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+.action-icon {
+    font-size: 1.5em;
+    margin-bottom: 10px; /* Space between icon and heading */
+    color: #4A6A8D;
+}
+
+.action-item h3 {
+    margin: 0;
+    font-size: 18px;
+    margin-bottom: 5px; /* Space between heading and paragraph */
+}
+
+.action-item p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Calendar Section */
+.calendar-section {
+    justify-self: right; /* Align calendar to the right */
+    padding: 25px;
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Ensure calendar does not stretch too wide */
+}
+
+/* Daily Schedule */
+.schedule-section {
+    justify-self: right; /* Align upcoming appointments to the right */
+    padding: 20px;
+    background-color: #F5F5F5;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* Space between the calendar and the schedule */
+    max-width: 400px; /* Match the width of the calendar */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 10px;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer */
+.footer {
+    background-color: #34495E;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+.footer-content p {
+    margin: 0;
+}
+
+/* Highlight Circle for Appointment Days */
+.highlight-circle {
+    background-color: #4A6A8D;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    margin: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .dashboard-container {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .calendar-section, .schedule-section {
+        justify-self: center;
+    }
+}

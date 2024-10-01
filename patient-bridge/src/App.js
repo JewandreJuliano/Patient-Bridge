@@ -5,7 +5,8 @@ import PatientSignUpPage from './components/PatientSignUpPage';
 import DoctorSignUpPage from './components/DoctorSignUpPage';
 import LoginPage from './components/LoginPage';
 import PatientDashboard from './components/PatientDashboard';
-// import PrescriptionPopup from './components/PrescriptionPopup';
+import DoctorDashboard from './components/DoctorDashboard';
+import PrescriptionPopup from './components/PrescriptionPopup';
 
 
 const App = () => {
@@ -17,7 +18,8 @@ const App = () => {
                 <Route path="/signup/doctor" element={<DoctorSignUpPage />} />
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path ="/dashboard" element={<PatientDashboard/>}/>
-                {/* Add other routes here */}
+                <Route path="/ddashboard"element={<DoctorDashboard/>}/>
+                
             </Routes>
         </Router>
     );
