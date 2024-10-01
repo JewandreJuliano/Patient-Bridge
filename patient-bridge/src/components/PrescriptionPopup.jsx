@@ -1,13 +1,22 @@
 // src/components/PrescriptionPopup.js
 import React, { useState } from 'react';
-import AddMedicationPopup from './AddMedicationPopup'; // Import Add Medication Popup component
+import AddMedicationPopup from './AddMedicationPopup';
 import '../styles/PrescriptionPopup.css';
 
 const PrescriptionPopup = ({ isOpen, onClose }) => {
   const [medications, setMedications] = useState([]);
   const [isAddMedicationOpen, setIsAddMedicationOpen] = useState(false);
+  const [editingMedicationIndex, setEditingMedicationIndex] = useState(null);
+  const [isConfirmRemoveOpen, setIsConfirmRemoveOpen] = useState(false); // State for confirmation dialog
+  const [medicationToRemove, setMedicationToRemove] = useState(null); // Store medication to remove
 
   const handleAddMedicationClick = () => {
+    setEditingMedicationIndex(null);
+    setIsAddMedicationOpen(true);
+  };
+
+  const handleEditMedicationClick = (index) => {
+    setEditingMedicationIndex(index);
     setIsAddMedicationOpen(true);
   };
 
@@ -16,11 +25,29 @@ const PrescriptionPopup = ({ isOpen, onClose }) => {
   };
 
   const handleSaveMedication = (medication) => {
-    setMedications([...medications, medication]);
+    if (editingMedicationIndex !== null) {
+      const updatedMedications = medications.map((med, index) =>
+        index === editingMedicationIndex ? medication : med
+      );
+      setMedications(updatedMedications);
+    } else {
+      setMedications([...medications, medication]);
+    }
+    setIsAddMedicationOpen(false);
+    setEditingMedicationIndex(null);
   };
 
-  const handleRemoveMedication = (indexToRemove) => {
-    setMedications(medications.filter((_, index) => index !== indexToRemove));
+  const handleRemoveMedication = (index) => {
+    setMedicationToRemove(index); // Set the medication to remove
+    setIsConfirmRemoveOpen(true); // Open confirmation dialog
+  };
+
+  const confirmRemoveMedication = () => {
+    if (medicationToRemove !== null) {
+      setMedications(medications.filter((_, index) => index !== medicationToRemove));
+      setMedicationToRemove(null); // Reset after removal
+    }
+    setIsConfirmRemoveOpen(false); // Close confirmation dialog
   };
 
   return (
@@ -33,15 +60,18 @@ const PrescriptionPopup = ({ isOpen, onClose }) => {
           <h2>Prescriptions</h2>
           <div id="medications-list">
             {medications.length === 0 ? (
-              <p>No medications added yet</p> // Placeholder for no medications
+              <p>No medications added yet</p>
             ) : (
               <ul>
                 {medications.map((medication, index) => (
-                  <li key={index} className="medication-item">
-                    {medication.medicationName} - {medication.dosage}, {medication.timesPerDay} times per day ({medication.timeOfDay})
+                  <li key={index} className="medication-item" onClick={() => handleEditMedicationClick(index)}>
+                    {medication.medicationName}
                     <button
                       className="remove-medication-btn"
-                      onClick={() => handleRemoveMedication(index)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRemoveMedication(index);
+                      }}
                     >
                       Remove
                     </button>
@@ -59,7 +89,24 @@ const PrescriptionPopup = ({ isOpen, onClose }) => {
             isOpen={isAddMedicationOpen}
             onClose={handleAddMedicationClose}
             onSave={handleSaveMedication}
+            medication={editingMedicationIndex !== null ? medications[editingMedicationIndex] : null}
           />
+
+          {/* Confirmation Dialog */}
+          {isConfirmRemoveOpen && (
+            <div className="confirmation-popup">
+              <div className="confirmation-content">
+                <h2>Are you sure?</h2>
+                <p>Do you really want to remove "{medications[medicationToRemove]?.medicationName}"?</p>
+                <button className="confirm-btn" onClick={confirmRemoveMedication}>
+                  OK
+                </button>
+                <button className="cancel-btn" onClick={() => setIsConfirmRemoveOpen(false)}>
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     )

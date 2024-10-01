@@ -22,6 +22,7 @@ const PatientDashboard = () => {
                     <h1 className="title">Patient Bridge</h1>
                 </div>
         <div className="header-actions">
+        <button className="reminders-button">Reminders</button>
           <button className="prescriptions-button" onClick={openPopup}>
             Prescriptions
           </button>

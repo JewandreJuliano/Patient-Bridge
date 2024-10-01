@@ -1,12 +1,28 @@
 // src/components/AddMedicationPopup.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/AddMedicationPopup.css';
 
-const AddMedicationPopup = ({ isOpen, onClose, onSave }) => {
+const AddMedicationPopup = ({ isOpen, onClose, onSave, medication }) => {
   const [medicationName, setMedicationName] = useState('');
   const [dosage, setDosage] = useState('');
   const [timesPerDay, setTimesPerDay] = useState('');
-  const [timeOfDay, setTimeOfDay] = useState(['']); // Array to store times for each dose
+  const [timeOfDay, setTimeOfDay] = useState([]);
+
+  useEffect(() => {
+    // If editing a medication, populate the fields with its data
+    if (medication) {
+      setMedicationName(medication.medicationName);
+      setDosage(medication.dosage);
+      setTimesPerDay(medication.timesPerDay);
+      setTimeOfDay(medication.timeOfDay);
+    } else {
+      // Reset fields if adding a new medication
+      setMedicationName('');
+      setDosage('');
+      setTimesPerDay('');
+      setTimeOfDay(['']);
+    }
+  }, [medication]);
 
   const handleTimesPerDayChange = (e) => {
     const value = parseInt(e.target.value);
@@ -38,7 +54,7 @@ const AddMedicationPopup = ({ isOpen, onClose, onSave }) => {
           <button className="close-btn" onClick={onClose}>
             X
           </button>
-          <h2>Add Medication</h2>
+          <h2>{medication ? 'Edit Medication' : 'Add Medication'}</h2>
           <form>
             <input
               type="text"
