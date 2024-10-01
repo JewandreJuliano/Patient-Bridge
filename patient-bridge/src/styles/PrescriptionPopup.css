@@ -43,3 +43,25 @@
 .add-medication-btn:hover {
     background-color: #0056b3;
 }
+
+.medication-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.remove-medication-btn {
+    padding: 5px 10px;
+    background-color: #e74c3c; /* Red background for the remove button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.remove-medication-btn:hover {
+    background-color: #c0392b; /* Darker red when hovering */
+}
