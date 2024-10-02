@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Import calendar styling
-import '../styles/DoctorDashboard.css'; // Custom CSS
-import { FaCalendarAlt, FaPills, FaFileMedical } from 'react-icons/fa'; // Import icons
+import 'react-calendar/dist/Calendar.css'; 
+import '../styles/DoctorDashboard.css'; 
+import { FaCalendarAlt, FaPills, FaFileMedical } from 'react-icons/fa'; 
 
 const DoctorDashboard = () => {
     const [appointments] = useState([

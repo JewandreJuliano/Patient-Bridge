@@ -9,6 +9,7 @@ import DoctorDashboard from './components/DoctorDashboard';
 import PrescriptionPopup from './components/PrescriptionPopup';
 
 
+
 const App = () => {
     return (
         <Router>
@@ -19,6 +20,7 @@ const App = () => {
                 <Route path="/login" element={<LoginPage/>}/>
                 <Route path ="/dashboard" element={<PatientDashboard/>}/>
                 <Route path="/ddashboard"element={<DoctorDashboard/>}/>
+                
                 
             </Routes>
         </Router>

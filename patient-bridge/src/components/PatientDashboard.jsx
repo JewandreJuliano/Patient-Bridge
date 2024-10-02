@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/PatientDashboard.css'; // Import the CSS file for styling
 import PrescriptionPopup from './PrescriptionPopup';
+import { Link } from 'react-router-dom';
 
 
 const PatientDashboard = () => {
@@ -22,7 +23,7 @@ const PatientDashboard = () => {
                     <h1 className="title">Patient Bridge</h1>
                 </div>
         <div className="header-actions">
-        <button className="reminders-button">Reminders</button>
+        <button className="track-button">Track Medication</button>
           <button className="prescriptions-button" onClick={openPopup}>
             Prescriptions
           </button>
