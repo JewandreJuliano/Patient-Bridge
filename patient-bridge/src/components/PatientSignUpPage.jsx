@@ -44,7 +44,7 @@ const PatientSignUpPage = () => {
         .then((data) => {
             console.log('Success:', data);
             alert('Account created successfully');
-            navigate('/dashboard');
+            navigate('/login');
         })
         .catch((error) => {
             console.error('Error:', error);

@@ -47,7 +47,7 @@ const DoctorSignUpPage = () => {
         .then((data) => {
             console.log('Success:', data);
             alert('Doctor registered successfully');
-            navigate('/dashboard');
+            navigate('/login');
 
             // You might want to navigate or clear the form here
         })

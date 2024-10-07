@@ -1,17 +1,45 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/LoginPage.css'; // Import CSS file for styling
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Email:', email);
-        console.log('Password:', password);
-    };
 
+        // Prepare the request body
+        const requestBody = { email, password };
+
+        try {
+            const response = await fetch('http://localhost:5432/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log('Login successful:', data);
+                // Navigate to the appropriate dashboard based on user type
+                if (data.userType === 'patient') {
+                    navigate('/dashboard'); // Change to your patient dashboard route
+                } else {
+                    navigate('/dashboard'); // Change to your doctor dashboard route
+                }
+            } else {
+                console.error('Login failed:', data.message);
+                alert(data.message); // Show error message to the user
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            alert('Error during login, please try again.');
+        }
+    };
     return (
         <div className="login-page">
             <header className="header">
