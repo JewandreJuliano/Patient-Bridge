@@ -27,9 +27,9 @@ const LoginPage = () => {
                 console.log('Login successful:', data);
                 // Navigate to the appropriate dashboard based on user type
                 if (data.userType === 'patient') {
-                    navigate('/dashboard'); // Change to your patient dashboard route
+                    navigate('/patient-dashboard'); // Change to your patient dashboard route
                 } else {
-                    navigate('/dashboard'); // Change to your doctor dashboard route
+                    navigate('/doctor-dashboard'); // Change to your doctor dashboard route
                 }
             } else {
                 console.error('Login failed:', data.message);
