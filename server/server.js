@@ -3,8 +3,10 @@ const mysql = require('mysql');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const app = express();
+const secretKey = 'patient_bridge_helper';
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json()); // to handle JSON request bodies
@@ -99,11 +101,17 @@ app.post('/api/login', async (req, res) => {
                 return res.status(401).json({ error: 'Invalid email or password' });
             }
 
+            // Generate a token for the patient
+            const token = jwt.sign({ id: patient.patient_id, role: patient.role }, secretKey, {
+                expiresIn: '30m' // Token expiration time
+            });
+
             // Successfully logged in as a patient
             return res.status(200).json({ 
                 message: 'Login successful', 
                 userType: 'patient', 
-                user: patient 
+                user: patient,
+                token // Include the token in the response
             });
         }
 
@@ -123,11 +131,17 @@ app.post('/api/login', async (req, res) => {
                     return res.status(401).json({ error: 'Invalid email or password' });
                 }
 
+                // Generate a token for the doctor
+                const token = jwt.sign({ id: doctor.doctor_id, role: doctor.role }, secretKey, {
+                    expiresIn: '30m' // Token expiration time
+                });
+
                 // Successfully logged in as a doctor
                 return res.status(200).json({ 
                     message: 'Login successful', 
                     userType: 'doctor', 
-                    user: doctor 
+                    user: doctor,
+                    token // Include the token in the response
                 });
             }
 
