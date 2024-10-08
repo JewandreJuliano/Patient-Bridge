@@ -1,0 +1,102 @@
+/* Container for the track medications page */
+.track-medication-container {
+    margin: 20px;
+    padding: 20px;
+    max-width: 800px;
+    background-color: #f7f9fc; /* Light background color */
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
+  
+  .track-medication-container h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  .medications-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .medication-item {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .medication-item h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .medication-item p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .time-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .medication-time {
+    display: flex;
+    align-items: center;
+  }
+  
+  .medication-time label {
+    font-size: 14px;
+    color: #333;
+    margin-left: 5px;
+  }
+  
+  /* Checkbox style */
+  .medication-time input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #4caf50; /* Custom color for checkbox */
+  }
+  
+  .track-medication-container p {
+    font-size: 14px;
+    color: #888;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  /* Style for the remaining doses message */
+  .medication-item p:last-of-type {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  @media (max-width: 600px) {
+    .track-medication-container {
+      padding: 15px;
+    }
+  
+    .medication-item h3 {
+      font-size: 18px;
+    }
+  
+    .medication-item p {
+      font-size: 14px;
+    }
+  
+    .time-checkboxes {
+      gap: 5px;
+    }
+  }
+  

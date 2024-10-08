@@ -23,7 +23,7 @@ const PatientDashboard = () => {
                     <h1 className="title">Patient Bridge</h1>
                 </div>
         <div className="header-actions">
-        <button className="track-button">Track Medication</button>
+        <Link to= "/track-medications" className="meds-btn">Track medication</Link>
           <button className="prescriptions-button" onClick={openPopup}>
             Prescriptions
           </button>
