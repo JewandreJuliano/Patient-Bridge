@@ -6,7 +6,7 @@ import DoctorSignUpPage from './components/DoctorSignUpPage';
 import LoginPage from './components/LoginPage';
 import PatientDashboard from './components/PatientDashboard';
 import DoctorDashboard from './components/DoctorDashboard';
-import PrescriptionPopup from './components/PrescriptionPopup';
+/*import PrescriptionPopup from './components/PrescriptionPopup';*/
 
 
 

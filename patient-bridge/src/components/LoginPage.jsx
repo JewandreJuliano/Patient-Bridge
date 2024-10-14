@@ -25,6 +25,10 @@ const LoginPage = () => {
             const data = await response.json();
             if (response.ok) {
                 console.log('Login successful:', data);
+
+                // Store the user information in localStorage
+                localStorage.setItem('user', JSON.stringify(data.user)); // Adjust according to your API response
+
                 // Navigate to the appropriate dashboard based on user type
                 if (data.userType === 'patient') {
                     navigate('/patient-dashboard'); // Change to your patient dashboard route
@@ -40,6 +44,7 @@ const LoginPage = () => {
             alert('Error during login, please try again.');
         }
     };
+
     return (
         <div className="login-page">
             <header className="header">
@@ -80,7 +85,6 @@ const LoginPage = () => {
                             <p><Link to="/signup/patient" className="dropdown-item">Sign Up as Patient</Link></p>
                             <p>or</p>
                             <p><Link to="/signup/doctor" className="dropdown-item">Sign Up as Doctor/Practice</Link></p>
-
                         </div>
                     </form>
                 </div>
