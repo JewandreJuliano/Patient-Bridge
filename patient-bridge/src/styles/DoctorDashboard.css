@@ -2,9 +2,9 @@
 .dashboard-container {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Two equal width columns */
-    grid-gap: 40px; /* More white space between left and right sections */
+    grid-gap: 80px; /* Increased gap to add more white space between sections */
     padding: 40px;
-    max-width: 1200px;
+    max-width: 1400px; /* Increased width to allow more room */
     margin: 0 auto;
 }
 
@@ -61,6 +61,7 @@ p, li {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    width: 100%; /* Ensure it stretches to the left edge */
 }
 
 /* Quick Actions */
@@ -68,7 +69,7 @@ p, li {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    align-items: flex-start; /* Align items to the left */
+    align-items: stretch; /* Make action items take full width */
 }
 
 .action-item {
@@ -109,23 +110,23 @@ p, li {
 
 /* Calendar Section */
 .calendar-section {
-    justify-self: right; /* Align calendar to the right */
+    justify-self: flex-end; /* Align to the right */
     padding: 25px;
     background-color: #FFFFFF;
     border-radius: 12px;
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
-    max-width: 400px; /* Ensure calendar does not stretch too wide */
+    max-width: 400px; /* Increased size to occupy more space */
 }
 
 /* Daily Schedule */
 .schedule-section {
-    justify-self: right; /* Align upcoming appointments to the right */
+    justify-self: flex-end; /* Align to the right */
     padding: 20px;
     background-color: #F5F5F5;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     margin-top: 20px; /* Space between the calendar and the schedule */
-    max-width: 400px; /* Match the width of the calendar */
+    max-width: 500px; /* Match the width of the calendar */
 }
 
 ul {
@@ -153,7 +154,7 @@ ul li {
     margin: 0;
 }
 
-/* Highlight Circle for Appointment Days */
+
 .highlight-circle {
     background-color: #4A6A8D;
     height: 12px;
@@ -162,7 +163,6 @@ ul li {
     margin: auto;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .dashboard-container {
         grid-template-columns: 1fr;
