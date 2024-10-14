@@ -6,13 +6,9 @@ import DoctorSignUpPage from './components/DoctorSignUpPage';
 import LoginPage from './components/LoginPage';
 import PatientDashboard from './components/PatientDashboard';
 import DoctorDashboard from './components/DoctorDashboard';
-<<<<<<< HEAD
-/*import PrescriptionPopup from './components/PrescriptionPopup';*/
-=======
 import PrescriptionPopup from './components/PrescriptionPopup';
 import TrackMedicationPage from './components/TrackMedicationPage';
 import BookAppointment from './components/BookAppointment';
->>>>>>> 6e576628d0faaffb14024660dae0ee5ce70cde73
 
 const App = () => {
   // State to manage the medications across different components
