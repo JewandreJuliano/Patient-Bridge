@@ -8,10 +8,6 @@ const PatientDashboard = () => {
   const [username, setUsername] = useState(''); // State to store the username
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
 
-const handleSettingsDropdownToggle = () => {
-    setShowSettingsDropdown(!showSettingsDropdown);
-};
-
   useEffect(() => {
     // Retrieve user info from localStorage when the component mounts
     const storedUser = JSON.parse(localStorage.getItem('user'));
@@ -19,7 +15,11 @@ const handleSettingsDropdownToggle = () => {
       setUsername(storedUser.fullName || storedUser.practiceName || 'User'); // Fallback to 'User' if no name
     }
   }, []);
-};
+
+  const handleSettingsDropdownToggle = () => {
+    setShowSettingsDropdown(!showSettingsDropdown);
+  };
+
   const openPopup = () => {
     setIsPopupOpen(true);
   };
@@ -36,12 +36,12 @@ const handleSettingsDropdownToggle = () => {
           <h1 className="title">Patient Bridge</h1>
         </div>
         <div className="header-actions">
-        <button className="track-button">Track Medication</button>
+          <button className="track-button">Track Medication</button>
           <button className="prescriptions-button" onClick={openPopup}>
             Prescriptions
           </button>
           <div className="settings-dropdown">
-            <button className="settings-button" onClick = {handleSettingsDropdownToggle}>Settings</button>
+            <button className="settings-button" onClick={handleSettingsDropdownToggle}>Settings</button>
             {showSettingsDropdown && (
               <div className='settings-dropmenu'>
                 <a href='/' className='dropdown-item'>General</a>
@@ -54,7 +54,7 @@ const handleSettingsDropdownToggle = () => {
       </header>
 
       <main className="dashboard-content">
-        <h1>Welcome, {username}</h1> {/* Corrected syntax */}
+        <h1>Welcome, {username}</h1>
         <div className='search-container'>
           <input type="text" className="search-bar" placeholder="Search by Condition or Area" />
           <span className="search-icon">&#128269;</span>
