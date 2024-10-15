@@ -4,12 +4,13 @@ import PrescriptionPopup from './PrescriptionPopup';
 /*import { Link } from 'react-router-dom';*/
 
 const PatientDashboard = () => {
-<<<<<<< HEAD
-  const [isPopupOpen, setIsPopupOpen] = useState(false); 
-  const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
-=======
   const [isPopupOpen, setIsPopupOpen] = useState(false); // State to handle popup visibility
   const [username, setUsername] = useState(''); // State to store the username
+  const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
+
+const handleSettingsDropdownToggle = () => {
+    setShowSettingsDropdown(!showSettingsDropdown);
+};
 
   useEffect(() => {
     // Retrieve user info from localStorage when the component mounts
@@ -18,10 +19,6 @@ const PatientDashboard = () => {
       setUsername(storedUser.fullName || storedUser.practiceName || 'User'); // Fallback to 'User' if no name
     }
   }, []);
->>>>>>> 3e99449cebc8adad74a9c5929661954e35b5a764
-
-const handleSettingsDropdownToggle = () => {
-    setShowSettingsDropdown(!showSettingsDropdown);
 };
   const openPopup = () => {
     setIsPopupOpen(true);
