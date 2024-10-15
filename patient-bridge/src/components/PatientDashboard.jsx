@@ -1,12 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/PatientDashboard.css'; // Import the CSS file for styling
 import PrescriptionPopup from './PrescriptionPopup';
-import { Link } from 'react-router-dom';
-
+/*import { Link } from 'react-router-dom';*/
 
 const PatientDashboard = () => {
+<<<<<<< HEAD
   const [isPopupOpen, setIsPopupOpen] = useState(false); 
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
+=======
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // State to handle popup visibility
+  const [username, setUsername] = useState(''); // State to store the username
+
+  useEffect(() => {
+    // Retrieve user info from localStorage when the component mounts
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    if (storedUser) {
+      setUsername(storedUser.fullName || storedUser.practiceName || 'User'); // Fallback to 'User' if no name
+    }
+  }, []);
+>>>>>>> 3e99449cebc8adad74a9c5929661954e35b5a764
 
 const handleSettingsDropdownToggle = () => {
     setShowSettingsDropdown(!showSettingsDropdown);
@@ -22,12 +34,12 @@ const handleSettingsDropdownToggle = () => {
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-      <div className="logo-title">
-                    <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
-                    <h1 className="title">Patient Bridge</h1>
-                </div>
+        <div className="logo-title">
+          <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
+          <h1 className="title">Patient Bridge</h1>
+        </div>
         <div className="header-actions">
-        <Link to= "/track-medications" className="meds-btn">Track medication</Link>
+        <button className="track-button">Track Medication</button>
           <button className="prescriptions-button" onClick={openPopup}>
             Prescriptions
           </button>
@@ -45,12 +57,14 @@ const handleSettingsDropdownToggle = () => {
       </header>
 
       <main className="dashboard-content">
-        <h1>Welcome, {"{username}"}</h1>
+        <h1>Welcome, {username}</h1> {/* Corrected syntax */}
         <div className='search-container'>
-        <input type="text" className="search-bar" placeholder="Search by Condition or Area" />
-        <span className="search-icon">&#128269;</span>
+          <input type="text" className="search-bar" placeholder="Search by Condition or Area" />
+          <span className="search-icon">&#128269;</span>
         </div>
-        <div className='sections-header'><h2>Let Us Guide You to the Right Specialist!</h2></div>
+        <div className='sections-header'>
+          <h2>Let Us Guide You to the Right Specialist!</h2>
+        </div>
 
         <div className="sections">
           <div className="section">
@@ -93,10 +107,10 @@ const handleSettingsDropdownToggle = () => {
       </main>
 
       <footer className="footer">
-                <div className="footer-content">
-                    <p>© 2024 Patient Bridge. All rights reserved.</p>
-                </div>
-            </footer>
+        <div className="footer-content">
+          <p>© 2024 Patient Bridge. All rights reserved.</p>
+        </div>
+      </footer>
 
       {/* Prescription Popup */}
       <PrescriptionPopup isOpen={isPopupOpen} onClose={closePopup} />
