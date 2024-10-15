@@ -7,6 +7,7 @@ import PrescriptionPopup from './PrescriptionPopup';
 const PatientDashboard = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false); // State to handle popup visibility
   const [username, setUsername] = useState(''); // State to store the username
+  const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
 
   useEffect(() => {
     // Retrieve user info from localStorage when the component mounts
@@ -15,6 +16,10 @@ const PatientDashboard = () => {
       setUsername(storedUser.fullName || storedUser.practiceName || 'User'); // Fallback to 'User' if no name
     }
   }, []);
+
+  const handleSettingsDropdownToggle = () => {
+    setShowSettingsDropdown(!showSettingsDropdown);
+  };
 
   const openPopup = () => {
     setIsPopupOpen(true);
@@ -37,13 +42,20 @@ const PatientDashboard = () => {
             Prescriptions
           </button>
           <div className="settings-dropdown">
-            <button className="settings-button">Settings</button>
+            <button className="settings-button" onClick={handleSettingsDropdownToggle}>Settings</button>
+            {showSettingsDropdown && (
+              <div className='settings-dropmenu'>
+                <a href='/' className='dropdown-item'>General</a>
+                <a href='/signup/patient' className='dropdown-item'>Logout</a>
+                <a href='/' className='dropdown-item'>Notification Preferences</a>
+              </div>
+            )}
           </div>
         </div>
       </header>
 
       <main className="dashboard-content">
-        <h1>Welcome, {username}</h1> {/* Corrected syntax */}
+        <h1>Welcome, {username}</h1>
         <div className='search-container'>
           <input type="text" className="search-bar" placeholder="Search by Condition or Area" />
           <span className="search-icon">&#128269;</span>

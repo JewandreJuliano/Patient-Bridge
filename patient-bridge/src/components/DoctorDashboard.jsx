@@ -10,6 +10,11 @@ const DoctorDashboard = () => {
         { id: 1, date: new Date(2024, 9, 22), patient: 'John Doe', time: '10:00 AM' },
         { id: 2, date: new Date(2024, 9, 25), patient: 'Jane Smith', time: '2:00 PM' },
     ]);
+    const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
+
+const handleSettingsDropdownToggle = () => {
+    setShowSettingsDropdown(!showSettingsDropdown);
+};
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -36,7 +41,16 @@ const DoctorDashboard = () => {
                     <h1 className="title">Patient Bridge</h1>
                 </div>
                 <div className="header-actions">
-                    <button className="settings-button">Settings</button>
+                <div className="settings-dropdown">
+            <button className="settings-button" onClick = {handleSettingsDropdownToggle}>Settings</button>
+            {showSettingsDropdown && (
+              <div className='settings-dropmenu'>
+                <a href='/' className='dropdown-item'>Profile</a>
+                <a href='/' className='dropdown-item'>Verify Practice</a>
+                <a href='/signup/doctor' className='dropdown-item'>Logout</a>
+              </div>
+            )}
+          </div>
                 </div>
             </header>
 
@@ -51,13 +65,13 @@ const DoctorDashboard = () => {
                         </div>
                         <div className="action-item">
                             <FaPills className="action-icon" />
-                            <h3>Manage Medication</h3>
-                            <p>Add, Remove or Edit patient medication</p>
+                            <h3>Manage Patient Records</h3>
+                            <p>Edit patient health records</p>
                         </div>
                         <div className="action-item">
                             <FaFileMedical className="action-icon" />
                             <h3>View Health Records</h3>
-                            <p>View an upcoming or current patient's health records</p>
+                            <p>View patient's health records</p>
                         </div>
                     </section>
                 </div>
