@@ -5,8 +5,12 @@ import { Link } from 'react-router-dom';
 
 
 const PatientDashboard = () => {
-  const [isPopupOpen, setIsPopupOpen] = useState(false); // State to handle popup visibility
+  const [isPopupOpen, setIsPopupOpen] = useState(false); 
+  const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
 
+const handleSettingsDropdownToggle = () => {
+    setShowSettingsDropdown(!showSettingsDropdown);
+};
   const openPopup = () => {
     setIsPopupOpen(true);
   };
@@ -28,7 +32,14 @@ const PatientDashboard = () => {
             Prescriptions
           </button>
           <div className="settings-dropdown">
-            <button className="settings-button">Settings</button>
+            <button className="settings-button" onClick = {handleSettingsDropdownToggle}>Settings</button>
+            {showSettingsDropdown && (
+              <div className='settings-dropmenu'>
+                <a href='/' className='dropdown-item'>General</a>
+                <a href='/signup/patient' className='dropdown-item'>Logout</a>
+                <a href='/' className='dropdown-item'>Notification Preferences</a>
+              </div>
+            )}
           </div>
         </div>
       </header>

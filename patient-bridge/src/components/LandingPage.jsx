@@ -17,8 +17,8 @@ const LandingPage = () => {
                     <h1 className="title">Patient Bridge</h1>
                 </div>
                 <div className="auth-buttons">
-                    <Link to="/patient-dashboard" className="help-btn">Help</Link>
-                    <Link to="/login" className="login-btn">Login</Link>
+                    <a href='/'>Help</a>
+                    <a href = '/login' className='login-btn'>Login</a>
                     <div className="signup-dropdown">
                         <button className="signup-btn" onClick={handleDropdownToggle}>Sign Up</button>
                         {showDropdown && (
