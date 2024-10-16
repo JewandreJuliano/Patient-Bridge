@@ -2,9 +2,13 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
+import { useLocation } from "react-router-dom"; // Import useLocation for accessing passed data
 import "../styles/BookAppointment.css"; // Ensure this path is correct for your CSS
 
 const BookAppointment = () => {
+  const location = useLocation(); // Access the location object
+  const { doctor } = location.state || {}; // Get the doctor data from state
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState("13:00");
 
@@ -34,10 +38,12 @@ const BookAppointment = () => {
       <div className="book-appointment-container">
         <h1 className="heading">Book Appointment</h1>
         <div className="booking-content">
-          <div className="doctor-info">
-            <h2>Doctor's Name</h2>
-            <p>Occupation: General Practitioner</p>
-          </div>
+          {doctor && (
+            <div className="doctor-info">
+              <h2>Doctor's Name: {doctor.practiceName}</h2> {/* Display doctor's name */}
+              <p>Specialty: {doctor.specialty}</p> {/* Display doctor's specialty */}
+            </div>
+          )}
 
           <div className="appointment-form">
             <div className="date-picker">
