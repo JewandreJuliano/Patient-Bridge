@@ -84,11 +84,7 @@ const PatientDashboard = () => {
             onChange={handleSearch} 
           />
           <span className="search-icon">&#128269;</span>
-        </div>
-        
-        <div className='sections-header'>
-          <h2>Let Us Guide You to the Right Specialist!</h2>
-        </div>
+        </div>        
 
         {/* Display search results */}
         <div className="doctor-results">
@@ -106,6 +102,10 @@ const PatientDashboard = () => {
           ) : (
             <p>No doctors found.</p>
           )}
+        </div>
+
+        <div className='sections-header'>
+          <h2>Let Us Guide You to the Right Specialist!</h2>
         </div>
 
         {/* Other sections here... */}

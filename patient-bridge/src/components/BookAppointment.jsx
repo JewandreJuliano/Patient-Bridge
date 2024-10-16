@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import moment from "moment";
-import { useLocation } from "react-router-dom"; // Import useLocation for accessing passed data
+import { useLocation, useNavigate } from "react-router-dom"; // Import useLocation and useNavigate
 import "../styles/BookAppointment.css"; // Ensure this path is correct for your CSS
 
 const BookAppointment = () => {
   const location = useLocation(); // Access the location object
+  const navigate = useNavigate(); // Initialize useNavigate
   const { doctor } = location.state || {}; // Get the doctor data from state
 
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -20,8 +21,37 @@ const BookAppointment = () => {
     setSelectedTime(e.target.value);
   };
 
-  const confirmAppointment = () => {
-    alert(`Appointment Confirmed for ${moment(selectedDate).format("DD MMMM YYYY")} at ${selectedTime}`);
+  const confirmAppointment = async () => {
+    try {
+      
+      const patientId = localStorage.getItem('patientId');
+
+      const response = await fetch('http://localhost:5432/api/book-appointment', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          patient_id: patientId, // Use the retrieved patient ID
+          doctor_id: doctor.doctor_id, // Pass the doctor's ID
+          appointment_date: moment(selectedDate).format("YYYY-MM-DD"), // Format the date for MySQL
+          appointment_time: selectedTime, // Time in HH:MM format
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(data.message);
+        
+        navigate('/patient-dashboard');
+      } else {
+        alert(data.error || 'Error booking appointment.');
+      }
+    } catch (error) {
+      console.error('Error confirming appointment:', error);
+      alert('Error booking appointment. Please try again.');
+    }
   };
 
   return (
@@ -33,7 +63,7 @@ const BookAppointment = () => {
           <h1 className="title">Patient Bridge</h1>
         </div>
       </header>
-      
+
       {/* Appointment Booking Section */}
       <div className="book-appointment-container">
         <h1 className="heading">Book Appointment</h1>
