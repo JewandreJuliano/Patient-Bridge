@@ -167,20 +167,31 @@ app.get('/api/patients', (req, res) => {
     });
 });
 
-// Define a route to fetch doctors
+
+// Define a route to fetch doctors based on specialty
 app.get('/api/doctors', (req, res) => {
-    // SQL query to select all doctors from the `doctors` table
-    const query = 'SELECT * FROM doctors';
+    const specialty = req.query.specialty?.toLowerCase(); // Get specialty from query
+
+    // SQL query to select doctors from the `doctors` table
+    let query = 'SELECT * FROM doctors';
+    const queryParams = [];
+
+    // Filter by specialty if provided
+    if (specialty) {
+        query += ' WHERE LOWER(specialty) LIKE ?';
+        queryParams.push(`%${specialty}%`);
+    }
 
     // Execute the query
-    connection.query(query, (err, results) => {
+    connection.query(query, queryParams, (err, results) => {
         if (err) {
             console.error('Error fetching doctors:', err);
-            return res.status(500).send('Server error');
+            return res.status(500).json({ error: 'Error fetching doctors' });
         }
-        res.json(results);  // Send the retrieved data as JSON
+        res.json(results); // Send the retrieved data as JSON
     });
 });
+
 
 // Start the server on port 5432
 app.listen(5432, () => {
