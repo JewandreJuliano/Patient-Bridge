@@ -1,0 +1,21 @@
+.doctor-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .doctor-card:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .doctor-name {
+    margin: 0;
+  }
+  
+  .doctor-details {
+    margin-top: 10px;
+  }
+  

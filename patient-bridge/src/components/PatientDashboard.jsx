@@ -80,7 +80,7 @@ const PatientDashboard = () => {
           <input 
             type="text" 
             className="search-bar" 
-            placeholder="Search by Condition or Address" 
+            placeholder="Search by Specialty" 
             onChange={handleSearch} 
           />
           <span className="search-icon">&#128269;</span>
@@ -108,6 +108,7 @@ const PatientDashboard = () => {
           )}
         </div>
 
+        {/* Other sections here... */}
         <div className="sections">
           <div className="section">
             <div className="section-item">

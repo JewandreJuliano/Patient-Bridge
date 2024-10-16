@@ -86,7 +86,34 @@ body {
     font-size: 16px;
     box-sizing: border-box;
   }
-  
+  /* PatientDashboard.css */
+
+.doctor-results {
+  display: flex;                /* Use flexbox for horizontal layout */
+  flex-wrap: wrap;             /* Allow wrapping to new lines */
+  justify-content: space-around; /* Space cards evenly */
+  margin-top: 20px;            /* Add some space at the top */
+}
+
+.doctor-card {
+  background-color: #f9f9f9;   /* Light background for cards */
+  border: 1px solid #ddd;      /* Light border */
+  border-radius: 8px;          /* Rounded corners */
+  padding: 20px;               /* Space inside card */
+  margin: 10px;                /* Space between cards */
+  width: 200px;                /* Fixed width for cards */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  text-align: center;          /* Center text */
+}
+
+.doctor-card h3 {
+  margin: 0 0 10px 0;         /* Space below the heading */
+}
+
+.doctor-card p {
+  margin: 5px 0;               /* Space between paragraphs */
+}
+
   .search-icon {
     position: absolute;
     top: 50%;
