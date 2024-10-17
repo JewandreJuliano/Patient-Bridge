@@ -26,6 +26,15 @@ const EmergencyContacts = () => {
         </div>
 
         <div className="input-group">
+            <label htmlFor="emergencyRelationship">Relationship</label>
+            <input
+              type="text"
+              id="emergencyRelationship"
+              placeholder="Relationship"
+            />
+          </div>
+
+        <div className="input-group">
           <div className="input-half">
             <label htmlFor="emergencyPhone">Phone Number</label>
             <input
@@ -35,15 +44,6 @@ const EmergencyContacts = () => {
             />
           </div>
         </div>
-
-        <div className="input-group">
-            <label htmlFor="emergencyRelationship">Relationship</label>
-            <input
-              type="text"
-              id="emergencyRelationship"
-              placeholder="Relationship"
-            />
-          </div>
 
         {/* Emergency Contact Email */}
         <div className="input-group">

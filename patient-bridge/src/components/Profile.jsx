@@ -1,7 +1,15 @@
 import React from 'react';
 import '../styles/Profile.css'; // Make sure to import the CSS file
+import { useNavigate } from 'react-router-dom'; // For handling navigation
 
 const Profile = () => {
+  const navigate = useNavigate();
+
+  const handleCancel = () => {
+    // Navigate back to a previous page (adjust as necessary)
+    navigate('/doctor-dashboard');
+  };
+
   return (
     <div className="dashboard"> {/* Added a parent container for the dashboard */}
       <header className="dashboard-header"> {/* Header section */}
@@ -46,10 +54,20 @@ const Profile = () => {
           />
         </div>
 
+        {/* Confirm Password */}
+        <div className="input-group">
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirm your password"
+          />
+        </div>
 
-        {/* Save Changes Button */}
-        <div>
-          <button type="button">Save Changes</button>
+        {/* Buttons: Save Changes and Cancel */}
+        <div className="button-group">
+          <button type="button" className="save-btn">Save Changes</button>
+          <button type="button" className="cancel-btn" onClick={handleCancel}>Cancel</button>
         </div>
       </div>
     </div>
