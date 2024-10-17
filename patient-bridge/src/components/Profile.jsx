@@ -46,48 +46,6 @@ const Profile = () => {
           />
         </div>
 
-        <h3>Emergency Contact</h3>
-
-        {/* Emergency Contact Full Name */}
-        <div className="input-group">
-          <label htmlFor="emergencyFullName">Full Name</label>
-          <input
-            type="text"
-            id="emergencyFullName"
-            placeholder="Full name"
-          />
-        </div>
-
-        {/* Emergency Contact Details */}
-        <div className="input-group">
-          <div className="input-half">
-            <label htmlFor="emergencyPhone">Phone Number</label>
-            <input
-              type="tel"
-              id="emergencyPhone"
-              placeholder="Phone number"
-            />
-          </div>
-        </div>
-
-        <div className="input-group">
-            <label htmlFor="emergencyRelationship">Relationship</label>
-            <input
-              type="text"
-              id="emergencyRelationship"
-              placeholder="Relationship"
-            />
-          </div>
-
-        {/* Emergency Contact Email */}
-        <div className="input-group">
-          <label htmlFor="emergencyEmail">Email Address</label>
-          <input
-            type="email"
-            id="emergencyEmail"
-            placeholder="Email"
-          />
-        </div>
 
         {/* Save Changes Button */}
         <div>
