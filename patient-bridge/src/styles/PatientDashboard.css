@@ -1,92 +1,101 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .dashboard {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-  }
-  
-  .dashboard-header {
-    display: flex;
-    justify-content: flex-end; 
-    align-items: center;
-    padding: 10px 20px; 
-    background-color: #2c3e50;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  padding: 10px 20px; 
+  background-color: #2c3e50;
+}
+
 .settings-dropdown {
-    position: relative;
-    width: auto;
+  position: relative;
+  width: auto;
 }
 
 .settings-dropmenu {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
 
 .dropdown-item {
-    padding: 10px 20px;
-    text-decoration: none;
-    color: #2c3e50;
-    font-size: 16px;
-    transition: background-color 0.3s;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #2c3e50;
+  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
 .dropdown-item:hover {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-  }
-  
-  .track-button,.prescriptions-button, .settings-button {
-    padding: 10px 15px;
-    background-color: #2c3e50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px; 
-  }
-  
-  .dashboard-content {
-    flex: 1;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    }
-  
-  .search-container {
-    position: relative;
-    width: 60%; 
-    max-width: 600px; 
-    margin-bottom: 20px;
-  }
-  
-  .search-bar {
-    width: 100%;
-    padding: 10px 40px 10px 20px; /* Adjust padding for space on the right for the icon */
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    font-size: 16px;
-    box-sizing: border-box;
-  }
-  /* PatientDashboard.css */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px; 
+}
+
+.track-button, .prescriptions-button, .settings-button {
+  padding: 10px 15px;
+  background-color: #2c3e50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px; 
+  transition: background-color 0.3s; /* Added transition for smooth effect */
+}
+
+.track-button:hover, .prescriptions-button:hover, .settings-button:hover{
+  background-color: #f0f0f0; /* Set the same hover color as the settings button */
+  color: #2c3e50; /* Optional: Change text color on hover */
+}
+
+
+.dashboard-content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.search-container {
+  position: relative;
+  width: 60%; 
+  max-width: 600px; 
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px 40px 10px 20px; /* Adjust padding for space on the right for the icon */
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* PatientDashboard.css */
 
 .doctor-results {
   display: flex;                /* Use flexbox for horizontal layout */
@@ -114,54 +123,52 @@ body {
   margin: 5px 0;               /* Space between paragraphs */
 }
 
-  .search-icon {
-    position: absolute;
-    top: 50%;
-    right: 15px; /* Adjust based on the size of your input */
-    transform: translateY(-50%);
-    font-size: 18px; /* Adjust size for the icon */
-    color: #888;
-    pointer-events: none; /* Prevent icon from blocking input clicks */
-  }
-  
-  
-  .sections {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    width: 100%;
-  }
-  
-  .sections-header {
-    text-align: center;
-    color: #2c3e50;
-    margin-bottom: 20px; /* Add some space below the header */
-  }
-  
-  .section {
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #fff;
-    text-align: center;
-    color: #2c3e50;
-  }
-  
-  .section-image {
-    width: 100%;
-    height: auto;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    object-fit: cover;
-  }
-  
-  .description {
-    color: #6d6e71;
-  }
-  
-  .dashboard-footer {
-    padding: 10px;
-    background-color: #f0f0f0;
-    text-align: center;
-  }
-  
+.search-icon {
+  position: absolute;
+  top: 50%;
+  right: 15px; /* Adjust based on the size of your input */
+  transform: translateY(-50%);
+  font-size: 18px; /* Adjust size for the icon */
+  color: #888;
+  pointer-events: none; /* Prevent icon from blocking input clicks */
+}
+
+.sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+.sections-header {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px; /* Add some space below the header */
+}
+
+.section {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+  text-align: center;
+  color: #2c3e50;
+}
+
+.section-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.description {
+  color: #6d6e71;
+}
+
+.dashboard-footer {
+  padding: 10px;
+  background-color: #f0f0f0;
+  text-align: center;
+}

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import '../styles/PatientDashboard.css'; // Import the CSS file for styling
+import PrescriptionPopup from './PrescriptionPopup';
 
 const PatientDashboard = () => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [username, setUsername] = useState(''); // State to store the username
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
   const [doctors, setDoctors] = useState([]); // State for doctors
+  const [showPrescriptionPopup, setShowPrescriptionPopup] = useState(false); 
   const [searchResults, setSearchResults] = useState([]); // State for search results
 
   useEffect(() => {
@@ -48,6 +50,14 @@ const PatientDashboard = () => {
     setShowSettingsDropdown(!showSettingsDropdown);
   };
 
+  const handlePrescriptionsClick = () => {
+    setShowPrescriptionPopup(true); // Show the prescriptions popup when the button is clicked
+  };
+
+  const handleProfileClick = () => {
+    navigate('/profile'); // Navigate to the Profile page
+  };
+
   const handleSelectDoctor = (doctor) => {
     navigate('/book-apt', { state: { doctor } }); // Navigate to BookAppointment page with doctor info
   };
@@ -61,11 +71,12 @@ const PatientDashboard = () => {
         </div>
         <div className="header-actions">
           <button className="track-button">Track Medication</button>
+          <button className="prescriptions-button" onClick={handlePrescriptionsClick}>Prescriptions</button>
           <div className="settings-dropdown">
             <button className="settings-button" onClick={handleSettingsDropdownToggle}>Settings</button>
             {showSettingsDropdown && (
               <div className='settings-dropmenu'>
-                <a href='/' className='dropdown-item'>General</a>
+                <a href className='dropdown-item' onClick={handleProfileClick}>Profile</a>
                 <a href='/signup/patient' className='dropdown-item'>Logout</a>
                 <a href='/' className='dropdown-item'>Notification Preferences</a>
               </div>
@@ -154,6 +165,11 @@ const PatientDashboard = () => {
           <p>© 2024 Patient Bridge. All rights reserved.</p>
         </div>
       </footer>
+
+      <PrescriptionPopup 
+        isOpen={showPrescriptionPopup} 
+        onClose={() => setShowPrescriptionPopup(false)} // Function to close the popup
+      />
     </div>
   );
 };

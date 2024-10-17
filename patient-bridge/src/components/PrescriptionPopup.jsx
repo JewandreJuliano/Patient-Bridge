@@ -1,4 +1,3 @@
-// src/components/PrescriptionPopup.js
 import React, { useState } from 'react';
 import AddMedicationPopup from './AddMedicationPopup';
 import '../styles/PrescriptionPopup.css';
@@ -7,8 +6,8 @@ const PrescriptionPopup = ({ isOpen, onClose }) => {
   const [medications, setMedications] = useState([]);
   const [isAddMedicationOpen, setIsAddMedicationOpen] = useState(false);
   const [editingMedicationIndex, setEditingMedicationIndex] = useState(null);
-  const [isConfirmRemoveOpen, setIsConfirmRemoveOpen] = useState(false); // State for confirmation dialog
-  const [medicationToRemove, setMedicationToRemove] = useState(null); // Store medication to remove
+  const [isConfirmRemoveOpen, setIsConfirmRemoveOpen] = useState(false); 
+  const [medicationToRemove, setMedicationToRemove] = useState(null);
 
   const handleAddMedicationClick = () => {
     setEditingMedicationIndex(null);
@@ -38,16 +37,16 @@ const PrescriptionPopup = ({ isOpen, onClose }) => {
   };
 
   const handleRemoveMedication = (index) => {
-    setMedicationToRemove(index); // Set the medication to remove
-    setIsConfirmRemoveOpen(true); // Open confirmation dialog
+    setMedicationToRemove(index); 
+    setIsConfirmRemoveOpen(true); 
   };
 
   const confirmRemoveMedication = () => {
     if (medicationToRemove !== null) {
       setMedications(medications.filter((_, index) => index !== medicationToRemove));
-      setMedicationToRemove(null); // Reset after removal
+      setMedicationToRemove(null); 
     }
-    setIsConfirmRemoveOpen(false); // Close confirmation dialog
+    setIsConfirmRemoveOpen(false); 
   };
 
   return (

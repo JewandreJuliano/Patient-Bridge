@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
+import { useNavigate} from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css'; 
 import '../styles/DoctorDashboard.css'; 
 import { FaCalendarAlt, FaPills, FaFileMedical } from 'react-icons/fa'; 
 
 const DoctorDashboard = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [appointments] = useState([
         { id: 1, date: new Date(2024, 9, 22), patient: 'John Doe', time: '10:00 AM' },
@@ -15,6 +17,10 @@ const DoctorDashboard = () => {
 const handleSettingsDropdownToggle = () => {
     setShowSettingsDropdown(!showSettingsDropdown);
 };
+
+const handleDoctorProfileClick = () => {
+    navigate('/doctor-profile')
+  };
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
@@ -45,7 +51,7 @@ const handleSettingsDropdownToggle = () => {
             <button className="settings-button" onClick = {handleSettingsDropdownToggle}>Settings</button>
             {showSettingsDropdown && (
               <div className='settings-dropmenu'>
-                <a href='/' className='dropdown-item'>Profile</a>
+               <a href className='dropdown-item' onClick={handleDoctorProfileClick}>Profile</a>
                 <a href='/' className='dropdown-item'>Verify Practice</a>
                 <a href='/signup/doctor' className='dropdown-item'>Logout</a>
               </div>

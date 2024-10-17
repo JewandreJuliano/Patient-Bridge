@@ -9,14 +9,12 @@ const AddMedicationPopup = ({ isOpen, onClose, onSave, medication }) => {
   const [timeOfDay, setTimeOfDay] = useState([]);
 
   useEffect(() => {
-    // If editing a medication, populate the fields with its data
     if (medication) {
       setMedicationName(medication.medicationName);
       setDosage(medication.dosage);
       setTimesPerDay(medication.timesPerDay);
       setTimeOfDay(medication.timeOfDay);
     } else {
-      // Reset fields if adding a new medication
       setMedicationName('');
       setDosage('');
       setTimesPerDay('');
@@ -25,9 +23,15 @@ const AddMedicationPopup = ({ isOpen, onClose, onSave, medication }) => {
   }, [medication]);
 
   const handleTimesPerDayChange = (e) => {
-    const value = parseInt(e.target.value);
+    const value = e.target.value === '' ? '' : parseInt(e.target.value); // Allow empty input
     setTimesPerDay(value);
-    setTimeOfDay(Array(value).fill('')); // Create an array of empty strings based on `timesPerDay`
+
+    // If value is a valid number, update the timeOfDay array accordingly
+    if (!isNaN(value) && value > 0) {
+      setTimeOfDay(Array(value).fill(''));
+    } else {
+      setTimeOfDay(['']); // Default to one empty string if input is cleared or invalid
+    }
   };
 
   const handleTimeChange = (index, value) => {
