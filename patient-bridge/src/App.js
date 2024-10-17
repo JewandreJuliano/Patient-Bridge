@@ -11,6 +11,7 @@ import TrackMedicationPage from './components/TrackMedicationPage';
 import BookAppointment from './components/BookAppointment';
 import Profile from './components/Profile';
 import DoctorProfile from './components/DoctorProfile'
+import EmergencyContacts from './components/EmergencyContacts';
 
 const App = () => {
   // State to manage the medications across different components
@@ -34,7 +35,7 @@ const App = () => {
         <Route path="/medication" element={<PrescriptionPopup />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/doctor-profile" element={<DoctorProfile/>} />
-        {/* Prescription Popup Route (can be used in patient dashboard or standalone) */}
+        <Route path="/emergency-contact" element={<EmergencyContacts />} />
         <Route
           path="/prescriptions"
           element={

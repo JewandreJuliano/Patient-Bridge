@@ -8,6 +8,8 @@ const DoctorSignUpPage = () => {
     const [formData, setFormData] = useState({
         practiceName: '',
         practiceAddress: '',
+        suburb: '', // New suburb field
+        city: '', // New city field
         email: '',
         password: '',
         confirmPassword: '',
@@ -37,6 +39,8 @@ const DoctorSignUpPage = () => {
             body: JSON.stringify({
                 practiceName: formData.practiceName,
                 practiceAddress: formData.practiceAddress,
+                suburb: formData.suburb, // Include suburb in the request body
+                city: formData.city, // Include city in the request body
                 email: formData.email,
                 password: formData.password,
                 phoneNumber: formData.phoneNumber,
@@ -48,8 +52,6 @@ const DoctorSignUpPage = () => {
             console.log('Success:', data);
             alert('Doctor registered successfully');
             navigate('/login');
-
-            // You might want to navigate or clear the form here
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -82,6 +84,30 @@ const DoctorSignUpPage = () => {
                             id="practiceAddress"
                             name="practiceAddress"
                             value={formData.practiceAddress}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    {/* New Suburb Field */}
+                    <div className="form-group">
+                        <label htmlFor="suburb">Suburb</label>
+                        <input
+                            type="text"
+                            id="suburb"
+                            name="suburb"
+                            value={formData.suburb}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+                    {/* New City Field */}
+                    <div className="form-group">
+                        <label htmlFor="city">City</label>
+                        <input
+                            type="text"
+                            id="city"
+                            name="city"
+                            value={formData.city}
                             onChange={handleChange}
                             required
                         />
@@ -143,7 +169,6 @@ const DoctorSignUpPage = () => {
                     </div>
                     <button type="submit" className="signup-btn">Sign Up</button>
                 </form>
-                
             </main>
             <footer className="signup-footer">
                 <p>Already have an account? <a href="/login">Log in here</a></p>

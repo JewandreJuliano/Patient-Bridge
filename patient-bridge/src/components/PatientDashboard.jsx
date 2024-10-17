@@ -58,6 +58,11 @@ const PatientDashboard = () => {
     navigate('/profile'); // Navigate to the Profile page
   };
 
+  const handleEmergencyContactClick = () => {
+    navigate('/emergency-contact');
+
+  }
+
   const handleSelectDoctor = (doctor) => {
     navigate('/book-apt', { state: { doctor } }); // Navigate to BookAppointment page with doctor info
   };
@@ -79,6 +84,7 @@ const PatientDashboard = () => {
                 <a href className='dropdown-item' onClick={handleProfileClick}>Profile</a>
                 <a href='/signup/patient' className='dropdown-item'>Logout</a>
                 <a href='/' className='dropdown-item'>Notification Preferences</a>
+                <a href className='dropdown-item' onClick={handleEmergencyContactClick}>Emergency Contact</a>
               </div>
             )}
           </div>

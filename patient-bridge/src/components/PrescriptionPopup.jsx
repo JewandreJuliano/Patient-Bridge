@@ -56,7 +56,7 @@ const PrescriptionPopup = ({ isOpen, onClose }) => {
           <button className="close-btn" onClick={onClose}>
             X
           </button>
-          <h2>Prescriptions</h2>
+          <h2>Medications</h2>
           <div id="medications-list">
             {medications.length === 0 ? (
               <p>No medications added yet</p>
