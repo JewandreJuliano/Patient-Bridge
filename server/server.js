@@ -57,17 +57,20 @@ app.post('/api/patient-register', async (req, res) => {
 
 // Define a route to add a new doctor
 app.post('/api/doctor-register', async (req, res) => {
-    const { practiceName, practiceAddress, email, password, phoneNumber, specialty } = req.body;
+    const { practiceName, practiceAddress, suburb, city, email, password, phoneNumber, specialty } = req.body; // Include suburb and city
 
     try {
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Define the SQL query with the correct column names
-        const query = 'INSERT INTO doctors (practiceName, practiceAddress, email, password, phoneNumber, specialty, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())';
+        const query = `
+            INSERT INTO doctors 
+            (practiceName, practiceAddress, suburb, city, email, password, phoneNumber, specialty, created_at) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())`;
 
-        // Execute the query
-        connection.query(query, [practiceName, practiceAddress, email, hashedPassword, phoneNumber, specialty], (err, results) => {
+        // Execute the query with the updated values
+        connection.query(query, [practiceName, practiceAddress, suburb, city, email, hashedPassword, phoneNumber, specialty], (err, results) => {
             if (err) {
                 console.error('Database query error:', err); // Log the error
                 return res.status(500).json({ error: 'Error saving doctor to the database' });
@@ -80,6 +83,7 @@ app.post('/api/doctor-register', async (req, res) => {
         res.status(500).json({ error: 'Error processing registration' });
     }
 });
+
 
 // Define a route to handle login
 app.post('/api/login', async (req, res) => {

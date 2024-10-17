@@ -67,6 +67,10 @@ const PatientDashboard = () => {
     navigate('/book-apt', { state: { doctor } }); // Navigate to BookAppointment page with doctor info
   };
 
+  const handleTrackMedicationClick = () => {
+    navigate('/track-medications'); // Navigate to TrackMedicationPage
+  };
+
   return (
     <div className="dashboard">
       <header className="dashboard-header">
@@ -75,7 +79,7 @@ const PatientDashboard = () => {
           <h1 className="title">Patient Bridge</h1>
         </div>
         <div className="header-actions">
-          <button className="track-button">Track Medication</button>
+          <button className="track-button" onClick={handleTrackMedicationClick}>Track Medication</button>
           <button className="prescriptions-button" onClick={handlePrescriptionsClick}>Prescriptions</button>
           <div className="settings-dropdown">
             <button className="settings-button" onClick={handleSettingsDropdownToggle}>Settings</button>
