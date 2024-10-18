@@ -17,7 +17,7 @@ const PatientDashboard = () => {
     if (storedUser) {
       setUsername(storedUser.fullName || storedUser.practiceName || 'User'); // Fallback to 'User' if no name
     }
-    
+
     // Fetch all doctors when the component mounts
     fetchDoctors();
   }, []);
@@ -60,8 +60,7 @@ const PatientDashboard = () => {
 
   const handleEmergencyContactClick = () => {
     navigate('/emergency-contact');
-
-  }
+  };
 
   const handleSelectDoctor = (doctor) => {
     navigate('/book-apt', { state: { doctor } }); // Navigate to BookAppointment page with doctor info
@@ -85,10 +84,10 @@ const PatientDashboard = () => {
             <button className="settings-button" onClick={handleSettingsDropdownToggle}>Settings</button>
             {showSettingsDropdown && (
               <div className='settings-dropmenu'>
-                <a href className='dropdown-item' onClick={handleProfileClick}>Profile</a>
+                <a href="#" className='dropdown-item' onClick={handleProfileClick}>Profile</a>
                 <a href='/signup/patient' className='dropdown-item'>Logout</a>
-                <a href='/' className='dropdown-item'>Notification Preferences</a>
-                <a href className='dropdown-item' onClick={handleEmergencyContactClick}>Emergency Contact</a>
+                <a href='/notification-preferences' className='dropdown-item'>Notification Preferences</a>
+                <a href="#" className='dropdown-item' onClick={handleEmergencyContactClick}>Emergency Contact</a>
               </div>
             )}
           </div>
@@ -105,7 +104,7 @@ const PatientDashboard = () => {
             onChange={handleSearch} 
           />
           <span className="search-icon">&#128269;</span>
-        </div>        
+        </div>
 
         {/* Display search results */}
         <div className="doctor-results">
@@ -155,7 +154,7 @@ const PatientDashboard = () => {
             </div>
             <h2>See a General Practitioner when...</h2>
             <div className='description'>
-              <p>You have a fever, cold, or flu symptoms, or just need a general health check up.</p>
+              <p>You have a fever, cold, or flu symptoms, or just need a general health check-up.</p>
             </div>
           </div>
           <div className="section">
