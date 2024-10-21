@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../styles/LoginPage.css'; // Import CSS file for styling
+import '../styles/LoginPage.css'; // Keeping your existing styles
+import PatientSignUpPage from './PatientSignUpPage';
+import DoctorSignUpPage from './DoctorSignUpPage'; // Import DoctorSignUpPage
 
-const LoginPage = () => {
+const LoginPage = ({ isOpen, onClose }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const [isDoctorSignUpOpen, setIsDoctorSignUpOpen] = useState(false);
+
+    const handleOpenDoctorSignUp = () => {
+        setIsDoctorSignUpOpen(true);
+    };
+
+    const handleCloseDoctorSignUp = () => {
+        setIsDoctorSignUpOpen(false);
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -27,17 +38,17 @@ const LoginPage = () => {
                 console.log('Login successful:', data);
 
                 // Store the user information in localStorage
-                localStorage.setItem('user', JSON.stringify(data.user)); // Adjust according to your API response
+                localStorage.setItem('user', JSON.stringify(data.user)); 
 
                 // Navigate to the appropriate dashboard based on user type
                 if (data.userType === 'patient') {
-                    navigate('/patient-dashboard'); // Change to your patient dashboard route
+                    navigate('/patient-dashboard'); 
                 } else {
-                    navigate('/doctor-dashboard'); // Change to your doctor dashboard route
+                    navigate('/doctor-dashboard'); 
                 }
             } else {
                 console.error('Login failed:', data.message);
-                alert(data.message); // Show error message to the user
+                alert(data.message);
             }
         } catch (error) {
             console.error('Error during login:', error);
@@ -46,56 +57,60 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="login-page">
-            <header className="header">
-                <div className="logo-title">
-                    <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
-                    <h1 className="title">Patient Bridge</h1>
+        <>
+            {isOpen && (
+                <div className="popup-container">
+                    <div className="popup-content">
+                        <button className="close-btn" onClick={onClose}>
+                            X
+                        </button>
+                        <p className="login-title">WELCOME TO PATIENT BRIDGE</p>
+                        <p className='sign-in-message'>Please sign into your account below</p>
+                        <form className="login-form" onSubmit={handleSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="email">EMAIL</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="password">PASSWORD</label>
+                                <a href="/forgot-password" className="forgot-password-link"> Forgot Password?</a>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <button type="submit" className="login-btn">LOGIN</button>
+                            <div className="login-links">
+                                <div>
+                                    New on our platform? Sign up as a  
+                                    <span className='patient-sign'>
+                                        <a href='/signup/patient' className='patient-sign'>  Patient </a>
+                                    </span> 
+                                     or 
+                                    <span className='doctor-sign' onClick={handleOpenDoctorSignUp}> 
+                                        <a href="#!" className='doctor-sign'> Doctor</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            </header>
+            )}
 
-            <main className="main-content">
-                <div className="login-container">
-                    <h2 className="login-title">Login</h2>
-                    <form className="login-form" onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="email">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                id="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                        </div>
-                        <button type="submit" className="login-btn">Login</button>
-                        <div className="login-links">
-                            <Link to="/forgot-password" className="forgot-password-link">Forgot Password?</Link>
-                            <p>Don't have an account?</p>
-                            <p><Link to="/signup/patient" className="dropdown-item">Sign Up as Patient</Link></p>
-                            <p>or</p>
-                            <p><Link to="/signup/doctor" className="dropdown-item">Sign Up as Doctor/Practice</Link></p>
-                        </div>
-                    </form>
-                </div>
-            </main>
-
-            <footer className="footer">
-                <div className="footer-content">
-                    <p>© 2024 Patient Bridge. All rights reserved.</p>
-                </div>
-            </footer>
-        </div>
+            {/* Render Doctor Sign Up Popup */}
+            {isDoctorSignUpOpen && (
+                <DoctorSignUpPage isOpen={isDoctorSignUpOpen} onClose={handleCloseDoctorSignUp} />
+            )}
+        </>
     );
 };
 

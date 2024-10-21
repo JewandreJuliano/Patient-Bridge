@@ -4,33 +4,7 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    font-family: "Open Sans", sans-serif;
-}
-
-.header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    background-color: #2c3e50;
-    border-bottom: 5px solid #9ab1c2;
-}
-
-.logo-title {
-    display: flex;
-    align-items: center;
-}
-
-.icon {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
-}
-
-.title {
-    margin: 0;
-    font-size: 24px;
-    color: #f5f5f5;
+    font-family: "Montserrat", sans-serif; /* Updated font */
 }
 
 .main-content {
@@ -51,24 +25,42 @@
 }
 
 .login-title {
-    font-size: 2rem;
+    font-size: 20px;
     margin-bottom: 20px;
-    text-align: center;
+    text-align: left;
+    font-family: "Montserrat", sans-serif; /* Updated font */
+    color: #2c3e50;
+    font-weight: 650;
 }
 
+.sign-in-message {
+    margin-top: 0;
+    text-align: left;
+    font-family: "Montserrat", sans-serif; /* Updated font */
+    font-size: 14px;
+}
+
+.patient-sign, .doctor-sign{
+    color: #2c3e50;
+}
 .login-form {
     display: flex;
     flex-direction: column;
+    height: auto; /* Adjust height to fit content */
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 10px; /* Increased margin for better spacing */
+    width: 80%;
 }
 
 .form-group label {
     display: block;
     margin-bottom: 5px;
     font-size: 1rem;
+    text-align: left;
+    font-weight: 600; /* Make label text thicker */
+    color: #2c3e50;
 }
 
 .form-group input {
@@ -79,19 +71,27 @@
     border-radius: 5px;
 }
 
+.password-container {
+    display: flex;
+    justify-content: space-between; /* Align items on the same line */
+    align-items: center; /* Center vertically */
+    width: 100%; /* Match width of form group */
+}
+
 .login-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
+    width: 100%; /* Set width to 100% for centering */
+    padding: 10px; /* Increased padding for better button size */
+    background-color: #2c3e50;
     color: white;
     font-size: 1rem;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px; /* Add top margin for spacing */
 }
 
 .login-btn:hover {
-    background-color: #45a049;
+    background-color: black;
 }
 
 .login-links {
@@ -99,13 +99,41 @@
     margin-top: 20px;
 }
 
-.forgot-password-link, .signup-link {
-    color: #4CAF50;
-    text-decoration: none;
-}
 
 .forgot-password-link:hover, .signup-link:hover {
     text-decoration: underline;
+}
+
+.popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px; /* Adjust as needed */
+    position: relative;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .footer {

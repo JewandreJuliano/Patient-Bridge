@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import '../styles/DoctorSignUpPage.css'; // Import CSS file for styling
 
-const DoctorSignUpPage = () => {
+const DoctorSignUpPage = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         practiceName: '',
         practiceAddress: '',
-        suburb: '', // New suburb field
-        city: '', // New city field
+        suburb: '',
+        city: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -36,16 +35,7 @@ const DoctorSignUpPage = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                practiceName: formData.practiceName,
-                practiceAddress: formData.practiceAddress,
-                suburb: formData.suburb, // Include suburb in the request body
-                city: formData.city, // Include city in the request body
-                email: formData.email,
-                password: formData.password,
-                phoneNumber: formData.phoneNumber,
-                specialty: formData.specialty
-            }),
+            body: JSON.stringify(formData),
         })
         .then((response) => response.json())
         .then((data) => {
@@ -60,123 +50,129 @@ const DoctorSignUpPage = () => {
     };
 
     return (
-        <div className="doctor-signup-page">
-            <header className="header">
-                <h1 className="title">Doctor/Practice Sign Up</h1>
-            </header>
-            <main className="main-content">
-                <form className="signup-form" onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="practiceName">Practice Name</label>
-                        <input
-                            type="text"
-                            id="practiceName"
-                            name="practiceName"
-                            value={formData.practiceName}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="practiceAddress">Practice Address</label>
-                        <input
-                            type="text"
-                            id="practiceAddress"
-                            name="practiceAddress"
-                            value={formData.practiceAddress}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    {/* New Suburb Field */}
-                    <div className="form-group">
-                        <label htmlFor="suburb">Suburb</label>
-                        <input
-                            type="text"
-                            id="suburb"
-                            name="suburb"
-                            value={formData.suburb}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    {/* New City Field */}
-                    <div className="form-group">
-                        <label htmlFor="city">City</label>
-                        <input
-                            type="text"
-                            id="city"
-                            name="city"
-                            value={formData.city}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="phoneNumber">Phone Number</label>
-                        <input
-                            type="text"
-                            id="phoneNumber"
-                            name="phoneNumber"
-                            value={formData.phoneNumber}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="specialty">Specialty</label>
-                        <input
-                            type="text"
-                            id="specialty"
-                            name="specialty"
-                            value={formData.specialty}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="confirmPassword">Confirm Password</label>
-                        <input
-                            type="password"
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            value={formData.confirmPassword}
-                            onChange={handleChange}
-                            required
-                        />
-                    </div>
-                    <button type="submit" className="signup-btn">Sign Up</button>
-                </form>
-            </main>
-            <footer className="signup-footer">
-                <p>Already have an account? <a href="/login">Log in here</a></p>
-            </footer>
-            <footer className="footer">
-                <p>© 2024 Patient Bridge. All rights reserved.</p>
-            </footer>
-        </div>
+        isOpen && (
+            <div className="popup-container">
+                <div className="popup-content">
+                    <button className="close-btn" onClick={onClose}>
+                        X
+                    </button>
+                    <p className="login-title">SIGN UP AS DOCTOR</p>
+                    <p className='sign-in-message'>Welcome! Sign Up below to get your journey started!</p>
+                    <form className="signup-form" onSubmit={handleSubmit}>
+                        <div className="form-row">
+                            <div className="doctor-form-group">
+                                <label htmlFor="practiceName">PRACTICE NAME</label>
+                                <input
+                                    type="text"
+                                    id="practiceName"
+                                    name="practiceName"
+                                    value={formData.practiceName}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="doctor-form-group">
+                                <label htmlFor="practiceAddress">PRACTICE ADDRESS</label>
+                                <input
+                                    type="text"
+                                    id="practiceAddress"
+                                    name="practiceAddress"
+                                    value={formData.practiceAddress}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="doctor-form-group">
+                                <label htmlFor="suburb">SUBURB</label>
+                                <input
+                                    type="text"
+                                    id="suburb"
+                                    name="suburb"
+                                    value={formData.suburb}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="doctor-form-group">
+                                <label htmlFor="city">CITY</label>
+                                <input
+                                    type="text"
+                                    id="city"
+                                    name="city"
+                                    value={formData.city}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="doctor-form-group">
+                                <label htmlFor="email">EMAIL</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="doctor-form-group">
+                                <label htmlFor="phoneNumber">PHONE NUMBER</label>
+                                <input
+                                    type="text"
+                                    id="phoneNumber"
+                                    name="phoneNumber"
+                                    value={formData.phoneNumber}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="doctor-form-group">
+                                <label htmlFor="specialty">SPECIALTY</label>
+                                <input
+                                    type="text"
+                                    id="specialty"
+                                    name="specialty"
+                                    value={formData.specialty}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <div className="form-row">
+                            <div className="doctor-form-group">
+                                <label htmlFor="password">PASSWORD</label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                            <div className="doctor-form-group">
+                                <label htmlFor="confirmPassword">CONFIRM PASSWORD</label>
+                                <input
+                                    type="password"
+                                    id="confirmPassword"
+                                    name="confirmPassword"
+                                    value={formData.confirmPassword}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        </div>
+                        <button type="submit" className="signup-btn">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        )
     );
 };
 

@@ -1,12 +1,22 @@
 import React, { useState } from 'react'; 
+import { Link } from 'react-router-dom'; 
 import '../styles/LandingPage.css'; 
-import { Link } from 'react-router-dom';
+import LoginPage from './LoginPage';  // Import the login popup (previously LoginPopup)
 
 const LandingPage = () => {
     const [showDropdown, setShowDropdown] = useState(false);
+    const [isLoginOpen, setIsLoginOpen] = useState(false); // State for login popup
 
     const handleDropdownToggle = () => {
         setShowDropdown(!showDropdown);
+    };
+
+    const handleOpenLogin = () => {
+        setIsLoginOpen(true); // Open login popup
+    };
+
+    const handleCloseLogin = () => {
+        setIsLoginOpen(false); // Close login popup
     };
 
     return (
@@ -20,7 +30,7 @@ const LandingPage = () => {
                 <nav className="nav-links">
                     <a href="/">Help</a>
                     <a href="/">About Us</a>
-                    <a href="/login">Login</a>
+                    <a href="#" onClick={handleOpenLogin}>Login</a> {/* Trigger login popup */}
                     <a href="#" onClick={handleDropdownToggle}>Sign Up</a>
                     {showDropdown && (
                         <div className="dropdown-menu">
@@ -30,31 +40,31 @@ const LandingPage = () => {
                     )}
                 </nav>
             </header>
-            <header class="header2">
-        <div class="content">
-          <h1><span>Your Health,</span><br />In Your Hands</h1>
-          <p>
-            In today's fast-paced world, access to prompt and efficient medical
-            services is of paramount importance. When faced with a medical
-            emergency or seeking immediate medical attention, the ability to
-            receive quick medical services can significantly impact the outcome
-            of a situation.
-          </p>
-        </div>
-        <div class="image">
-          <span class="image__bg"></span>
-          <img src="assets/doctor-overlay.png" alt="header image" className='profile-image'/>
-          </div>
-          <div class="image__content image__content__1">
-            <div class="details">
-              <p>Friendly Doctors</p>
-            </div>
-          </div>
-          <div class="image__content image__content__2">
-            <p>Friendly Doctors</p>
-          </div>
-        
-      </header>
+
+            <header className="header2">
+                <div className="content">
+                    <h1><span>Your Health,</span><br />In Your Hands</h1>
+                    <p>
+                        In today's fast-paced world, access to prompt and efficient medical
+                        services is of paramount importance. When faced with a medical
+                        emergency or seeking immediate medical attention, the ability to
+                        receive quick medical services can significantly impact the outcome
+                        of a situation.
+                    </p>
+                </div>
+                <div className="image">
+                    <span className="image__bg"></span>
+                    <img src="assets/doctor-overlay.png" alt="header image" className='profile-image' />
+                </div>
+                <div className="image__content image__content__1">
+                    <div className="details">
+                        <p>Friendly Doctors</p>
+                    </div>
+                </div>
+                <div className="image__content image__content__2">
+                    <p>Friendly Doctors</p>
+                </div>
+            </header>
 
             <main className="main-content">
                 <section className="benefits">
@@ -93,6 +103,9 @@ const LandingPage = () => {
                     </div>
                 </div>
             </footer>
+
+            {/* Render the login pop-up */}
+            <LoginPage isOpen={isLoginOpen} onClose={handleCloseLogin} />
         </div>
     );
 };
