@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import '../styles/LandingPage.css'; 
 import { Link } from 'react-router-dom';
 
@@ -11,48 +11,53 @@ const LandingPage = () => {
 
     return (
         <div className="landing-page">
-            <header className="header sticky-header">
+            <header className="header">
                 <div className="logo-title">
                     <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
-                    <h1 className="title">Patient Bridge</h1>
+                    <h1 className="title">PATIENT BRIDGE</h1>
                 </div>
-                <div className="auth-buttons">
-                    <a href='/'>Help</a>
-                    <a href = '/login' className='login-btn'>Login</a>
-                    <div className="signup-dropdown">
-                        <button className="signup-btn" onClick={handleDropdownToggle}>Sign Up</button>
-                        {showDropdown && (
-                            <div className="dropdown-menu">
-                                <a href="/signup/patient" className="dropdown-item">Sign Up as Patient</a>
-                                <a href="/signup/doctor" className="dropdown-item">Sign Up as Doctor/Practice</a>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </header>
-
-            
-            <div className="background-image-container">
-                <img src="/assets/bgroundimage.png" alt="Medical Icons Background" className="background-image" />
-            </div>
-
-            
-            <div className="hero-section">
-                <h2 className="hero-tagline">Your Health, in Your Hands</h2>
-                <p className="hero-description">
-                    Welcome to Patient Bridge, your go-to platform for seamless healthcare management.
-                    Our app offers an intuitive and user-friendly experience to help you manage appointments,
-                    communicate with your healthcare providers, and track your medication efficiently.
-                    Start exploring our features today and take control of your health journey!
-                </p>
                 
-                <a href="/explore" className="cta-button">Get Started</a>
+                <nav className="nav-links">
+                    <a href="/">Help</a>
+                    <a href="/">About Us</a>
+                    <a href="/login">Login</a>
+                    <a href="#" onClick={handleDropdownToggle}>Sign Up</a>
+                    {showDropdown && (
+                        <div className="dropdown-menu">
+                            <a href="/signup/patient" className="dropdown-item">Sign Up as Patient</a>
+                            <a href="/signup/doctor" className="dropdown-item">Sign Up as Doctor/Practice</a>
+                        </div>
+                    )}
+                </nav>
+            </header>
+            <header class="header2">
+        <div class="content">
+          <h1><span>Your Health,</span><br />In Your Hands</h1>
+          <p>
+            In today's fast-paced world, access to prompt and efficient medical
+            services is of paramount importance. When faced with a medical
+            emergency or seeking immediate medical attention, the ability to
+            receive quick medical services can significantly impact the outcome
+            of a situation.
+          </p>
+        </div>
+        <div class="image">
+          <span class="image__bg"></span>
+          <img src="assets/doctor-overlay.png" alt="header image" className='profile-image'/>
+          </div>
+          <div class="image__content image__content__1">
+            <div class="details">
+              <p>Friendly Doctors</p>
             </div>
+          </div>
+          <div class="image__content image__content__2">
+            <p>Friendly Doctors</p>
+          </div>
+        
+      </header>
 
-            
             <main className="main-content">
                 <section className="benefits">
-                    <h2>Why Use Patient Bridge?</h2>
                     <div className="benefits-grid">
                         <div className="benefit-item">
                             <img src="/assets/calender.jpg" alt="Easy Appointment Scheduling" className="benefit-icon" loading="lazy" />
