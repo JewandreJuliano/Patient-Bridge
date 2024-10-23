@@ -168,7 +168,7 @@ const DoctorSignUpPage = ({ isOpen, onClose }) => {
                                 />
                             </div>
                         </div>
-                        <button type="submit" className="signup-btn">Sign Up</button>
+                        <button type="submit" className="signup-btn">CREATE ACCOUNT</button>
                     </form>
                 </div>
             </div>

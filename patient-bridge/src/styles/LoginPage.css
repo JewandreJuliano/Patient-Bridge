@@ -51,7 +51,7 @@
 
 .form-group {
     margin-bottom: 10px; /* Increased margin for better spacing */
-    width: 80%;
+    width: 70%;
 }
 
 .form-group label {
@@ -64,8 +64,8 @@
 }
 
 .form-group input {
-    width: 100%;
-    padding: 10px;
+    width: 300px !important;
+    padding: 10px !important;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;

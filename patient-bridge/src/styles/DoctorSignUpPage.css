@@ -4,7 +4,7 @@
     min-height: 100vh;
     font-family: "Open Sans", sans-serif;
     background-color: #f4f4f4;
-    padding: 20px;
+    padding: 2px;
 }
 
 .popup-container {
@@ -24,7 +24,7 @@
     background-color: white;
     padding: 20px;
     border-radius: 10px;
-    width: 500px; /* Adjust as needed */
+    width: 550px; /* Adjust as needed */
     position: relative;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 }

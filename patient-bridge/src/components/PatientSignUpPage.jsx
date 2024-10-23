@@ -53,79 +53,82 @@ const PatientSignUpPage = ({ isOpen, onClose }) => {
     };
 
     return (
-        isOpen && (  // Render the form only if isOpen is true
-            <div className="popup-container">
-                <div className="popup-content">
-                    <button className="close-btn" onClick={onClose}>
-                        X
-                    </button>
-                    <header className="signup-header">
-                        <h1 className="signup-title">Patient Sign Up</h1>
-                    </header>
+        isOpen && ( // Render the form only if isOpen is true
+            <div className="patient-popup-container">
+                <div className="patient-popup-content">
+                    <button className="close-btn" onClick={onClose}>X</button>
+                    <p className="login-title">SIGN UP AS PATIENT</p>
+                    <p className='sign-in-message'>Welcome! Sign Up below to get your journey started!</p>
 
                     <form className="signup-form" onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label htmlFor="fullName">Full Name</label>
-                            <input
-                                type="text"
-                                id="fullName"
-                                name="fullName"
-                                value={formData.fullName}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
+    <div className="form-row">
+        <div className="patient-form-group">
+            <label htmlFor="fullName">FULL NAME</label>
+            <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                required
+            />
+        </div>
 
-                        <div className="form-group">
-                            <label htmlFor="email">Email Address</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
+        <div className="patient-form-group">
+            <label htmlFor="email">EMAIL ADDRESS</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+            />
+        </div>
+    </div>
 
-                        <div className="form-group">
-                            <label htmlFor="phoneNumber">Phone Number</label>
-                            <input
-                                type="tel"
-                                id="phoneNumber"
-                                name="phoneNumber"
-                                value={formData.phoneNumber}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
+    <div className="form-row">
+        <div className="patient-form-group">
+            <label htmlFor="phoneNumber">PHONE NUMBER</label>
+            <input
+                type="tel"
+                id="phoneNumber"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                required
+            />
+        </div>
 
-                        <div className="form-group">
-                            <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
+        <div className="patient-form-group">
+            <label htmlFor="password">PASSWORD</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+            />
+        </div>
+    </div>
 
-                        <div className="form-group">
-                            <label htmlFor="confirmPassword">Confirm Password</label>
-                            <input
-                                type="password"
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                value={formData.confirmPassword}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
+    <div className="form-row">
+        <div className="patient-form-group">
+            <label htmlFor="confirmPassword">CONFIRM PASSWORD</label>
+            <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+            />
+        </div>
+    </div>
 
-                        <button type="submit" className="signup-btn">Create Account</button>
-                    </form>
+    <button type="submit" className="signup-btn">CREATE ACCOUNT</button>
+</form>
 
                     <footer className="signup-footer">
                         <p>Already have an account? <a href="/login">Log in here</a></p>

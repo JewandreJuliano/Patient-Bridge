@@ -8,14 +8,29 @@ const LoginPage = ({ isOpen, onClose }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const [isDoctorSignUpOpen, setIsDoctorSignUpOpen] = useState(false);
 
+    // State for handling popups
+    const [isDoctorSignUpOpen, setIsDoctorSignUpOpen] = useState(false);
+    const [isPatientSignUpOpen, setIsPatientSignUpOpen] = useState(false);
+
+    // Open Doctor Sign Up Popup
     const handleOpenDoctorSignUp = () => {
         setIsDoctorSignUpOpen(true);
     };
 
+    // Close Doctor Sign Up Popup
     const handleCloseDoctorSignUp = () => {
         setIsDoctorSignUpOpen(false);
+    };
+
+    // Open Patient Sign Up Popup
+    const handleOpenPatientSignUp = () => {
+        setIsPatientSignUpOpen(true);
+    };
+
+    // Close Patient Sign Up Popup
+    const handleClosePatientSignUp = () => {
+        setIsPatientSignUpOpen(false);
     };
 
     const handleSubmit = async (event) => {
@@ -92,8 +107,8 @@ const LoginPage = ({ isOpen, onClose }) => {
                             <div className="login-links">
                                 <div>
                                     New on our platform? Sign up as a  
-                                    <span className='patient-sign'>
-                                        <a href='/signup/patient' className='patient-sign'>  Patient </a>
+                                    <span className='patient-sign' onClick={handleOpenPatientSignUp}>
+                                        <a href="#!" className='patient-sign'>  Patient </a>
                                     </span> 
                                      or 
                                     <span className='doctor-sign' onClick={handleOpenDoctorSignUp}> 
@@ -109,6 +124,11 @@ const LoginPage = ({ isOpen, onClose }) => {
             {/* Render Doctor Sign Up Popup */}
             {isDoctorSignUpOpen && (
                 <DoctorSignUpPage isOpen={isDoctorSignUpOpen} onClose={handleCloseDoctorSignUp} />
+            )}
+
+            {/* Render Patient Sign Up Popup */}
+            {isPatientSignUpOpen && (
+                <PatientSignUpPage isOpen={isPatientSignUpOpen} onClose={handleClosePatientSignUp} />
             )}
         </>
     );
