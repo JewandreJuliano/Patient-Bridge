@@ -6,6 +6,7 @@ import '../styles/DoctorDashboard.css';
 import { FaCalendarAlt, FaPills, FaFileMedical } from 'react-icons/fa'; 
 import PatientListPopup from './PatientListPopup'; // Import the PatientListPopup component
 import AppointmentList from './AppointmentList'; // Ensure you have this component imported
+import HealthRecordsList from './HealthRecordsList';
 
 const DoctorDashboard = () => {
     const navigate = useNavigate();
@@ -14,6 +15,7 @@ const DoctorDashboard = () => {
     const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
     const [isPatientListOpen, setIsPatientListOpen] = useState(false); // State for the patient list popup
     const [isAppointmentListOpen, setIsAppointmentListOpen] = useState(false); // State for the appointment list popup
+    const[ isHealthRecordsListOpen, setIsHealthRecordsListOpen] = useState(false);
 
     const handleSettingsDropdownToggle = () => {
         setShowSettingsDropdown(!showSettingsDropdown);
@@ -55,6 +57,10 @@ const DoctorDashboard = () => {
         setIsAppointmentListOpen(true); // Open the appointment list popup
     };
 
+    const handleViewHealthRecordsClick = () => {
+        setIsHealthRecordsListOpen(true);
+    }
+
     return (
         <div className="dashboard">
             <header className="dashboard-header">
@@ -90,7 +96,7 @@ const DoctorDashboard = () => {
                             <h3>Manage Patient Records</h3>
                             <p>Edit patient health records</p>
                         </div>
-                        <div className="action-item">
+                        <div className="action-item" onClick = {handleViewHealthRecordsClick}>
                             <FaFileMedical className="action-icon" />
                             <h3>View Health Records</h3>
                             <p>View patient's health records</p>
@@ -103,27 +109,13 @@ const DoctorDashboard = () => {
                     <h2>Your Calendar</h2>
                     <Calendar tileContent={tileContent} />
                 </section>
-
-                {/* Daily Schedule */}
-                <section className="schedule-section">
-                    <h2>These are your upcoming appointments:</h2>
-                    {appointments.length > 0 ? (
-                        <ul>
-                            {appointments.map((appointment) => (
-                                <li key={appointment.id}>
-                                    <strong>{appointment.date.toDateString()} - {appointment.patient}</strong>
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No appointments today.</p>
-                    )}
-                </section>
+                
             </div>
 
             {/* Patient List Popup */}
             <PatientListPopup isOpen={isPatientListOpen} onClose={() => setIsPatientListOpen(false)} />
             <AppointmentList isOpen={isAppointmentListOpen} onClose={() => setIsAppointmentListOpen(false)} />
+            <HealthRecordsList isOpen = {isHealthRecordsListOpen} onClose={() => setIsHealthRecordsListOpen(false)}/>
             
             <footer className="footer">
                 <div className="footer-content">

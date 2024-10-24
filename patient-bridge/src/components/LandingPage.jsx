@@ -1,11 +1,12 @@
 import React, { useState } from 'react'; 
-import { Link } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom'; 
 import '../styles/LandingPage.css'; 
 import LoginPage from './LoginPage';  // Import the login popup (previously LoginPopup)
 
 const LandingPage = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [isLoginOpen, setIsLoginOpen] = useState(false); // State for login popup
+    const navigate = useNavigate(); // Hook to navigate to different routes
 
     const handleDropdownToggle = () => {
         setShowDropdown(!showDropdown);
@@ -17,6 +18,14 @@ const LandingPage = () => {
 
     const handleCloseLogin = () => {
         setIsLoginOpen(false); // Close login popup
+    };
+
+    const handlePatientSignUp = () => {
+        navigate('/signup/patient'); // Navigate to patient signup page
+    };
+
+    const handleDoctorSignUp = () => {
+        navigate('/signup/doctor'); // Navigate to doctor signup page
     };
 
     return (
@@ -34,8 +43,8 @@ const LandingPage = () => {
                     <a href="#" onClick={handleDropdownToggle}>Sign Up</a>
                     {showDropdown && (
                         <div className="dropdown-menu">
-                            <a href="/signup/patient" className="dropdown-item">Sign Up as Patient</a>
-                            <a href="/signup/doctor" className="dropdown-item">Sign Up as Doctor/Practice</a>
+                            <a className="dropdown-item" onClick={handlePatientSignUp}>Sign Up as Patient</a>
+                            <a className="dropdown-item" onClick={handleDoctorSignUp}>Sign Up as Doctor/Practice</a>
                         </div>
                     )}
                 </nav>
@@ -77,7 +86,7 @@ const LandingPage = () => {
                         <div className="benefit-item">
                             <img src="/assets/location.jpg" alt="Locate Available Doctors" className="benefit-icon" loading="lazy" />
                             <h3>Locate Available Doctors</h3>
-                            <p>Communicate securely with your doctors from anywhere.</p>
+                            <p>Communicate securely with your doctors on our app.</p>
                         </div>
                         <div className="benefit-item">
                             <img src="/assets/trackmedication.jpg" alt="Medication Tracking" className="benefit-icon" loading="lazy" />
@@ -87,7 +96,7 @@ const LandingPage = () => {
                         <div className="benefit-item">
                             <img src="/assets/emergency.jpg" alt="Emergency Responses" className="benefit-icon" loading="lazy" />
                             <h3>Emergency Responses</h3>
-                            <p>Contact emergency lines directly.</p>
+                            <p>Add and access your emergency contacts.</p>
                         </div>
                     </div>
                 </section>
@@ -97,9 +106,9 @@ const LandingPage = () => {
                 <div className="footer-content">
                     <p>© 2024 Patient Bridge. All rights reserved.</p>
                     <div className="footer-links">
-                        <Link to="/privacy-policy">Privacy Policy</Link>
-                        <Link to="/terms-of-service">Terms of Service</Link>
-                        <Link to="/contact">Contact Us</Link>
+                        <a href="/privacy-policy">Privacy Policy</a>
+                        <a href="/terms-of-service">Terms of Service</a>
+                        <a href="/contact">Contact Us</a>
                     </div>
                 </div>
             </footer>

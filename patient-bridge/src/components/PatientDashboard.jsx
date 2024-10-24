@@ -1,46 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
-import '../styles/PatientDashboard.css'; // Import the CSS file for styling
+import { useNavigate } from 'react-router-dom';
+import '../styles/PatientDashboard.css';
 import PrescriptionPopup from './PrescriptionPopup';
 
 const PatientDashboard = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
-  const [username, setUsername] = useState(''); // State to store the username
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
-  const [doctors, setDoctors] = useState([]); // State for doctors
-  const [showPrescriptionPopup, setShowPrescriptionPopup] = useState(false); 
-  const [searchResults, setSearchResults] = useState([]); // State for search results
+  const [doctors, setDoctors] = useState([]);
+  const [showPrescriptionPopup, setShowPrescriptionPopup] = useState(false);
+  const [searchResults, setSearchResults] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
 
   useEffect(() => {
-    // Retrieve user info from localStorage when the component mounts
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
-      setUsername(storedUser.fullName || storedUser.practiceName || 'User'); // Fallback to 'User' if no name
+      setUsername(storedUser.fullName || storedUser.practiceName || 'User');
     }
 
-    // Fetch all doctors when the component mounts
     fetchDoctors();
+
+    // Event listener for outside clicks to close settings dropdown
+    const handleOutsideClick = (event) => {
+      if (!event.target.closest('.settings-dropdown')) {
+        setShowSettingsDropdown(false);
+      }
+    };
+    document.addEventListener('click', handleOutsideClick);
+    return () => document.removeEventListener('click', handleOutsideClick);
   }, []);
 
   const fetchDoctors = async () => {
     try {
-      const response = await fetch('http://localhost:5432/api/doctors'); // Update with your actual server URL
+      const response = await fetch('http://localhost:5432/api/doctors');
       const data = await response.json();
-      setDoctors(data); // Store fetched doctors in state
+      setDoctors(data);
     } catch (error) {
       console.error('Error fetching doctors:', error);
+    } finally {
+      setIsLoading(false); // Stop loading once data is fetched
     }
   };
 
   const handleSearch = (event) => {
     const query = event.target.value.toLowerCase();
-    const results = doctors.filter(doc => 
-      doc.specialty.toLowerCase().includes(query) || 
+    const results = doctors.filter(doc =>
+      doc.specialty.toLowerCase().includes(query) ||
       doc.practiceAddress.toLowerCase().includes(query)
     );
     setSearchResults(results);
 
-    // Clear search results when input is empty
     if (event.target.value === '') {
       setSearchResults([]);
     }
@@ -51,11 +60,11 @@ const PatientDashboard = () => {
   };
 
   const handlePrescriptionsClick = () => {
-    setShowPrescriptionPopup(true); // Show the prescriptions popup when the button is clicked
+    setShowPrescriptionPopup(true);
   };
 
   const handleProfileClick = () => {
-    navigate('/profile'); // Navigate to the Profile page
+    navigate('/profile');
   };
 
   const handleEmergencyContactClick = () => {
@@ -63,11 +72,11 @@ const PatientDashboard = () => {
   };
 
   const handleSelectDoctor = (doctor) => {
-    navigate('/book-apt', { state: { doctor } }); // Navigate to BookAppointment page with doctor info
+    navigate('/book-apt', { state: { doctor } });
   };
 
   const handleTrackMedicationClick = () => {
-    navigate('/track-medications'); // Navigate to TrackMedicationPage
+    navigate('/track-medications');
   };
 
   return (
@@ -75,13 +84,19 @@ const PatientDashboard = () => {
       <header className="dashboard-header">
         <div className="logo-title">
           <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
-          <h1 className="title">Patient Bridge</h1>
+          <h1 className="title">PATIENT BRIDGE</h1>
         </div>
         <div className="header-actions">
-          <button className="track-button" onClick={handleTrackMedicationClick}>Track Medication</button>
-          <button className="prescriptions-button" onClick={handlePrescriptionsClick}>Prescriptions</button>
+          <button className="track-button" onClick={handleTrackMedicationClick} aria-label="Track Medication">
+            Track Medication
+          </button>
+          <button className="prescriptions-button" onClick={handlePrescriptionsClick} aria-label="Medications">
+            Medications
+          </button>
           <div className="settings-dropdown">
-            <button className="settings-button" onClick={handleSettingsDropdownToggle}>Settings</button>
+            <button className="settings-button" onClick={handleSettingsDropdownToggle} aria-label="Settings">
+              Settings
+            </button>
             {showSettingsDropdown && (
               <div className='settings-dropmenu'>
                 <a href="#" className='dropdown-item' onClick={handleProfileClick}>Profile</a>
@@ -100,73 +115,62 @@ const PatientDashboard = () => {
           <input 
             type="text" 
             className="search-bar" 
-            placeholder="Search by Specialty" 
-            onChange={handleSearch} 
+            placeholder="Search Doctors by Specialty or Address" 
+            onChange={handleSearch}
+            aria-label="Search Doctors by Specialty or Address"
           />
           <span className="search-icon">&#128269;</span>
         </div>
 
-        {/* Display search results */}
-        <div className="doctor-results">
-          {searchResults.length > 0 ? (
-            searchResults.map((doctor, index) => (
-              <div key={index} className="doctor-card">
-                <h3>{doctor.practiceName}</h3>
-                <p>Specialty: {doctor.specialty}</p>
-                <p>Address: {doctor.practiceAddress}</p>
-                <p>Email: {doctor.email}</p>
-                <p>Phone: {doctor.phoneNumber}</p>
-                <button onClick={() => handleSelectDoctor(doctor)}>Select Doctor</button>
-              </div>
-            ))
-          ) : (
-            <p>No doctors found.</p>
-          )}
-        </div>
+        {isLoading ? (
+          <p>Loading doctors...</p>
+        ) : (
+          <div className="doctor-results">
+            {searchResults.length > 0 ? (
+              searchResults.map((doctor, index) => (
+                <div key={index} className="doctor-card">
+                  <h3>{doctor.practiceName}</h3>
+                  <p>Specialty: {doctor.specialty}</p>
+                  <p>Address: {doctor.practiceAddress}</p>
+                  <p>Email: {doctor.email}</p>
+                  <p>Phone: {doctor.phoneNumber}</p>
+                  <button onClick={() => handleSelectDoctor(doctor)}>Select Doctor</button>
+                </div>
+              ))
+            ) : (
+              <p>No doctors found.</p>
+            )}
+          </div>
+        )}
 
         <div className='sections-header'>
-          <h2>Let Us Guide You to the Right Specialist!</h2>
+          <h2>Need help looking for the appropraite specialist?</h2>
         </div>
 
-        {/* Other sections here... */}
-        <div className="sections">
-          <div className="section">
-            <div className="section-item">
-              <img src="/assets/teeth.jpg" alt="Section 1" className="section-image" />
-            </div>
-            <h2>See a Dentist when...</h2>
-            <div className='description'>
-              <p>You have a toothache or gum pain.</p>
-            </div>
-          </div>
-          <div className="section">
-            <div className="section-item">
-              <img src="/assets/stress.jpg" alt="Section 2" className="section-image" />
-            </div>
-            <h2>See a Psychologist when...</h2>
-            <div className='description'>
-              <p>You feel overwhelmed, anxious, or depressed.</p>
-            </div>
-          </div>
-          <div className="section">
-            <div className="section-item">
-              <img src="/assets/flu.jpg" alt="Section 3" className="section-image" />
-            </div>
-            <h2>See a General Practitioner when...</h2>
-            <div className='description'>
-              <p>You have a fever, cold, or flu symptoms, or just need a general health check-up.</p>
-            </div>
-          </div>
-          <div className="section">
-            <div className="section-item">
-              <img src="/assets/eye.jpg" alt="Section 4" className="section-image" />
-            </div>
-            <h2>See an Optometrist when...</h2>
-            <div className='description'>
-              <p>You have blurred or double vision, or are experiencing eye strain or headaches.</p>
-            </div>
-          </div>
-        </div>
+        <section className="benefits">
+                    <div className="benefits-grid">
+                        <div className="benefit-item">
+                            <img src="/assets/teeth.jpg" alt="Dentist" className="benefit-icon" loading="lazy" />
+                            <h3>See a Dentist when...</h3>
+                            <p>You have a toothache or gum pain..</p>
+                        </div>
+                        <div className="benefit-item">
+                            <img src="/assets/stress.jpg" alt="Locate Available Doctors" className="benefit-icon" loading="lazy" />
+                            <h3>See a Psychologist when...</h3>
+                            <p>You feel overwhelmed, anxious, or depressed.</p>
+                        </div>
+                        <div className="benefit-item">
+                            <img src="/assets/flu.jpg" alt="Medication Tracking" className="benefit-icon" loading="lazy" />
+                            <h3>See a General Practitioner when...</h3>
+                            <p>You have a fever, cold, or flu symptoms, or need a general health check-up.</p>
+                        </div>
+                        <div className="benefit-item">
+                            <img src="/assets/eye.jpg" alt="Emergency Responses" className="benefit-icon" loading="lazy" />
+                            <h3>See an Optometrist when...</h3>
+                            <p>You have blurred or double vision, or are experiencing eye strain or headaches.</p>
+                        </div>
+                    </div>
+                </section>
       </main>
 
       <footer className="footer">
@@ -175,10 +179,9 @@ const PatientDashboard = () => {
         </div>
       </footer>
 
-      <PrescriptionPopup 
-        isOpen={showPrescriptionPopup} 
-        onClose={() => setShowPrescriptionPopup(false)} // Function to close the popup
-      />
+      {showPrescriptionPopup && (
+        <PrescriptionPopup isOpen={showPrescriptionPopup} onClose={() => setShowPrescriptionPopup(false)} />
+      )}
     </div>
   );
 };

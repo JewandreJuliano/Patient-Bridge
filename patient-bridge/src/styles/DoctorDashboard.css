@@ -157,16 +157,6 @@ p, li {
     max-width: 400px; /* Increased size to occupy more space */
 }
 
-/* Daily Schedule */
-.schedule-section {
-    justify-self: flex-end; /* Align to the right */
-    padding: 20px;
-    background-color: #F5F5F5;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-top: 20px; /* Space between the calendar and the schedule */
-    max-width: 500px; /* Match the width of the calendar */
-}
 
 ul {
     list-style: none;
