@@ -39,12 +39,12 @@ const LandingPage = () => {
                 <nav className="nav-links">
                     <a href="/">Help</a>
                     <a href="/">About Us</a>
-                    <a href="#" onClick={handleOpenLogin}>Login</a> {/* Trigger login popup */}
-                    <a href="#" onClick={handleDropdownToggle}>Sign Up</a>
+                    <a href="/" onClick={handleOpenLogin}>Login</a> {/* Trigger login popup */}
+                    <a href="/" onClick={handleDropdownToggle}>Sign Up</a>
                     {showDropdown && (
                         <div className="dropdown-menu">
-                            <a className="dropdown-item" onClick={handlePatientSignUp}>Sign Up as Patient</a>
-                            <a className="dropdown-item" onClick={handleDoctorSignUp}>Sign Up as Doctor/Practice</a>
+                            <a href="/signup/patient" className="dropdown-item" onClick={handlePatientSignUp}>Sign Up as Patient</a>
+                            <a href="/signup/doctor" className="dropdown-item" onClick={handleDoctorSignUp}>Sign Up as Doctor/Practice</a>
                         </div>
                     )}
                 </nav>
