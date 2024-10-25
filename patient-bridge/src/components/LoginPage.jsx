@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {useNavigate } from 'react-router-dom';
 import '../styles/LoginPage.css'; // Keeping your existing styles
+import { Link } from 'react-router-dom';
 import PatientSignUpPage from './PatientSignUpPage';
 import DoctorSignUpPage from './DoctorSignUpPage'; // Import DoctorSignUpPage
 
@@ -108,13 +109,9 @@ const LoginPage = ({ isOpen, onClose }) => {
                             <div className="login-links">
                                 <div>
                                     New on our platform? Sign up as a  
-                                    <span className='patient-sign' onClick={handleOpenPatientSignUp}>
-                                        <a href="#!" className='patient-sign'>  Patient </a>
-                                    </span> 
+                                    <Link to="#!" className="patient-signup" onClick={handleOpenPatientSignUp}>Patient</Link>
                                      or 
-                                    <span className='doctor-sign' onClick={handleOpenDoctorSignUp}> 
-                                        <a href="#!" className='doctor-sign'> Doctor</a>
-                                    </span>
+                                     <Link to="#!" className="doctor-signup" onClick={handleOpenDoctorSignUp}>Doctor</Link>
                                 </div>
                             </div>
                         </form>
