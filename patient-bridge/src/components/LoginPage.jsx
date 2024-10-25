@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import '../styles/LoginPage.css'; // Keeping your existing styles
 import PatientSignUpPage from './PatientSignUpPage';
 import DoctorSignUpPage from './DoctorSignUpPage'; // Import DoctorSignUpPage
@@ -94,7 +94,7 @@ const LoginPage = ({ isOpen, onClose }) => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="password">PASSWORD</label>
-                                <a href="/forgot-password" className="forgot-password-link"> Forgot Password?</a>
+                                
                                 <input
                                     type="password"
                                     id="password"
@@ -104,6 +104,7 @@ const LoginPage = ({ isOpen, onClose }) => {
                                 />
                             </div>
                             <button type="submit" className="login-btn">LOGIN</button>
+                            <a href="/forgot-password" className="forgot-password-link"> Forgot Password?</a>
                             <div className="login-links">
                                 <div>
                                     New on our platform? Sign up as a  
