@@ -2,18 +2,20 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/AddMedicationPopup.css';
 
-const AddMedicationPopup = ({ isOpen, onClose, onSave, medication }) => {
+const AddMedicationPopup = ({ isOpen, onClose, onSave, medication, patientId }) => {
   const [medicationName, setMedicationName] = useState('');
   const [dosage, setDosage] = useState('');
   const [timesPerDay, setTimesPerDay] = useState('');
   const [timeOfDay, setTimeOfDay] = useState([]);
+  const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState('');
 
   useEffect(() => {
     if (medication) {
-      setMedicationName(medication.medicationName);
+      setMedicationName(medication.medication_name);
       setDosage(medication.dosage);
-      setTimesPerDay(medication.timesPerDay);
-      setTimeOfDay(medication.timeOfDay);
+      setTimesPerDay(medication.times_per_day);
+      setTimeOfDay(medication.time_of_day);
     } else {
       setMedicationName('');
       setDosage('');
@@ -23,15 +25,9 @@ const AddMedicationPopup = ({ isOpen, onClose, onSave, medication }) => {
   }, [medication]);
 
   const handleTimesPerDayChange = (e) => {
-    const value = e.target.value === '' ? '' : parseInt(e.target.value); // Allow empty input
+    const value = e.target.value === '' ? '' : parseInt(e.target.value);
     setTimesPerDay(value);
-
-    // If value is a valid number, update the timeOfDay array accordingly
-    if (!isNaN(value) && value > 0) {
-      setTimeOfDay(Array(value).fill(''));
-    } else {
-      setTimeOfDay(['']); // Default to one empty string if input is cleared or invalid
-    }
+    setTimeOfDay(Array(value).fill(''));
   };
 
   const handleTimeChange = (index, value) => {
@@ -40,14 +36,60 @@ const AddMedicationPopup = ({ isOpen, onClose, onSave, medication }) => {
     setTimeOfDay(updatedTimes);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (medicationName && dosage && timesPerDay && timeOfDay.every(time => time)) {
-      onSave({ medicationName, dosage, timesPerDay, timeOfDay });
-      onClose();
-      setMedicationName('');
-      setDosage('');
-      setTimesPerDay('');
-      setTimeOfDay(['']);
+      const medicationData = {
+        patient_id: patientId, // Ensure patientId is sent here
+        medication_name: medicationName,
+        dosage,
+        times_per_day: timesPerDay,
+        time_of_day: timeOfDay,
+      };
+
+      try {
+        const response = medication ? 
+          await fetch(`http://localhost:5432/api/medications/${medication.medication_id}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(medicationData),
+          }) :
+          await fetch('http://localhost:5432/api/medications', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(medicationData),
+          });
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Medication saved:', result);
+          setMessage('Medication saved successfully!');
+          setMessageType('success');
+          onSave(medicationData);
+          onClose();
+
+          // Reset fields
+          setMedicationName('');
+          setDosage('');
+          setTimesPerDay('');
+          setTimeOfDay(['']);
+        } else {
+          const error = await response.json();
+          console.error('Error saving medication:', error);
+          setMessage('Error saving medication. Please try again.');
+          setMessageType('error');
+        }
+      } catch (error) {
+        console.error('Error submitting medication:', error);
+        setMessage('Error submitting medication. Please check your connection.');
+        setMessageType('error');
+      }
+    } else {
+      setMessage('Please fill in all fields.');
+      setMessageType('error');
     }
   };
 
@@ -55,42 +97,17 @@ const AddMedicationPopup = ({ isOpen, onClose, onSave, medication }) => {
     isOpen && (
       <div className="add-medication-popup-container">
         <div className="add-medication-popup-content">
-          <button className="close-btn" onClick={onClose}>
-            X
-          </button>
+          <button className="close-btn" onClick={onClose}>X</button>
           <h2>{medication ? 'Edit Medication' : 'Add Medication'}</h2>
+          {message && <div className={`message ${messageType}`}>{message}</div>}
           <form>
-            <input
-              type="text"
-              placeholder="Medication Name"
-              value={medicationName}
-              onChange={(e) => setMedicationName(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="Dosage (e.g., 500mg)"
-              value={dosage}
-              onChange={(e) => setDosage(e.target.value)}
-            />
-            <input
-              type="number"
-              min="1"
-              placeholder="Times per Day"
-              value={timesPerDay}
-              onChange={handleTimesPerDayChange}
-            />
+            <input type="text" placeholder="Medication Name" value={medicationName} onChange={(e) => setMedicationName(e.target.value)} />
+            <input type="text" placeholder="Dosage (e.g., 500mg)" value={dosage} onChange={(e) => setDosage(e.target.value)} />
+            <input type="number" min="1" placeholder="Times per Day" value={timesPerDay} onChange={handleTimesPerDayChange} />
             {timeOfDay.map((time, index) => (
-              <input
-                key={index}
-                type="time"
-                value={time}
-                onChange={(e) => handleTimeChange(index, e.target.value)}
-                placeholder={`Time ${index + 1}`}
-              />
+              <input key={index} type="time" value={time} onChange={(e) => handleTimeChange(index, e.target.value)} placeholder={`Time ${index + 1}`} />
             ))}
-            <button type="button" onClick={handleSave} className="save-btn">
-              Save Medication
-            </button>
+            <button type="button" onClick={handleSave} className="save-btn">Save Medication</button>
           </form>
         </div>
       </div>

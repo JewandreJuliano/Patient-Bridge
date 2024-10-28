@@ -6,6 +6,7 @@ import PrescriptionPopup from './PrescriptionPopup';
 const PatientDashboard = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
+  const [currentPatientId, setCurrentPatientId] = useState(null); // State for patient ID
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
   const [doctors, setDoctors] = useState([]);
   const [showPrescriptionPopup, setShowPrescriptionPopup] = useState(false);
@@ -16,6 +17,7 @@ const PatientDashboard = () => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
       setUsername(storedUser.fullName || storedUser.practiceName || 'User');
+      setCurrentPatientId(storedUser.patientId || null); // Retrieve and set patient ID
     }
 
     fetchDoctors();
@@ -144,33 +146,33 @@ const PatientDashboard = () => {
         )}
 
         <div className='sections-header'>
-          <h2>Need help looking for the appropraite specialist?</h2>
+          <h2>Need help looking for the appropriate specialist?</h2>
         </div>
 
         <section className="benefits">
-                    <div className="benefits-grid">
-                        <div className="benefit-item">
-                            <img src="/assets/teeth.jpg" alt="Dentist" className="benefit-icon" loading="lazy" />
-                            <h3>See a Dentist when...</h3>
-                            <p>You have a toothache or gum pain..</p>
-                        </div>
-                        <div className="benefit-item">
-                            <img src="/assets/stress.jpg" alt="Locate Available Doctors" className="benefit-icon" loading="lazy" />
-                            <h3>See a Psychologist when...</h3>
-                            <p>You feel overwhelmed, anxious, or depressed.</p>
-                        </div>
-                        <div className="benefit-item">
-                            <img src="/assets/flu.jpg" alt="Medication Tracking" className="benefit-icon" loading="lazy" />
-                            <h3>See a General Practitioner when...</h3>
-                            <p>You have a fever, cold, or flu symptoms, or need a general health check-up.</p>
-                        </div>
-                        <div className="benefit-item">
-                            <img src="/assets/eye.jpg" alt="Emergency Responses" className="benefit-icon" loading="lazy" />
-                            <h3>See an Optometrist when...</h3>
-                            <p>You have blurred or double vision, or are experiencing eye strain or headaches.</p>
-                        </div>
-                    </div>
-                </section>
+          <div className="benefits-grid">
+            <div className="benefit-item">
+              <img src="/assets/teeth.jpg" alt="Dentist" className="benefit-icon" loading="lazy" />
+              <h3>See a Dentist when...</h3>
+              <p>You have a toothache or gum pain.</p>
+            </div>
+            <div className="benefit-item">
+              <img src="/assets/stress.jpg" alt="Locate Available Doctors" className="benefit-icon" loading="lazy" />
+              <h3>See a Psychologist when...</h3>
+              <p>You feel overwhelmed, anxious, or depressed.</p>
+            </div>
+            <div className="benefit-item">
+              <img src="/assets/flu.jpg" alt="Medication Tracking" className="benefit-icon" loading="lazy" />
+              <h3>See a General Practitioner when...</h3>
+              <p>You have a fever, cold, or flu symptoms, or need a general health check-up.</p>
+            </div>
+            <div className="benefit-item">
+              <img src="/assets/eye.jpg" alt="Emergency Responses" className="benefit-icon" loading="lazy" />
+              <h3>See an Optometrist when...</h3>
+              <p>You have blurred or double vision, or are experiencing eye strain or headaches.</p>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer className="footer">
@@ -180,7 +182,11 @@ const PatientDashboard = () => {
       </footer>
 
       {showPrescriptionPopup && (
-        <PrescriptionPopup isOpen={showPrescriptionPopup} onClose={() => setShowPrescriptionPopup(false)} />
+        <PrescriptionPopup
+          isOpen={showPrescriptionPopup}
+          onClose={() => setShowPrescriptionPopup(false)}
+          currentPatientId={currentPatientId} // Pass the patient ID to the popup
+        />
       )}
     </div>
   );

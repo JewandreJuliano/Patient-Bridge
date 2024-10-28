@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/LoginPage.css'; // Keeping your existing styles
 import { Link } from 'react-router-dom';
 import PatientSignUpPage from './PatientSignUpPage';
@@ -56,8 +56,9 @@ const LoginPage = ({ isOpen, onClose }) => {
                 // Store the user information in localStorage
                 localStorage.setItem('user', JSON.stringify(data.user)); 
 
-                // Navigate to the appropriate dashboard based on user type
+                // If user type is 'patient', also save the patient ID
                 if (data.userType === 'patient') {
+                    localStorage.setItem('patientId', data.user.patientId); // Save patient ID
                     navigate('/patient-dashboard'); 
                 } else {
                     navigate('/doctor-dashboard'); 
