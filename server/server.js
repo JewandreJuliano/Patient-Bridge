@@ -271,6 +271,32 @@ app.delete('/api/medications/:medication_id', (req, res) => {
   });
 });
 
+// Define a route to update a doctor's profile
+app.post('/api/update-doctor-profile', async (req, res) => {
+  const { practiceName, practiceAddress, suburb, city, email, password, phoneNumber, specialty } = req.body;
+
+  // Create a query to update the doctor's details
+  const query = `
+      UPDATE doctors 
+      SET practiceName = ?, practiceAddress = ?, suburb = ?, city = ?, email = ?, phoneNumber = ?, specialty = ?, password = ? 
+      WHERE doctor_id = ?`; // Make sure to include the doctor_id in your request body
+
+  // Assume doctor_id is sent in the request body
+  const doctorId = req.body.doctor_id; 
+
+  // Hash password only if it's being updated
+  let hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
+
+  // Execute the query
+  connection.query(query, [practiceName, practiceAddress, suburb, city, email, hashedPassword || null, phoneNumber, specialty, doctorId], (err, results) => {
+    if (err) {
+      console.error('Error updating doctor profile:', err);
+      return res.status(500).json({ error: 'Error updating doctor profile' });
+    }
+    res.status(200).json({ message: 'Profile updated successfully!' });
+  });
+});
+
 // Start the server
 const PORT = 5432; // Port number
 app.listen(PORT, () => {

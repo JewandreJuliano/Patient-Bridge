@@ -1,9 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/Profile.css'; 
 import { useNavigate } from 'react-router-dom'; 
 
 const Profile = () => {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    practiceName: '',
+    practiceAddress: '',
+    suburb: '',
+    town: '',
+    email: '',
+    phoneNumber: '',
+    specialty: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Validate form data here if needed
+    const response = await fetch('/api/update-doctor-profile', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      // Handle successful response
+      console.log('Profile updated successfully!');
+      navigate('/doctor-dashboard');
+    } else {
+      // Handle error response
+      console.error('Error updating profile');
+    }
+  };
 
   const handleCancel = () => {
     navigate('/doctor-dashboard');
@@ -18,97 +58,27 @@ const Profile = () => {
         </div>
       </header>
 
-      <div className="profile-container"> 
+      <form className="profile-container" onSubmit={handleSubmit}> 
         <h2>Edit Profile</h2>
 
-        <div className="input-group">
-          <div className="input-half">
-            <label htmlFor="practiceName">Practice Name</label>
+        {Object.keys(formData).map((key) => (
+          <div className="input-group" key={key}>
+            <label htmlFor={key}>{key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1')}</label>
             <input
-              type="text"
-              id="practiceName"
-              placeholder="Enter practice name"
+              type={key === 'password' || key === 'confirmPassword' ? 'password' : 'text'}
+              id={key}
+              placeholder={`Enter ${key.replace(/([A-Z])/g, ' $1').toLowerCase()}`}
+              value={formData[key]}
+              onChange={handleChange}
             />
           </div>
-        </div>
-
-        <div className="input-group">
-          <label htmlFor="practiceAddress">Practice Address</label>
-          <input
-            type="text"
-            id="practiceAddress"
-            placeholder="Enter practice address"
-          />
-        </div>
-
-        <div className="input-group">
-          <label htmlFor="suburb">Suburb</label>
-          <input
-            type="text"
-            id="suburb"
-            placeholder="Enter suburb"
-          />
-        </div>
-
-        <div className="input-group">
-          <label htmlFor="town">Town/City</label>
-          <input
-            type="text"
-            id="town"
-            placeholder="Enter town/city"
-          />
-        </div>
-
-        <div className="input-group">
-          <label htmlFor="email">Email Address</label>
-          <input
-            type="email"
-            id="email"
-            placeholder="Enter email address"
-          />
-        </div>
-
-        <div className="input-group">
-          <label htmlFor="phoneNumber">Phone Number</label>
-          <input
-            type="tel"
-            id="phoneNumber"
-            placeholder="Enter phone number"
-          />
-        </div>
-
-        <div className="input-group">
-          <label htmlFor="specialty">Specialty</label>
-          <input
-            type="text"
-            id="specialty"
-            placeholder="Enter specialty"
-          />
-        </div>
-
-        <div className="input-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Enter your new password"
-          />
-        </div>
-
-        <div className="input-group">
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            placeholder="Confirm your new password"
-          />
-        </div>
+        ))}
 
         <div className="button-group">
-          <button type="button" className="save-btn">Save Changes</button>
+          <button type="submit" className="save-btn">Save Changes</button>
           <button type="button" className="cancel-btn" onClick={handleCancel}>Cancel</button>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
