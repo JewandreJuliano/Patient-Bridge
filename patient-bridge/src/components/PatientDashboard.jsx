@@ -6,23 +6,23 @@ import PrescriptionPopup from './PrescriptionPopup';
 const PatientDashboard = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
-  const [currentPatientId, setCurrentPatientId] = useState(null);
+  const [currentPatientId, setCurrentPatientId] = useState(null); // State for patient ID
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
   const [doctors, setDoctors] = useState([]);
   const [showPrescriptionPopup, setShowPrescriptionPopup] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); // Loading state
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
       setUsername(storedUser.fullName || storedUser.practiceName || 'User');
-      setCurrentPatientId(storedUser.patientId || null);
-      fetchMedications(storedUser.patientId); // Fetch medications on login
+      setCurrentPatientId(storedUser.patientId || null); // Retrieve and set patient ID
     }
 
     fetchDoctors();
 
+    // Event listener for outside clicks to close settings dropdown
     const handleOutsideClick = (event) => {
       if (!event.target.closest('.settings-dropdown')) {
         setShowSettingsDropdown(false);
@@ -40,18 +40,7 @@ const PatientDashboard = () => {
     } catch (error) {
       console.error('Error fetching doctors:', error);
     } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const fetchMedications = async (patientId) => {
-    try {
-      const response = await fetch(`http://localhost:5432/api/medications/${patientId}`);
-      const data = await response.json();
-      // Set the medications in local storage or state as needed
-      localStorage.setItem('medications', JSON.stringify(data)); // Save medications to local storage
-    } catch (error) {
-      console.error('Error fetching medications:', error);
+      setIsLoading(false); // Stop loading once data is fetched
     }
   };
 
@@ -196,7 +185,7 @@ const PatientDashboard = () => {
         <PrescriptionPopup
           isOpen={showPrescriptionPopup}
           onClose={() => setShowPrescriptionPopup(false)}
-          currentPatientId={currentPatientId}
+          currentPatientId={currentPatientId} // Pass the patient ID to the popup
         />
       )}
     </div>

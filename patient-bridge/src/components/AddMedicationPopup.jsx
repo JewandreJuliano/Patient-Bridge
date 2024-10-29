@@ -1,4 +1,3 @@
-// src/components/AddMedicationPopup.js
 import React, { useState, useEffect } from 'react';
 import '../styles/AddMedicationPopup.css';
 
@@ -39,7 +38,7 @@ const AddMedicationPopup = ({ isOpen, onClose, onSave, medication, patientId }) 
   const handleSave = async () => {
     if (medicationName && dosage && timesPerDay && timeOfDay.every(time => time)) {
       const medicationData = {
-        patient_id: patientId, // Ensure patientId is sent here
+        patient_id: patientId,
         medication_name: medicationName,
         dosage,
         times_per_day: timesPerDay,
@@ -47,21 +46,14 @@ const AddMedicationPopup = ({ isOpen, onClose, onSave, medication, patientId }) 
       };
 
       try {
-        const response = medication ? 
-          await fetch(`http://localhost:5432/api/medications/${medication.medication_id}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+        const response = await fetch(
+          medication ? `http://localhost:5432/api/medications/${medication.medication_id}` : 'http://localhost:5432/api/medications',
+          {
+            method: medication ? 'PUT' : 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(medicationData),
-          }) :
-          await fetch('http://localhost:5432/api/medications', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(medicationData),
-          });
+          }
+        );
 
         if (response.ok) {
           const result = await response.json();
@@ -71,7 +63,6 @@ const AddMedicationPopup = ({ isOpen, onClose, onSave, medication, patientId }) 
           onSave(medicationData);
           onClose();
 
-          // Reset fields
           setMedicationName('');
           setDosage('');
           setTimesPerDay('');
@@ -105,7 +96,13 @@ const AddMedicationPopup = ({ isOpen, onClose, onSave, medication, patientId }) 
             <input type="text" placeholder="Dosage (e.g., 500mg)" value={dosage} onChange={(e) => setDosage(e.target.value)} />
             <input type="number" min="1" placeholder="Times per Day" value={timesPerDay} onChange={handleTimesPerDayChange} />
             {timeOfDay.map((time, index) => (
-              <input key={index} type="time" value={time} onChange={(e) => handleTimeChange(index, e.target.value)} placeholder={`Time ${index + 1}`} />
+              <input
+                key={index}
+                type="time"
+                value={time}
+                onChange={(e) => handleTimeChange(index, e.target.value)}
+                placeholder={`Time ${index + 1}`}
+              />
             ))}
             <button type="button" onClick={handleSave} className="save-btn">Save Medication</button>
           </form>
