@@ -12,6 +12,7 @@ import BookAppointment from './components/BookAppointment';
 import Profile from './components/Profile';
 import DoctorProfile from './components/DoctorProfile'
 import EmergencyContacts from './components/EmergencyContacts';
+import DoctorAvailability from './components/DoctorAvailability';
 
 const App = () => {
   // State to manage the medications across different components
@@ -36,6 +37,8 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/doctor-profile" element={<DoctorProfile/>} />
         <Route path="/emergency-contact" element={<EmergencyContacts />} />
+        <Route path="/doctor-avail" element={<DoctorAvailability />} />
+        
         <Route
           path="/prescriptions"
           element={
