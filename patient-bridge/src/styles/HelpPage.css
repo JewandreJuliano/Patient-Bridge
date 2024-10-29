@@ -1,0 +1,106 @@
+.help-page {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background for better contrast */
+}
+
+.header {
+    background-color: #2c3e50;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.title {
+    font-size: 2.5em; /* Larger title for emphasis */
+    color: white;
+}
+
+.sidebar {
+    width: 200px; /* Slightly wider for better content fit */
+    position: fixed;
+    top: 130px; /* Below header */
+    left: 20px;
+    background-color: #2c3e50;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 100; /* Ensure sidebar is above other content */
+}
+
+.sidebar h3 {
+    margin-top: 0;
+    color: white; /* Make section headers visible */
+}
+
+.sidebar a {
+    display: block;
+    padding: 12px; /* Increased padding for touch targets */
+    margin-bottom: 10px; /* Increased margin for separation */
+    border-radius: 4px;
+    color: #ffffff; /* White text for better contrast */
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #1abc9c; /* Change to a vibrant color on hover */
+    color: #ffffff; /* Maintain text color on hover */
+}
+
+.sidebar a.active {
+    background-color: #16a085; /* Active link indication */
+}
+
+.help-content {
+    margin-top: 20px;
+    padding: 20px;
+    margin-left: 240px; /* Space for the sidebar */
+    border-radius: 5px; /* Rounded corners */
+    background-color: white; /* White background for content */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3, h4 {
+    color: #2c3e50;
+    margin-top: 20px;
+}
+
+h2 {
+    margin-bottom: 10px;
+    font-size: 1.8em; /* Adjusted for clarity */
+}
+
+p {
+    margin: 10px 0;
+    line-height: 1.6; /* Improved readability */
+}
+
+ol {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+a {
+    color: #0056b3;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+a:hover {
+    color: #003d80; /* Darker shade on hover */
+}

@@ -7,6 +7,7 @@ import { FaCalendarAlt, FaPills, FaFileMedical } from 'react-icons/fa';
 import PatientListPopup from './PatientListPopup'; // Import the PatientListPopup component
 import AppointmentList from './AppointmentList'; // Ensure you have this component imported
 import HealthRecordsList from './HealthRecordsList';
+import VerifyPractice from './VerifyPractice';
 
 const DoctorDashboard = () => {
     const navigate = useNavigate();
@@ -16,7 +17,12 @@ const DoctorDashboard = () => {
     const [isPatientListOpen, setIsPatientListOpen] = useState(false); // State for the patient list popup
     const [isAppointmentListOpen, setIsAppointmentListOpen] = useState(false); // State for the appointment list popup
     const[ isHealthRecordsListOpen, setIsHealthRecordsListOpen] = useState(false);
+    const [isVerifyPracticeOpen, setIsVerifyPracticeOpen] = useState(false);
 
+
+    const handleVerifyPracticeClick = () => {
+        setIsVerifyPracticeOpen(true); // Open the VerifyPractice popup
+    };
     const handleSettingsDropdownToggle = () => {
         setShowSettingsDropdown(!showSettingsDropdown);
     };
@@ -74,8 +80,8 @@ const DoctorDashboard = () => {
                         {showSettingsDropdown && (
                             <div className='settings-dropmenu'>
                                 <a href className='dropdown-item' onClick={handleDoctorProfileClick}>Profile</a>
-                                <a href='/' className='dropdown-item'>Verify Practice</a>
-                                <a href='/signup/doctor' className='dropdown-item'>Logout</a>
+                                <a href="#" className="dropdown-item" onClick={handleVerifyPracticeClick}>Verify Practice</a>
+                                <a href='/' className='dropdown-item'>Logout</a>
                             </div>
                         )}
                     </div>
@@ -116,6 +122,7 @@ const DoctorDashboard = () => {
             <PatientListPopup isOpen={isPatientListOpen} onClose={() => setIsPatientListOpen(false)} />
             <AppointmentList isOpen={isAppointmentListOpen} onClose={() => setIsAppointmentListOpen(false)} />
             <HealthRecordsList isOpen = {isHealthRecordsListOpen} onClose={() => setIsHealthRecordsListOpen(false)}/>
+            <VerifyPractice isOpen={isVerifyPracticeOpen} onClose={() => setIsVerifyPracticeOpen(false)} />
             
             <footer className="footer">
                 <div className="footer-content">
