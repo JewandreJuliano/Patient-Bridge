@@ -1,8 +1,8 @@
 /* General Layout */
 .dashboard-container {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal width columns */
-    grid-gap: 80px; /* Increased gap to add more white space between sections */
+    grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+    grid-gap: 80px; /* Increased gap for more white space between sections */
     padding: 40px;
     max-width: 1400px; /* Increased width to allow more room */
     margin: 0 auto;
@@ -16,6 +16,42 @@
     background-color: #34495E;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    gap: 45px;
+    position: relative; /* Needed for the underline effect */
+}
+
+.nav-links a {
+    color: #f5f5f5;
+    text-decoration: none;
+    font-size: 16px;
+    position: relative; /* Needed for the underline effect */
+    padding-bottom: 5px; /* Space for the underline */
+    transition: color 0.3s ease; /* Color transition */
+}
+
+.nav-links a:hover {
+    color: #9ab1c2;
+}
+
+/* Underline Effect */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px; /* Thickness of the underline */
+    background-color: #9ab1c2; /* Underline color */
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    width: 100%; /* Full width underline on hover */
+    left: 0; /* Aligns the underline with the hovered link */
+}
 
 .logo-title {
     display: flex;
@@ -25,7 +61,7 @@
 .title {
     margin-left: 15px;
     color: white;
-    font-size: 1.5em;
+    font-size: 30px !important;
     font-weight: bold;
 }
 
@@ -36,27 +72,29 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 15px;
     transition: background-color 0.3s ease;
 }
 
 .settings-button:hover {
     background-color: #3E5876;
 }
+
 .settings-dropmenu {
     position: absolute;
-    top: 4.5rem;
-    right: 1.5rem;
-    width: 150px; /* Adjust width if needed */
+    top: 3rem;
+    right: 0.5rem;
+    width: 150px;
     padding: 10px;
     border-radius: 8px;
     background-color: white;
     border: 1px solid gray;
     display: flex;
-    flex-direction: column; /* Align items in a column */
-    gap: 10px; /* Add some space between each item */
-  }
-  
-  .settings-dropmenu::before {
+    flex-direction: column;
+    gap: 10px;
+}
+
+.settings-dropmenu::before {
     content: "";
     position: absolute;
     top: -0.7rem;
@@ -67,20 +105,20 @@
     background-color: white;
     border-left: 1px solid gray;
     border-top: 1px solid gray;
-  }
-  
-  .dropdown-item {
+}
+
+.dropdown-item {
     display: block;
     padding: 5px 10px;
     text-align: left;
     color: #333;
     text-decoration: none;
     border-radius: 4px;
-  }
-  
-  .dropdown-item:hover {
+}
+
+.dropdown-item:hover {
     background-color: #f0f0f0;
-  }
+}
 
 h1, h2 {
     font-family: 'Roboto', sans-serif;
@@ -100,15 +138,15 @@ p, li {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 100%; /* Ensure it stretches to the left edge */
+    width: 100%;
 }
 
 /* Quick Actions */
 .quick-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: stretch; /* Make action items take full width */
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Arrange actions in two columns */
+    gap: 70px;
+    align-items: stretch;
 }
 
 .action-item {
@@ -116,12 +154,13 @@ p, li {
     border-radius: 12px;
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    text-align: left; /* Align text to the left */
+    margin-bottom: 10px;
+    text-align: left;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    width: 100%; /* Ensure each item takes full width */
+    width: 100%;
     display: flex;
-    flex-direction: column; /* Ensure content is stacked vertically */
-    align-items: flex-start; /* Align items to the start (left) */
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .action-item:hover {
@@ -131,14 +170,14 @@ p, li {
 
 .action-icon {
     font-size: 1.5em;
-    margin-bottom: 10px; /* Space between icon and heading */
+    margin-bottom: 10px;
     color: #4A6A8D;
 }
 
 .action-item h3 {
     margin: 0;
     font-size: 18px;
-    margin-bottom: 5px; /* Space between heading and paragraph */
+    margin-bottom: 20px;
 }
 
 .action-item p {
@@ -149,15 +188,15 @@ p, li {
 
 /* Calendar Section */
 .calendar-section {
-    justify-self: flex-end; /* Align to the right */
+    justify-self: flex-end;
     padding: 25px;
     background-color: #FFFFFF;
     border-radius: 12px;
     box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
-    max-width: 400px; /* Increased size to occupy more space */
+    max-width: 400px;
 }
 
-
+/* Appointment and Patient Lists */
 ul {
     list-style: none;
     padding: 0;
@@ -176,14 +215,14 @@ ul li {
     background-color: #34495E;
     padding: 20px;
     text-align: center;
-    color: white;
+    color: #34495E !important;
 }
 
 .footer-content p {
     margin: 0;
 }
 
-
+/* Calendar Highlight */
 .highlight-circle {
     background-color: #4A6A8D;
     height: 12px;
@@ -192,13 +231,18 @@ ul li {
     margin: auto;
 }
 
+/* Responsive Styling */
 @media (max-width: 768px) {
     .dashboard-container {
         grid-template-columns: 1fr;
         padding: 20px;
     }
 
-    .calendar-section, .schedule-section {
+    .calendar-section {
         justify-self: center;
+    }
+    
+    .quick-actions {
+        grid-template-columns: 1fr; /* Stack action items in a single column */
     }
 }

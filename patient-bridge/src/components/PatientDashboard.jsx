@@ -88,7 +88,7 @@ const PatientDashboard = () => {
           <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
           <h1 className="title">PATIENT BRIDGE</h1>
         </div>
-        <div className="header-actions">
+        <div className="nav-links">
           <button className="track-button" onClick={handleTrackMedicationClick} aria-label="Track Medication">
             Track Medication
           </button>

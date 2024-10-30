@@ -14,6 +14,7 @@ import DoctorProfile from './components/DoctorProfile'
 import EmergencyContacts from './components/EmergencyContacts';
 import DoctorAvailability from './components/DoctorAvailability';
 import HelpPage from './components/HelpPage';
+import AboutUs from './components/AboutUs';
 
 const App = () => {
   // State to manage the medications across different components
@@ -40,6 +41,7 @@ const App = () => {
         <Route path="/emergency-contact" element={<EmergencyContacts />} />
         <Route path="/doctor-avail" element={<DoctorAvailability />} />
         <Route path="/help-page" element={<HelpPage />} />
+        <Route path="/about-us" element={<AboutUs />} />
         
         <Route
           path="/prescriptions"

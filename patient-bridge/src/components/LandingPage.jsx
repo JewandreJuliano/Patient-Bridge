@@ -54,8 +54,8 @@ const LandingPage = () => {
                 </div>
                 
                 <nav className="nav-links">
-                    <Link to="/help">Help</Link>
-                    <Link to="/about">About Us</Link>
+                    <Link to="/help-page">Help</Link>
+                    <Link to="/about-us">About Us</Link>
                     <a href="#!" onClick={handleOpenLogin}>Login</a> {/* Trigger login popup */}
                     <a href="#!" onClick={handleDropdownToggle}>Sign Up</a>
                     {showDropdown && (
