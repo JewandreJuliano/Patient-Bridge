@@ -53,7 +53,7 @@ const DoctorSignUpPage = ({ isOpen, onClose }) => {
         .then((data) => {
             console.log('Success:', data);
             alert('Doctor registered successfully');
-            navigate('/login');
+            handleOpenLogin();
         })
         .catch((error) => {
             console.error('Error:', error);

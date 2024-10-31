@@ -46,7 +46,7 @@ const PatientSignUpPage = ({ isOpen, onClose }) => {
         .then((data) => {
             console.log('Success:', data);
             alert('Account created successfully');
-            navigate('/login');
+            handleOpenLogin();
         })
         .catch((error) => {
             console.error('Error:', error);
