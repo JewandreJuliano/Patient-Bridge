@@ -1,5 +1,5 @@
 const express = require('express');
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
@@ -14,7 +14,7 @@ app.use(express.json()); // to handle JSON request bodies
 
 // MySQL connection setup
 const connection = mysql.createConnection({
-  host: 'localhost',     // your MySQL host, usually 'localhost'
+  host: '127.0.0.1',     // your MySQL host, usually 'localhost'
   user: 'root',          // your MySQL username
   password: 'Witbooi7!',  // your MySQL password
   database: 'patient_bridge',  // the database you're connecting to
