@@ -12,7 +12,6 @@ const HelpPage = () => {
             </header>
 
             <div className="sidebar">
-                <h3>Quick Links</h3>
                 <a href="#getting-started">Getting Started</a>
                 <a href="#features">Features</a>
                 <a href="#faqs">FAQs</a>

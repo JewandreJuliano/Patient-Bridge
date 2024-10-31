@@ -36,24 +36,6 @@
   align-items: center;
 }
 
-.track-button, .prescriptions-button, .settings-button {
-  background-color: #2980b9;
-  color: #fff;
-  border: none;
-  padding: 10px 15px;
-  margin-left: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s;
-}
-
-.track-button:hover, .prescriptions-button:hover, .settings-button:hover {
-  background-color: #f0f0f0;
-  color: #2c3e50;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
 .settings-dropdown {
   position: relative;
 }

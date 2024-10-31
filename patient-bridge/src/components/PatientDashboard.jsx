@@ -89,16 +89,16 @@ const PatientDashboard = () => {
           <h1 className="title">PATIENT BRIDGE</h1>
         </div>
         <div className="nav-links">
-          <button className="track-button" onClick={handleTrackMedicationClick} aria-label="Track Medication">
+          <a href= "#" className="track-button" onClick={handleTrackMedicationClick} aria-label="Track Medication">
             Track Medication
-          </button>
-          <button className="prescriptions-button" onClick={handlePrescriptionsClick} aria-label="Medications">
+          </a>
+          <a href='#' className="prescriptions-button" onClick={handlePrescriptionsClick} aria-label="Medications">
             Medications
-          </button>
+          </a>
           <div className="settings-dropdown">
-            <button className="settings-button" onClick={handleSettingsDropdownToggle} aria-label="Settings">
+            <a href='#' className="settings-button" onClick={handleSettingsDropdownToggle} aria-label="Settings">
               Settings
-            </button>
+            </a>
             {showSettingsDropdown && (
               <div className='settings-dropmenu'>
                 <a href="/profile" className='dropdown-item' onClick={handleProfileClick}>Profile</a>

@@ -63,14 +63,14 @@ const DoctorSignUpPage = ({ isOpen, onClose }) => {
 
     return (
         isOpen && (
-            <div className="popup-container">
-                <div className="popup-content">
+            <div className="doctor-popup-container">
+                <div className="doctor-popup-content">
                     <button className="close-btn" onClick={onClose}>
                         X
                     </button>
                     <p className="login-title">SIGN UP AS DOCTOR</p>
                     <p className='sign-in-message'>Welcome! Sign Up below to get your journey started!</p>
-                    <form className="signup-form" onSubmit={handleSubmit}>
+                    <form className="doctor-signup-form" onSubmit={handleSubmit}>
                         <div className="form-row">
                             <div className="doctor-form-group">
                                 <label htmlFor="practiceName">PRACTICE NAME</label>
