@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/DoctorSignUpPage.css'; // Import CSS file for styling
+import LoginPage from './LoginPage';
 
 const DoctorSignUpPage = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
+    const [isDoctorSignUpOpen, setIsDoctorSignUpOpen] = useState(false);
     const [formData, setFormData] = useState({
         practiceName: '',
         practiceAddress: '',
@@ -20,6 +23,15 @@ const DoctorSignUpPage = ({ isOpen, onClose }) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
+
+    const handleOpenLogin = () => {
+        setIsDoctorSignUpOpen(false);
+        setIsLoginOpen(true);
+    };
+    const handleCloseLogin = () => {
+        setIsLoginOpen(false);
+    };
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -169,6 +181,15 @@ const DoctorSignUpPage = ({ isOpen, onClose }) => {
                             </div>
                         </div>
                         <button type="submit" className="signup-btn">CREATE ACCOUNT</button>
+                        <p>Already have an account? <a href="#" onClick={handleOpenLogin}>Log in here</a></p>
+                        {isLoginOpen && (
+                <LoginPage isOpen={isLoginOpen} onClose={handleCloseLogin} />
+            )}
+
+             {
+                
+            }
+
                     </form>
                 </div>
             </div>

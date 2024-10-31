@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/PatientSignUpPage.css'; // Import CSS file for styling
+import LoginPage from './LoginPage';
 
 const PatientSignUpPage = ({ isOpen, onClose }) => {
     const navigate = useNavigate();
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
@@ -50,6 +52,12 @@ const PatientSignUpPage = ({ isOpen, onClose }) => {
             console.error('Error:', error);
             alert('Error creating account');
         });
+    };
+    const handleOpenLogin = () => {
+        setIsLoginOpen(true);
+    };
+    const handleCloseLogin = () => {
+        setIsLoginOpen(false);
     };
 
     return (
@@ -130,12 +138,18 @@ const PatientSignUpPage = ({ isOpen, onClose }) => {
     <button type="submit" className="signup-btn">CREATE ACCOUNT</button>
 </form>
 
+{isLoginOpen && (
+                <LoginPage isOpen={isLoginOpen} onClose={handleCloseLogin} />
+            )}
+
                     <footer className="signup-footer">
-                        <p>Already have an account? <a href="/login">Log in here</a></p>
+                        <p>Already have an account? <a href="#" onClick={handleOpenLogin}>Log in here</a></p>
                     </footer>
                 </div>
             </div>
         )
+
+        
     );
 };
 
