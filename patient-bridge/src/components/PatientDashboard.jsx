@@ -15,11 +15,19 @@ const PatientDashboard = () => {
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
       setUsername(storedUser.fullName || storedUser.practiceName || 'User');
-      setCurrentPatientId(storedUser.patientId || null); // Retrieve and set patient ID
+      const patientId = storedUser.patientId || null; // Retrieve patient ID
+      setCurrentPatientId(patientId);
+      // Store patient ID in local storage
+      localStorage.setItem('currentPatientId', patientId);
     }
-
+  
     fetchDoctors();
-
+  
+    // Fetch patient data if currentPatientId is set
+    if (currentPatientId) {
+      fetchPatientData();
+    }
+  
     // Event listener for outside clicks to close settings dropdown
     const handleOutsideClick = (event) => {
       if (!event.target.closest('.settings-dropdown')) {
@@ -28,8 +36,8 @@ const PatientDashboard = () => {
     };
     document.addEventListener('click', handleOutsideClick);
     return () => document.removeEventListener('click', handleOutsideClick);
-  }, []);
-
+  }, [currentPatientId]); // Add currentPatientId as a dependency
+  
   const fetchDoctors = async () => {
     try {
       const response = await fetch('http://localhost:5432/api/doctors');
@@ -68,11 +76,25 @@ const PatientDashboard = () => {
   };
 
   const handleSelectDoctor = (doctor) => {
-    navigate('/book-apt', { state: { doctor } });
+    navigate('/book-apt', { state: { doctor, patientId: currentPatientId } }); // Pass patient ID to the booking page
   };
 
   const handleTrackMedicationClick = () => {
     navigate('/track-medications');
+  };
+
+  // Example function utilizing currentPatientId
+  const fetchPatientData = async () => {
+    if (currentPatientId) {
+      try {
+        const response = await fetch(`http://localhost:5432/api/patients/${currentPatientId}`);
+        const data = await response.json();
+        console.log('Patient data:', data);
+        // Handle patient data
+      } catch (error) {
+        console.error('Error fetching patient data:', error);
+      }
+    }
   };
 
   return (
@@ -83,14 +105,14 @@ const PatientDashboard = () => {
           <h1 className="title">PATIENT BRIDGE</h1>
         </div>
         <div className="nav-links">
-          <a href="#" className="track-button" onClick={handleTrackMedicationClick} aria-label="Track Medication">
+          <a href="#!" className="track-button" onClick={handleTrackMedicationClick} aria-label="Track Medication">
             Track Medication
           </a>
           <a href='/medication' className="prescriptions-button" aria-label="Medications">
             Medications
           </a>
           <div className="settings-dropdown">
-            <a href='#' className="settings-button" onClick={handleSettingsDropdownToggle} aria-label="Settings">
+            <a href='#!' className="settings-button" onClick={handleSettingsDropdownToggle} aria-label="Settings">
               Settings
             </a>
             {showSettingsDropdown && (
