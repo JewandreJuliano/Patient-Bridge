@@ -111,9 +111,9 @@ const LoginPage = ({ isOpen, onClose }) => {
                             <div className="login-links">
                                 <div>
                                     New on our platform? Sign up as a  
-                                    <Link to="#!" className="patient-signup" onClick={handleOpenPatientSignUp}>Patient</Link>
-                                     or 
-                                     <Link to="#!" className="doctor-signup" onClick={handleOpenDoctorSignUp}>Doctor</Link>
+                                    <Link to="#!" className="patient-signup" onClick={handleOpenPatientSignUp}> Patient </Link>
+                                    or 
+                                     <Link to="#!" className="doctor-signup" onClick={handleOpenDoctorSignUp}> Doctor</Link>
                                 </div>
                             </div>
                         </form>

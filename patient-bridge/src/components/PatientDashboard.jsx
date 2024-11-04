@@ -120,9 +120,9 @@ const PatientDashboard = () => {
             {showSettingsDropdown && (
               <div className='settings-dropmenu'>
                 <a href="/profile" className='dropdown-item' onClick={handleProfileClick}>Profile</a>
-                <a href='/' className='dropdown-item'>Logout</a>
                 <a href='/notification-preferences' className='dropdown-item'>Notification Preferences</a>
                 <a href="/emergency-contact" className='dropdown-item' onClick={handleEmergencyContactClick}>Emergency Contact</a>
+                <a href='/' className='dropdown-item'>Logout</a>
               </div>
             )}
           </div>
