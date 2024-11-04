@@ -58,8 +58,8 @@ const LoginPage = ({ isOpen, onClose }) => {
     
                 // If user type is 'patient', also save the patient ID
                 if (data.userType === 'patient') {
-                    localStorage.setItem('patientId', data.user.patientId); // Save patient ID
-                    navigate('/patient-dashboard'); 
+                    localStorage.setItem('currentPatientId', data.user.patient_id); // Save patient ID
+                    navigate('/patient-dashboard');
                 } else if (data.userType === 'doctor') {
                     localStorage.setItem('doctorId', data.user.doctorId); // Save doctor ID
                     navigate('/doctor-dashboard'); 

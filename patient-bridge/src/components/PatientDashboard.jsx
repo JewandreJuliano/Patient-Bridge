@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/PatientDashboard.css';
 
@@ -10,6 +10,20 @@ const PatientDashboard = () => {
   const [doctors, setDoctors] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Loading state
+
+  // Memoized fetchPatientData function
+  const fetchPatientData = useCallback(async () => {
+    if (currentPatientId) {
+      try {
+        const response = await fetch(`http://localhost:5432/api/patients/${currentPatientId}`);
+        const data = await response.json();
+        console.log('Patient data:', data);
+        // Handle patient data as needed
+      } catch (error) {
+        console.error('Error fetching patient data:', error);
+      }
+    }
+  }, [currentPatientId]); // Depend on currentPatientId
 
   useEffect(() => {
     // Retrieve user information from local storage
@@ -27,6 +41,7 @@ const PatientDashboard = () => {
     // Fetch patient data if currentPatientId is set
     if (currentPatientId) {
       fetchPatientData();
+      console.log("Current Patient ID:", currentPatientId); // Log to verify
     }
 
     // Event listener for outside clicks to close settings dropdown
@@ -37,7 +52,7 @@ const PatientDashboard = () => {
     };
     document.addEventListener('click', handleOutsideClick);
     return () => document.removeEventListener('click', handleOutsideClick);
-  }, [currentPatientId]); // Add currentPatientId as a dependency
+  }, [currentPatientId, fetchPatientData]); // Include fetchPatientData as a dependency
 
   const fetchDoctors = async () => {
     try {
@@ -82,20 +97,6 @@ const PatientDashboard = () => {
 
   const handleTrackMedicationClick = () => {
     navigate('/track-medications');
-  };
-
-  // Fetch patient data based on currentPatientId
-  const fetchPatientData = async () => {
-    if (currentPatientId) {
-      try {
-        const response = await fetch(`http://localhost:5432/api/patients/${currentPatientId}`);
-        const data = await response.json();
-        console.log('Patient data:', data);
-        // Handle patient data as needed
-      } catch (error) {
-        console.error('Error fetching patient data:', error);
-      }
-    }
   };
 
   return (

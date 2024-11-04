@@ -23,36 +23,41 @@ const BookAppointment = () => {
 
   const confirmAppointment = async () => {
     try {
-      
-      const patient_id = localStorage.getItem('patient_id');
+        // Retrieve the user object from local storage
+        const user = JSON.parse(localStorage.getItem('user'));
+        const patient_id = user ? user.patient_id : null; // Get patient_id
 
-      const response = await fetch('http://localhost:5432/api/book-appointment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          patient_id: patient_id, // Use the retrieved patient ID
-          doctor_id: doctor.doctor_id, // Pass the doctor's ID
-          appointment_date: moment(selectedDate).format("YYYY-MM-DD"), // Format the date for MySQL
-          appointment_time: selectedTime, // Time in HH:MM format
-        }),
-      });
+        if (!patient_id) {
+            alert('Patient ID not found. Please log in again.');
+            return;
+        }
 
-      const data = await response.json();
+        const response = await fetch('http://localhost:5432/api/book-appointment', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                patient_id: patient_id, // Use the retrieved patient ID
+                doctor_id: doctor.doctor_id, // Pass the doctor's ID
+                appointment_date: moment(selectedDate).format("YYYY-MM-DD"), // Format the date for MySQL
+                appointment_time: selectedTime, // Time in HH:MM format
+            }),
+        });
 
-      if (response.ok) {
-        alert(data.message);
-        
-        navigate('/patient-dashboard');
-      } else {
-        alert(data.error || 'Error booking appointment.');
-      }
+        const data = await response.json();
+
+        if (response.ok) {
+            alert(data.message);
+            navigate('/patient-dashboard');
+        } else {
+            alert(data.error || 'Error booking appointment.');
+        }
     } catch (error) {
-      console.error('Error confirming appointment:', error);
-      alert('Error booking appointment. Please try again.');
+        console.error('Error confirming appointment:', error);
+        alert('Error booking appointment. Please try again.');
     }
-  };
+};
 
   return (
     <div>
