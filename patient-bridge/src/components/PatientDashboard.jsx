@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/PatientDashboard.css';
-import PrescriptionPopup from './PrescriptionPopup';
 
 const PatientDashboard = () => {
   const navigate = useNavigate();
@@ -9,7 +8,6 @@ const PatientDashboard = () => {
   const [currentPatientId, setCurrentPatientId] = useState(null); // State for patient ID
   const [showSettingsDropdown, setShowSettingsDropdown] = useState(false);
   const [doctors, setDoctors] = useState([]);
-  const [showPrescriptionPopup, setShowPrescriptionPopup] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Loading state
 
@@ -61,10 +59,6 @@ const PatientDashboard = () => {
     setShowSettingsDropdown(!showSettingsDropdown);
   };
 
-  const handlePrescriptionsClick = () => {
-    setShowPrescriptionPopup(true);
-  };
-
   const handleProfileClick = () => {
     navigate('/profile');
   };
@@ -89,10 +83,10 @@ const PatientDashboard = () => {
           <h1 className="title">PATIENT BRIDGE</h1>
         </div>
         <div className="nav-links">
-          <a href= "#" className="track-button" onClick={handleTrackMedicationClick} aria-label="Track Medication">
+          <a href="#" className="track-button" onClick={handleTrackMedicationClick} aria-label="Track Medication">
             Track Medication
           </a>
-          <a href='#' className="prescriptions-button" onClick={handlePrescriptionsClick} aria-label="Medications">
+          <a href='/medication' className="prescriptions-button" aria-label="Medications">
             Medications
           </a>
           <div className="settings-dropdown">
@@ -180,14 +174,6 @@ const PatientDashboard = () => {
           <p>© 2024 Patient Bridge. All rights reserved.</p>
         </div>
       </footer>
-
-      {showPrescriptionPopup && (
-        <PrescriptionPopup
-          isOpen={showPrescriptionPopup}
-          onClose={() => setShowPrescriptionPopup(false)}
-          currentPatientId={currentPatientId} // Pass the patient ID to the popup
-        />
-      )}
     </div>
   );
 };
