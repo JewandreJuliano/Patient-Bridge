@@ -6,21 +6,68 @@ import '../styles/DoctorAvailability.css';
 const DoctorAvailability = ({ isOpen, onClose }) => {
     const [availableDates, setAvailableDates] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
+    const [startTime, setStartTime] = useState('');
+    const [endTime, setEndTime] = useState('');
+    const [editingDate, setEditingDate] = useState(null); // Track which date is being edited
 
-    const addDate = (date) => {
-        const dateString = date.toISOString().split('T')[0];
-        if (!availableDates.includes(dateString)) {
-            setAvailableDates([...availableDates, dateString]);
+    const addDate = () => {
+        if (!selectedDate || !startTime || !endTime) {
+            alert("Please select a date and specify start and end times.");
+            return;
+        }
+
+        const dateString = selectedDate.toISOString().split('T')[0];
+        const existingDate = availableDates.find(d => d.date === dateString);
+
+        if (!existingDate) {
+            setAvailableDates([...availableDates, { date: dateString, startTime, endTime }]);
+            clearInputs();
+        } else {
+            alert(`Date ${dateString} is already added!`);
         }
     };
 
+    const clearInputs = () => {
+        setSelectedDate(null);
+        setStartTime('');
+        setEndTime('');
+        setEditingDate(null); // Clear editing state
+    };
+
     const removeDate = (dateString) => {
-        setAvailableDates(availableDates.filter(d => d !== dateString));
+        setAvailableDates(availableDates.filter(d => d.date !== dateString));
+    };
+
+    const editDate = (dateString) => {
+        const dateToEdit = availableDates.find(d => d.date === dateString);
+        if (dateToEdit) {
+            setSelectedDate(new Date(dateString));
+            setStartTime(dateToEdit.startTime);
+            setEndTime(dateToEdit.endTime);
+            setEditingDate(dateString); // Set editing date
+        }
+    };
+
+    const updateDate = () => {
+        if (!editingDate || !startTime || !endTime) {
+            alert("Please specify start and end times to update.");
+            return;
+        }
+
+        const updatedDates = availableDates.map(d => {
+            if (d.date === editingDate) {
+                return { ...d, startTime, endTime };
+            }
+            return d;
+        });
+        setAvailableDates(updatedDates);
+        clearInputs(); // Clear inputs after update
     };
 
     const handleSubmit = () => {
         console.log('Selected available dates:', availableDates);
         alert("Availability saved!");
+        onClose(); // Close the modal after saving
     };
 
     return (
@@ -31,20 +78,41 @@ const DoctorAvailability = ({ isOpen, onClose }) => {
                     <h2>Doctor Availability</h2>
                     <p>Select the dates you are available:</p>
 
-                    <DatePicker
-                        selected={selectedDate}
-                        onChange={(date) => {
-                            setSelectedDate(date);
-                            addDate(date);
-                        }}
-                        inline
-                        highlightDates={availableDates.map(date => new Date(date))}
-                    />
+                    <div className="date-time-container">
+                        <DatePicker
+                            selected={selectedDate}
+                            onChange={(date) => setSelectedDate(date)}
+                            inline
+                            highlightDates={availableDates.map(({ date }) => new Date(date))}
+                        />
+                        <div className="time-inputs">
+                            <label>
+                                Start Time:
+                                <input
+                                    type="time"
+                                    value={startTime}
+                                    onChange={(e) => setStartTime(e.target.value)}
+                                />
+                            </label>
+                            <label>
+                                End Time:
+                                <input
+                                    type="time"
+                                    value={endTime}
+                                    onChange={(e) => setEndTime(e.target.value)}
+                                />
+                            </label>
+                            <button className="add-date-btn" onClick={editingDate ? updateDate : addDate}>
+                                {editingDate ? 'Update Time' : 'Add Date'}
+                            </button>
+                        </div>
+                    </div>
 
                     <div className="selected-dates">
-                        {availableDates.map(date => (
+                        {availableDates.map(({ date, startTime, endTime }) => (
                             <div key={date} className="date-item">
-                                <span>{date}</span>
+                                <span>{date} - {startTime} to {endTime}</span>
+                                <button onClick={() => editDate(date)}>Edit</button>
                                 <button onClick={() => removeDate(date)}>Remove</button>
                             </div>
                         ))}
