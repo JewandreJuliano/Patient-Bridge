@@ -196,22 +196,22 @@ app.get('/api/doctors', (req, res) => {
 
 // Define a route to create a new appointment
 app.post('/api/book-appointment', (req, res) => {
-  const { patient_id, doctor_id, appointment_date, appointment_time } = req.body;
+    const { patient_id, doctor_id, appointment_date, appointment_time } = req.body;
 
-  // Define the SQL query to insert the appointment
-  const query = `
-      INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time) 
-      VALUES (?, ?, ?, ?)
-  `;
+    // Define the SQL query to insert the appointment
+    const query = `
+        INSERT INTO appointments (patient_id, doctor_id, appointment_date, appointment_time) 
+        VALUES (?, ?, ?, ?)
+    `;
 
-  // Execute the query
-  connection.query(query, [patient_id, doctor_id, appointment_date, appointment_time], (err, results) => {
-    if (err) {
-      console.error('Database query error:', err);
-      return res.status(500).json({ error: 'Error saving appointment to the database' });
-    }
-    res.status(201).json({ message: 'Appointment booked successfully!', appointmentId: results.insertId });
-  });
+    // Execute the query
+    connection.query(query, [patient_id, doctor_id, appointment_date, appointment_time], (err, results) => {
+        if (err) {
+            console.error('Database query error:', err);
+            return res.status(500).json({ error: 'Error saving appointment to the database' });
+        }
+        res.status(201).json({ message: 'Appointment booked successfully!', appointmentId: results.insertId });
+    });
 });
 
 // In server.js or a separate medications route file

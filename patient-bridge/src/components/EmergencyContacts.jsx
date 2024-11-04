@@ -74,6 +74,12 @@ const EmergencyContacts = () => {
     contact.contactName.toLowerCase().includes(search.toLowerCase())
   );
 
+  const handleSaveContacts = () => {
+    console.log('Emergency Contacts:', contacts);
+    alert("Emergency contacts saved!");
+    // Here you would typically send the contacts to your backend or local storage
+  };
+
   return (
     <>
       <header className="dashboard-header"> 
@@ -173,8 +179,9 @@ const EmergencyContacts = () => {
           </table>
         )}
         
-        {/* Button positioned in the bottom left corner */}
+        {/* Save Contacts button */}
         <div className="bottom-left-corner">
+          <button onClick={handleSaveContacts} className="save-contacts-button">Save Contacts</button>
           <button onClick={() => navigate('/patient-dashboard')} className="back-button">Back to Dashboard</button>
         </div>
       </div>

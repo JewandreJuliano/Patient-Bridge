@@ -24,7 +24,7 @@ const BookAppointment = () => {
   const confirmAppointment = async () => {
     try {
       
-      const patientId = localStorage.getItem('patientId');
+      const patient_id = localStorage.getItem('patient_id');
 
       const response = await fetch('http://localhost:5432/api/book-appointment', {
         method: 'POST',
@@ -32,7 +32,7 @@ const BookAppointment = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          patient_id: patientId, // Use the retrieved patient ID
+          patient_id: patient_id, // Use the retrieved patient ID
           doctor_id: doctor.doctor_id, // Pass the doctor's ID
           appointment_date: moment(selectedDate).format("YYYY-MM-DD"), // Format the date for MySQL
           appointment_time: selectedTime, // Time in HH:MM format
