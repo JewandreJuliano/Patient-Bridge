@@ -214,6 +214,32 @@ app.post('/api/book-appointment', (req, res) => {
     });
 });
 
+// API endpoint to save emergency contact
+// API endpoint to save emergency contact
+app.post('/api/emergency-contacts', (req, res) => {
+  const { patient_id, contact_name, relationship, phone_number, email } = req.body;
+
+  // Input validation
+  if (!patient_id || !contact_name || !relationship || !phone_number || !email) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  // Prepare SQL query to insert emergency contact
+  const sql = 'INSERT INTO emergency_contacts (patient_id, contact_name, relationship, phone_number, email) VALUES (?, ?, ?, ?, ?)';
+  const values = [patient_id, contact_name, relationship, phone_number, email];
+
+  // Use 'connection' instead of 'db' if that’s what you’re defining
+  connection.query(sql, values, (error, results) => {
+    if (error) {
+      console.error('Error saving emergency contact:', error);
+      return res.status(500).json({ error: 'Database error' });
+    }
+
+    res.status(201).json({ message: 'Emergency contact saved successfully', contactId: results.insertId });
+  });
+});
+
+
 // In server.js or a separate medications route file
 app.get('/api/medications/:patientId', (req, res) => {
   const { patientId } = req.params;
@@ -279,6 +305,31 @@ app.delete('/api/medications/:id', (req, res) => {
   });
 });
 
+// Update patient profile
+app.put('/api/patients/:id', (req, res) => {
+  const { id } = req.params;
+  const { fullName, email, password, phoneNumber } = req.body;
+
+  let sql = 'UPDATE patients SET fullName = ?, email = ?, phoneNumber = ?';
+  const values = [fullName, email, phoneNumber];
+
+  if (password) {
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    sql += ', password = ?';
+    values.push(hashedPassword);
+  }
+
+  sql += ' WHERE patient_id = ?';
+  values.push(id);
+
+  connection.query(sql, values, (err, result) => {
+    if (err) {
+      console.error('Error updating patient profile:', err);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    res.status(200).json({ message: 'Profile updated successfully' });
+  });
+});
 
 // Define a route to update a doctor's profile
 app.post('/api/update-doctor-profile', async (req, res) => {

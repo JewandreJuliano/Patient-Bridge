@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../styles/Profile.css';
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
@@ -11,21 +11,10 @@ const Profile = () => {
     password: '',
     phoneNumber: ''
   });
-  const patientId = 1; // Replace this with the actual patient ID from your state management or context
 
-  // Fetch patient details when the component mounts
-  useEffect(() => {
-    const fetchPatientDetails = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5432/api/patients/${patientId}`);
-        setPatient(response.data); // Set the patient details to state
-      } catch (error) {
-        console.error('Error fetching patient details:', error);
-      }
-    };
-
-    fetchPatientDetails();
-  }, [patientId]);
+  const [confirmPassword, setConfirmPassword] = useState(''); // State for confirm password
+  const user = JSON.parse(localStorage.getItem('user'));
+  const patient_id = user ? user.patient_id : null; // Get patient_id
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -35,17 +24,42 @@ const Profile = () => {
     }));
   };
 
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value); // Handle confirm password state
+  };
+
   const handleSaveChanges = async () => {
+    if (patient.password && patient.password !== confirmPassword) {
+      alert("Passwords do not match.");
+      return;
+    }
+  
+    const updatedData = {
+      fullName: patient.fullName || user.fullName,
+      email: patient.email || user.email,
+      phoneNumber: patient.phoneNumber || user.phoneNumber,
+    };
+  
+    if (patient.password) {
+      updatedData.password = patient.password; // Include password only if provided
+    }
+  
     try {
-      const response = await axios.put(`http://localhost:5432/api/patients/${patientId}`, patient);
+      const response = await axios.put(`http://localhost:5432/api/patients/${patient_id}`, updatedData);
       alert(response.data.message); // Display success message
+  
+      // Update local storage with new patient data
+      const updatedUser = { ...user, ...updatedData };
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+  
       navigate('/patient-dashboard'); // Redirect after saving
     } catch (error) {
       console.error('Error saving patient details:', error);
       alert('Error saving patient details');
     }
   };
-
+  
+  
   const handleCancel = () => {
     navigate('/patient-dashboard');
   };
@@ -69,9 +83,8 @@ const Profile = () => {
               type="text"
               id="fullname"
               name="fullName"
-              value={patient.fullName}
+              placeholder={user.fullName || 'Full name'}
               onChange={handleInputChange} // Update state on change
-              placeholder="Full name"
             />
           </div>
         </div>
@@ -82,9 +95,19 @@ const Profile = () => {
             type="email"
             id="email"
             name="email"
-            value={patient.email}
+            placeholder={user.email || 'Email address'}
             onChange={handleInputChange} // Update state on change
-            placeholder="Email address"
+          />
+        </div>
+
+        <div className="input-group">
+          <label htmlFor="phoneNumber">Phone Number</label>
+          <input
+            type="text" // Change input type to text for phone number
+            id="phoneNumber"
+            name="phoneNumber"
+            placeholder={user.phoneNumber || 'Phone Number'}
+            onChange={handleInputChange} // Update state on change
           />
         </div>
 
@@ -94,9 +117,8 @@ const Profile = () => {
             type="password"
             id="password"
             name="password"
-            value={patient.password}
             onChange={handleInputChange} // Update state on change
-            placeholder="Enter your password"
+            placeholder="Enter new password"
           />
         </div>
 
@@ -105,7 +127,10 @@ const Profile = () => {
           <input
             type="password"
             id="confirmPassword"
-            placeholder="Confirm your password"
+            name="confirmPassword" 
+            value={confirmPassword} // Manage confirm password in state
+            onChange={handleConfirmPasswordChange} // Handle confirm password changes
+            placeholder="Confirm new password"
           />
         </div>
 

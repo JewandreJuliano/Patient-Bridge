@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import '../styles/EmergencyContacts.css';
 
 const EmergencyContacts = ({ patientId }) => {
@@ -9,6 +10,10 @@ const EmergencyContacts = ({ patientId }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('user'));
+  const patient_id = user ? user.patient_id : null; // Get patient_id
+
 
   const handleSaveChanges = async () => {
     setIsLoading(true);
@@ -16,7 +21,7 @@ const EmergencyContacts = ({ patientId }) => {
     setErrorMessage('');
 
     const contactData = {
-      patient_id: patientId,
+      patient_id: patient_id,
       contact_name: contactName,
       relationship,
       phone_number: phoneNumber,
@@ -40,6 +45,7 @@ const EmergencyContacts = ({ patientId }) => {
         setRelationship('');
         setPhoneNumber('');
         setEmail('');
+        navigate('/patient-dashboard');
       } else {
         const error = await response.json();
         setErrorMessage(error.error || 'Error saving emergency contact');
