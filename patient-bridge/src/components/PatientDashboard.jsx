@@ -12,22 +12,23 @@ const PatientDashboard = () => {
   const [isLoading, setIsLoading] = useState(true); // Loading state
 
   useEffect(() => {
+    // Retrieve user information from local storage
     const storedUser = JSON.parse(localStorage.getItem('user'));
     if (storedUser) {
       setUsername(storedUser.fullName || storedUser.practiceName || 'User');
       const patientId = storedUser.patientId || null; // Retrieve patient ID
       setCurrentPatientId(patientId);
-      // Store patient ID in local storage
+      // Store patient ID in local storage for easy access later if needed
       localStorage.setItem('currentPatientId', patientId);
     }
-  
+
     fetchDoctors();
-  
+
     // Fetch patient data if currentPatientId is set
     if (currentPatientId) {
       fetchPatientData();
     }
-  
+
     // Event listener for outside clicks to close settings dropdown
     const handleOutsideClick = (event) => {
       if (!event.target.closest('.settings-dropdown')) {
@@ -37,7 +38,7 @@ const PatientDashboard = () => {
     document.addEventListener('click', handleOutsideClick);
     return () => document.removeEventListener('click', handleOutsideClick);
   }, [currentPatientId]); // Add currentPatientId as a dependency
-  
+
   const fetchDoctors = async () => {
     try {
       const response = await fetch('http://localhost:5432/api/doctors');
@@ -83,14 +84,14 @@ const PatientDashboard = () => {
     navigate('/track-medications');
   };
 
-  // Example function utilizing currentPatientId
+  // Fetch patient data based on currentPatientId
   const fetchPatientData = async () => {
     if (currentPatientId) {
       try {
         const response = await fetch(`http://localhost:5432/api/patients/${currentPatientId}`);
         const data = await response.json();
         console.log('Patient data:', data);
-        // Handle patient data
+        // Handle patient data as needed
       } catch (error) {
         console.error('Error fetching patient data:', error);
       }

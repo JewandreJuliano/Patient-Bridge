@@ -36,10 +36,10 @@ const LoginPage = ({ isOpen, onClose }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+    
         // Prepare the request body
         const requestBody = { email, password };
-
+    
         try {
             const response = await fetch('http://localhost:5432/api/login', {
                 method: 'POST',
@@ -48,19 +48,20 @@ const LoginPage = ({ isOpen, onClose }) => {
                 },
                 body: JSON.stringify(requestBody),
             });
-
+    
             const data = await response.json();
             if (response.ok) {
                 console.log('Login successful:', data);
-
+    
                 // Store the user information in localStorage
                 localStorage.setItem('user', JSON.stringify(data.user)); 
-
+    
                 // If user type is 'patient', also save the patient ID
                 if (data.userType === 'patient') {
                     localStorage.setItem('patientId', data.user.patientId); // Save patient ID
                     navigate('/patient-dashboard'); 
-                } else {
+                } else if (data.userType === 'doctor') {
+                    localStorage.setItem('doctorId', data.user.doctorId); // Save doctor ID
                     navigate('/doctor-dashboard'); 
                 }
             } else {
@@ -72,7 +73,7 @@ const LoginPage = ({ isOpen, onClose }) => {
             alert('Error during login, please try again.');
         }
     };
-
+    
     return (
         <>
             {isOpen && (
