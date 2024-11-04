@@ -238,18 +238,17 @@ app.get('/api/medications/:patientId', (req, res) => {
 });
 
 // POST /api/medications
-app.post('/api/medications', (req, res) => {
-  const { patient_id, name, dosage, time } = req.body; // Ensure these keys match the request body
-  const query = 'INSERT INTO medications (patient_id, name, dosage, time) VALUES (?, ?, ?, ?)';
-
-  connection.query(query, [patient_id, name, dosage, time], (err, results) => { // Changed db to connection
-      if (err) {
-          console.error('Error adding medication:', err);
-          return res.status(500).json({ message: 'Error adding medication' });
-      }
-      res.status(201).json({ message: 'Medication added successfully', medicationId: results.insertId });
-  });
+app.post('/api/medications', async (req, res) => {
+  const { patient_id, name, dosage, time } = req.body;
+  try {
+      const result = await db.query('INSERT INTO medications (patient_id, name, dosage, time) VALUES (?, ?, ?, ?)', [patient_id, name, dosage, time]);
+      res.status(201).json({ success: true, message: 'Medication added successfully', medicationId: result.insertId });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Error saving medication' });
+  }
 });
+
 
 // PUT /api/medications/:id
 app.put('/api/medications/:id', (req, res) => {
