@@ -6,22 +6,22 @@ function Medications() {
   const [name, setName] = useState("");
   const [dosage, setDosage] = useState("");
   const [time, setTime] = useState("");
-  const [editId, setEditId] = useState(null);
+  const [editIndex, setEditIndex] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
-  // Handle adding new medication
+  // Handle adding or updating medication
   const handleSaveMedication = () => {
     if (!name || !dosage || !time) return; // Basic validation
 
-    if (editId !== null) {
+    if (editIndex !== null) {
       // Update existing medication
-      setMedications(medications.map(med => 
-        med.id === editId ? { id: editId, name, dosage, time } : med
+      setMedications(medications.map((med, index) => 
+        index === editIndex ? { name, dosage, time } : med
       ));
-      setEditId(null);
+      setEditIndex(null);
     } else {
       // Add new medication
-      setMedications([...medications, { id: Date.now(), name, dosage, time }]);
+      setMedications([...medications, { name, dosage, time }]);
     }
 
     // Clear form fields and hide the form
@@ -32,16 +32,17 @@ function Medications() {
   };
 
   // Handle deleting medication with confirmation
-  const handleDeleteMedication = (id) => {
+  const handleDeleteMedication = (index) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this medication?");
     if (confirmDelete) {
-      setMedications(medications.filter(med => med.id !== id));
+      setMedications(medications.filter((_, i) => i !== index));
     }
   };
 
   // Handle editing medication
-  const handleEditMedication = (medication) => {
-    setEditId(medication.id);
+  const handleEditMedication = (index) => {
+    const medication = medications[index];
+    setEditIndex(index);
     setName(medication.name);
     setDosage(medication.dosage);
     setTime(medication.time);
@@ -97,7 +98,6 @@ function Medications() {
           <table>
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th>Dosage</th>
                 <th>Time</th>
@@ -105,22 +105,21 @@ function Medications() {
               </tr>
             </thead>
             <tbody>
-              {medications.map((med) => (
-                <tr key={med.id}>
-                  <td>{med.id}</td>
+              {medications.map((med, index) => (
+                <tr key={index}>
                   <td>{med.name}</td>
                   <td>{med.dosage}</td>
                   <td>{med.time}</td>
                   <td>
                     <button 
                       className="update-button" 
-                      onClick={() => handleEditMedication(med)}
+                      onClick={() => handleEditMedication(index)}
                     >
                       Update
                     </button>
                     <button 
                       className="delete-button" 
-                      onClick={() => handleDeleteMedication(med.id)}
+                      onClick={() => handleDeleteMedication(index)}
                     >
                       Delete
                     </button>
