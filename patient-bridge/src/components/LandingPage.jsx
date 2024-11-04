@@ -54,7 +54,7 @@ const LandingPage = () => {
                 </div>
                 
                 <nav className="nav-links">
-                    <a href to="/help-page">Help</a>
+                    <a href="/help-page">Help</a>
                     <a href="/about-us">About Us</a>
                     <a href="#!" onClick={handleOpenLogin}>Login</a> {/* Trigger login popup */}
                     <a href="#!" onClick={handleDropdownToggle}>Sign Up</a>
@@ -85,7 +85,7 @@ const LandingPage = () => {
                 </div>
                 <div className="image__content image__content__1">
                     <div className="details">
-                        <p>Friendly Doctors</p>
+                        <p>Easy Appointment Booking</p>
                     </div>
                 </div>
                 <div className="image__content image__content__2">
@@ -104,7 +104,7 @@ const LandingPage = () => {
                         <div className="benefit-item">
                             <img src="/assets/location.jpg" alt="Locate Available Doctors" className="benefit-icon" loading="lazy" />
                             <h3>Locate Available Doctors</h3>
-                            <p>Communicate securely with your doctors from anywhere.</p>
+                            <p>Securely locate your doctors on our app.</p>
                         </div>
                         <div className="benefit-item">
                             <img src="/assets/trackmedication.jpg" alt="Medication Tracking" className="benefit-icon" loading="lazy" />

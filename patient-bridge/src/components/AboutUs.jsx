@@ -8,6 +8,7 @@ const AboutUs = () => {
                 <div className="logo-title">
                     <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
                     <h1 className="title">PATIENT BRIDGE</h1>
+                    <a href = "/"className='back-to-land'>Back</a>
                 </div>
             </header>
             <div className="aboutus-sidebar">
