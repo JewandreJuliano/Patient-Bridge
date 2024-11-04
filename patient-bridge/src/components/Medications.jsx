@@ -1,4 +1,3 @@
-// Medications.js
 import React, { useState } from 'react';
 import '../styles/Medications.css';
 
@@ -9,26 +8,30 @@ function Medications() {
   const [time, setTime] = useState("");
   const [editId, setEditId] = useState(null);
   const [showForm, setShowForm] = useState(false);
-  const [search, setSearch] = useState("");
 
-  const handleAddMedication = () => {
-    if (!name || !dosage || !time) return;
+  // Handle adding new medication
+  const handleSaveMedication = () => {
+    if (!name || !dosage || !time) return; // Basic validation
 
     if (editId !== null) {
+      // Update existing medication
       setMedications(medications.map(med => 
         med.id === editId ? { id: editId, name, dosage, time } : med
       ));
       setEditId(null);
     } else {
+      // Add new medication
       setMedications([...medications, { id: Date.now(), name, dosage, time }]);
     }
 
+    // Clear form fields and hide the form
     setName("");
     setDosage("");
     setTime("");
-    setShowForm(false);
+    setShowForm(false); // Hide the form after saving a medication
   };
 
+  // Handle deleting medication with confirmation
   const handleDeleteMedication = (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this medication?");
     if (confirmDelete) {
@@ -36,22 +39,13 @@ function Medications() {
     }
   };
 
+  // Handle editing medication
   const handleEditMedication = (medication) => {
     setEditId(medication.id);
     setName(medication.name);
     setDosage(medication.dosage);
     setTime(medication.time);
-    setShowForm(true);
-  };
-
-  const filteredMedications = medications.filter(med =>
-    med.name.toLowerCase().includes(search.toLowerCase())
-  );
-
-  const handleSaveMedications = () => {
-    // Here you would typically send `medications` to your backend or save it as needed.
-    console.log('Saved Medications:', medications);
-    alert("Medications saved!");
+    setShowForm(true); // Show form when editing
   };
 
   return (
@@ -59,52 +53,45 @@ function Medications() {
       <header className="dashboard-header"> 
         <div className="logo-title">
           <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
-          <h1 className="title">PATIENTBRIDGE</h1>
+          <h1 className="title">Patient Bridge</h1>
         </div>
       </header>
       <h2>Your Medications</h2>
       <div className="app-container">
-        <div className="toolbar">
-          <button onClick={() => setShowForm(true)}>Add Medication</button>
-          <input 
-            type="text" 
-            placeholder="Search medications" 
-            value={search} 
-            onChange={(e) => setSearch(e.target.value)} 
-            className="med-search-bar"
-          />
-        </div>
+        
+        {!showForm && (
+          <button onClick={() => setShowForm(true)}>
+            Add Medication
+          </button>
+        )}
 
         {showForm && (
-          <div className="modal">
-            <div className="modal-content">
-              <span className="close" onClick={() => setShowForm(false)}>&times;</span>
-              <input 
-                type="text" 
-                placeholder="Medication Name" 
-                value={name} 
-                onChange={(e) => setName(e.target.value)} 
-              />
-              <input 
-                type="text" 
-                placeholder="Dosage" 
-                value={dosage} 
-                onChange={(e) => setDosage(e.target.value)} 
-              />
-              <input 
-                type="time" 
-                value={time} 
-                onChange={(e) => setTime(e.target.value)} 
-                className="time-input"
-              />
-              <button onClick={handleAddMedication}>
-                {editId !== null ? "Update" : "Add"} Medication
-              </button>
-            </div>
+          <div className="form-container">
+            <input 
+              type="text" 
+              placeholder="Name" 
+              value={name} 
+              onChange={(e) => setName(e.target.value)} 
+            />
+            <input 
+              type="text" 
+              placeholder="Dosage" 
+              value={dosage} 
+              onChange={(e) => setDosage(e.target.value)} 
+            />
+            <input 
+              type="text" 
+              placeholder="Time" 
+              value={time} 
+              onChange={(e) => setTime(e.target.value)} 
+            />
+            <button onClick={handleSaveMedication}>
+              Save Medication
+            </button>
           </div>
         )}
 
-        {filteredMedications.length === 0 ? (
+        {medications.length === 0 ? (
           <p className="no-medications-message">No medications added yet. Start by adding one above.</p>
         ) : (
           <table>
@@ -118,7 +105,7 @@ function Medications() {
               </tr>
             </thead>
             <tbody>
-              {filteredMedications.map((med) => (
+              {medications.map((med) => (
                 <tr key={med.id}>
                   <td>{med.id}</td>
                   <td>{med.name}</td>
@@ -129,13 +116,13 @@ function Medications() {
                       className="update-button" 
                       onClick={() => handleEditMedication(med)}
                     >
-                      ✏️
+                      Update
                     </button>
                     <button 
                       className="delete-button" 
                       onClick={() => handleDeleteMedication(med.id)}
                     >
-                      🗑️
+                      Delete
                     </button>
                   </td>
                 </tr>
@@ -143,11 +130,6 @@ function Medications() {
             </tbody>
           </table>
         )}
-
-        {/* Add Save Medications button here */}
-        <button className="save-medications-btn" onClick={handleSaveMedications}>
-          Save Medications
-        </button>
       </div>
     </>
   );
