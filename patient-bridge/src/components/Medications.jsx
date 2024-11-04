@@ -65,7 +65,7 @@ function Medications() {
             placeholder="Search medications" 
             value={search} 
             onChange={(e) => setSearch(e.target.value)} 
-            className="search-bar"
+            className="med-search-bar"
           />
         </div>
 
