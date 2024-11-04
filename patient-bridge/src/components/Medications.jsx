@@ -48,6 +48,12 @@ function Medications() {
     med.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const handleSaveMedications = () => {
+    // Here you would typically send `medications` to your backend or save it as needed.
+    console.log('Saved Medications:', medications);
+    alert("Medications saved!");
+  };
+
   return (
     <>
       <header className="dashboard-header"> 
@@ -137,6 +143,11 @@ function Medications() {
             </tbody>
           </table>
         )}
+
+        {/* Add Save Medications button here */}
+        <button className="save-medications-btn" onClick={handleSaveMedications}>
+          Save Medications
+        </button>
       </div>
     </>
   );
