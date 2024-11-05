@@ -4,7 +4,7 @@ import Calendar from 'react-calendar';
 import { useNavigate } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css';
 import '../styles/DoctorDashboard.css';
-import { FaCalendarAlt, FaPills, FaFileMedical } from 'react-icons/fa';
+import { FaCalendarAlt, FaFileMedical } from 'react-icons/fa';
 import PatientListPopup from './PatientListPopup';
 import AppointmentList from './AppointmentList';
 import HealthRecordsList from './HealthRecordsList';
@@ -75,11 +75,6 @@ const DoctorDashboard = () => {
               </div>
             </div>
             <div className="quick-actions-row">
-              <div className="action-item" onClick={() => setIsPatientListOpen(true)}>
-                <FaPills className="action-icon" />
-                <h3>Manage Patient Records</h3>
-                <p>Edit patient health records</p>
-              </div>
               <div className="action-item" onClick={() => setIsHealthRecordsListOpen(true)}>
                 <FaFileMedical className="action-icon" />
                 <h3>View Health Records</h3>
