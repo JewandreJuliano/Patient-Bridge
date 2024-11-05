@@ -65,9 +65,9 @@ const DoctorSignUpPage = ({ isOpen, onClose }) => {
         isOpen && (
             <div className="doctor-popup-container">
                 <div className="doctor-popup-content">
-                    <button className="close-btn" onClick={onClose}>
-                        X
-                    </button>
+                <button style={{ fontSize: '10px', position: 'absolute', top: '10px', right: '10px' }} onClick={onClose}>
+  X
+</button>
                     <p className="login-title">SIGN UP AS DOCTOR</p>
                     <p className='sign-in-message'>Welcome! Sign Up below to get your journey started!</p>
                     <form className="doctor-signup-form" onSubmit={handleSubmit}>

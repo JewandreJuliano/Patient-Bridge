@@ -87,7 +87,7 @@ const LandingPage = () => {
                     </div>
                 </div>
                 <div className="image__content image__content__2">
-                    <p>Friendly Doctors</p>
+                    <p>Simple Medication Tracking</p>
                 </div>
             </header>
 
@@ -121,11 +121,6 @@ const LandingPage = () => {
             <footer className="footer">
                 <div className="footer-content">
                     <p>© 2024 Patient Bridge. All rights reserved.</p>
-                    <div className="footer-links">
-                        <Link to="/privacy-policy">Privacy Policy</Link>
-                        <Link to="/terms-of-service">Terms of Service</Link>
-                        <Link to="/contact">Contact Us</Link>
-                    </div>
                 </div>
             </footer>
 

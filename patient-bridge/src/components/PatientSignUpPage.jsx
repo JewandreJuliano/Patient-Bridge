@@ -64,7 +64,9 @@ const PatientSignUpPage = ({ isOpen, onClose }) => {
         isOpen && ( // Render the form only if isOpen is true
             <div className="patient-popup-container">
                 <div className="patient-popup-content">
-                    <button className="close-btn" onClick={onClose}>X</button>
+                <button style={{ fontSize: '10px', position: 'absolute', top: '10px', right: '10px' }} onClick={onClose}>
+  X
+</button>
                     <p className="login-title">SIGN UP AS PATIENT</p>
                     <p className='sign-in-message'>Welcome! Sign Up below to get your journey started!</p>
 

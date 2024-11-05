@@ -141,6 +141,7 @@ function Medications() {
           <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
           <h1 className="title">PATIENT BRIDGE</h1>
         </div>
+        <a href='/patient-dashboard' className='back-link' >Back</a>
       </header>
       <h2> Your Medications</h2>
       <div className="app-container">
