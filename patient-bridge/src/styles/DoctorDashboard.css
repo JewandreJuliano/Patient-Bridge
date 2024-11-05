@@ -198,6 +198,17 @@ p, li {
     background-color: #2c3e50; /* Background color for active tile */
     color: white; /* Text color for active tile */
 }
+/* Change the color of the current day */
+.react-calendar__tile--now {
+    background-color: #2c3e50; /* Replace with your desired color */
+    color: white; /* Change text color if necessary */
+}
+
+/* Optionally, you may want to change the hover effect as well */
+.react-calendar__tile--now:hover {
+    background-color: gray; /* Darker shade for hover effect */
+}
+
 
 .react-calendar__tile--hover {
     background-color: #D0E3E5; /* Background color on hover */
