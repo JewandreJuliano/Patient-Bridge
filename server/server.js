@@ -424,6 +424,75 @@ app.get('/api/appointments/:doctor_id', (req, res) => {
   });
 });
 
+app.post('/health-records', (req, res) => {
+  const { patient_id, illness_name, diagnosis_date, treatment_details, town } = req.body;
+  connection.query(
+    'INSERT INTO health_records (patient_id, illness_name, diagnosis_date, treatment_details, town) VALUES (?, ?, ?, ?, ?)',
+    [patient_id, illness_name, diagnosis_date, treatment_details, town],
+    (err, result) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+      res.status(201).json({ message: 'Health record created successfully', record_id: result.insertId });
+    }
+  );
+});
+
+app.get('/api/health_records/:patientId', (req, res) => {
+  const patientId = req.params.patientId;
+
+  // Update the SQL query to fetch all health records for a specific patient
+  const query = `
+    SELECT hr.*, 
+           CONCAT(p.first_name, ' ', p.last_name) AS fullName 
+    FROM health_records hr
+    JOIN patients p ON hr.patient_id = p.patient_id
+    WHERE hr.patient_id = ?
+  `;
+
+  connection.query(query, [patientId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'No health records found for this patient' });
+    }
+    res.json(results); // Return all records for the patient
+  });
+});
+
+
+
+// Update health record
+app.put('/health-records/:recordId', (req, res) => {
+  const { illness_name, diagnosis_date, treatment_details, town } = req.body;
+  const recordId = req.params.recordId;
+
+  connection.query(
+    'UPDATE health_records SET illness_name = ?, diagnosis_date = ?, treatment_details = ?, town = ? WHERE record_id = ?',
+    [illness_name, diagnosis_date, treatment_details, town, recordId],
+    (err, result) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+      res.json({ message: 'Record updated successfully' });
+    }
+  );
+});
+
+app.delete('/health-records/:recordId', (req, res) => {
+  const recordId = req.params.recordId;
+  connection.query('DELETE FROM health_records WHERE record_id = ?', [recordId], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Record not found' });
+    }
+    res.json({ message: 'Record deleted successfully' });
+  });
+});
+
 
 
 
