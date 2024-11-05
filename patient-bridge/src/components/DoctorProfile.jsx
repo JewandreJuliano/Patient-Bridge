@@ -34,7 +34,7 @@ const DoctorProfile = () => {
         specialty: user.specialty || '',
       });
     }
-  }, [user]); // Empty dependency array ensures this runs only once
+  }, []); // Empty dependency array ensures this runs only once
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
