@@ -8,9 +8,10 @@ const PatientListPopup = ({ isOpen, onClose }) => {
     isOpen && (
       <div className="popup-container">
         <div className="popup-content">
-          <button className="close-btn" onClick={onClose}>
-            X
-          </button>
+        <button style={{ fontSize: '10px', position: 'absolute', top: '10px', right: '10px' }} onClick={onClose}>
+  X
+</button>
+
           <h2>Patient List</h2>
           <div id="patients-list">
             {patients.length === 0 ? (
