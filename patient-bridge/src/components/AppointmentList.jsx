@@ -33,6 +33,17 @@ const AppointmentList = ({ isOpen, onClose }) => {
     }
   }, [isOpen]); // Dependency array to fetch appointments when isOpen changes
 
+  // Handlers for approve and decline (without backend logic)
+  const handleApprove = (appointmentId) => {
+    console.log(`Approved appointment with ID: ${appointmentId}`);
+    // Ideally, you'd call the backend API here to update the appointment status
+  };
+
+  const handleDecline = (appointmentId) => {
+    console.log(`Declined appointment with ID: ${appointmentId}`);
+    // Ideally, you'd call the backend API here to update the appointment status
+  };
+
   return (
     isOpen && (
       <div className="popup-container">
@@ -57,6 +68,10 @@ const AppointmentList = ({ isOpen, onClose }) => {
                     <li key={index} className="appointment-item">
                       <span>{appointment.patientName}</span> {/* Patient's name */}
                       <span> - {formattedDate} at {formattedTime}</span> {/* Appointment date and time */}
+                      <div className="appointment-actions">
+                        <button onClick={() => handleApprove(appointment.appointment_id)}>Approve</button>
+                        <button onClick={() => handleDecline(appointment.appointment_id)}>Decline</button>
+                      </div>
                     </li>
                   );
                 })}
