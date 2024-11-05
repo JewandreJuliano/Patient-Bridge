@@ -348,6 +348,22 @@ app.get('/api/medications/:patient_id', (req, res) => {
   });
 });
 
+app.get('/api/appointments', (req, res) => {
+  const query = `
+    SELECT appointments.*, patients.fullName AS patientName 
+    FROM appointments 
+    JOIN patients ON appointments.patient_id = patients.patient_id;
+  `;
+  
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.error('Database query error:', error);
+      return res.status(500).json({ error });
+    }
+    res.json(results);
+  });
+});
+
 
 
 

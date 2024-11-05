@@ -47,11 +47,11 @@ const DoctorDashboard = () => {
           <h1 className="title">PATIENT BRIDGE</h1>
         </div>
         <div className="nav-links">
-          <a href="#" className="settings-button" onClick={() => setShowSettingsDropdown(!showSettingsDropdown)}>Settings</a>
+          <a href="#!" className="settings-button" onClick={() => setShowSettingsDropdown(!showSettingsDropdown)}>Settings</a>
           {showSettingsDropdown && (
             <div className="settings-dropmenu">
-              <a href="#" className="dropdown-item" onClick={() => navigate('/doctor-profile')}>Profile</a>
-              <a href="#" className="dropdown-item" onClick={() => setIsVerifyPracticeOpen(true)}>Verify Practice</a>
+              <a href="#!" className="dropdown-item" onClick={() => navigate('/doctor-profile')}>Profile</a>
+              <a href="#!" className="dropdown-item" onClick={() => setIsVerifyPracticeOpen(true)}>Verify Practice</a>
               <a href="/" className="dropdown-item">Logout</a>
             </div>
           )}
