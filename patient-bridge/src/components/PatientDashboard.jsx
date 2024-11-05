@@ -113,6 +113,9 @@ const PatientDashboard = () => {
           <a href='/medication' className="prescriptions-button" aria-label="Medications">
             Medications
           </a>
+          <a href='/patient-apts' className="apts-button" aria-label="My Appointments">
+          My Appointments
+          </a>
           <div className="settings-dropdown">
             <a href='#!' className="settings-button" onClick={handleSettingsDropdownToggle} aria-label="Settings">
               Settings

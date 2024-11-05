@@ -1,85 +1,77 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/PatientListPopup.css';
+import "../styles/AppointmentsList.css";
 
 const AppointmentList = ({ isOpen, onClose }) => {
-  const [appointments, setAppointments] = useState([]); // Correctly initialized as an array
+  const [appointments, setAppointments] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const user = JSON.parse(localStorage.getItem('user'));
+  const doctor_id = user ? user.doctor_id : null;
 
   useEffect(() => {
     const fetchAppointments = async () => {
+      setIsLoading(true);
+      setErrorMessage('');
+
       try {
-        const response = await fetch('http://localhost:5432/api/appointments'); // Adjust URL as needed
-        if (!response.ok) {
-          const errorText = await response.text();
-          console.error('Error fetching appointments:', response.status, errorText);
+        if (!doctor_id) {
+          setErrorMessage('No doctor selected.');
           return;
         }
-        const data = await response.json();
-        console.log('Fetched appointments:', data); // Log the data fetched
 
-        // Ensure the response is an array
-        if (Array.isArray(data)) {
-          setAppointments(data); // Set appointments data
+        const response = await fetch(`http://localhost:5432/api/appointments/${doctor_id}`);
+
+        if (response.ok) {
+          const data = await response.json();
+          setAppointments(data);
         } else {
-          console.error('Fetched data is not an array:', data);
-          setAppointments([]); // Reset if data is not an array
+          setErrorMessage('Error fetching appointments');
         }
       } catch (error) {
         console.error('Error fetching appointments:', error);
+        setErrorMessage('Error fetching appointments');
+      } finally {
+        setIsLoading(false);
       }
     };
 
     if (isOpen) {
-      fetchAppointments(); // Fetch appointments when popup is open
+      fetchAppointments();
     }
-  }, [isOpen]); // Dependency array to fetch appointments when isOpen changes
+  }, [isOpen, doctor_id]);
 
-  // Handlers for approve and decline (without backend logic)
-  const handleApprove = (appointmentId) => {
-    console.log(`Approved appointment with ID: ${appointmentId}`);
-    // Ideally, you'd call the backend API here to update the appointment status
-  };
-
-  const handleDecline = (appointmentId) => {
-    console.log(`Declined appointment with ID: ${appointmentId}`);
-    // Ideally, you'd call the backend API here to update the appointment status
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0];
   };
 
   return (
     isOpen && (
       <div className="popup-container">
         <div className="popup-content">
-          <button 
-            style={{ fontSize: '10px', position: 'absolute', top: '10px', right: '10px' }} 
+          <button
+            style={{ fontSize: '10px', position: 'absolute', top: '10px', right: '10px' }}
             onClick={onClose}
           >
             X
           </button>
-          <h2>Appointments List</h2>
-          <div id="appointment-list">
-            {appointments.length > 0 ? (
-              <ul>
-                {appointments.map((appointment, index) => {
-                  const appointmentDate = new Date(appointment.appointment_date); // Create date from appointment_date
-                  const formattedDate = appointmentDate.toLocaleDateString(); // Format as readable date
-                  const appointmentTime = appointment.appointment_time; // Retrieve appointment_time directly
-                  const formattedTime = new Date(`1970-01-01T${appointmentTime}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false }); // Format time as 24-hour
 
-                  return (
-                    <li key={index} className="appointment-item">
-                      <span>{appointment.patientName}</span> {/* Patient's name */}
-                      <span> - {formattedDate} at {formattedTime}</span> {/* Appointment date and time */}
-                      <div className="appointment-actions">
-                        <button onClick={() => handleApprove(appointment.appointment_id)}>Approve</button>
-                        <button onClick={() => handleDecline(appointment.appointment_id)}>Decline</button>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            ) : (
-              <p>No appointments listed yet</p>
-            )}
-          </div>
+          <h2>Appointments List</h2>
+          {isLoading && <p>Loading...</p>}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+          {appointments.length === 0 ? (
+            <p>No appointments booked yet.</p>
+          ) : (
+            <ul>
+              {appointments.map((appointment, index) => (
+                <li key={index} className="records-item">
+                  {formatDate(appointment.appointment_date)} at {appointment.appointment_time}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     )

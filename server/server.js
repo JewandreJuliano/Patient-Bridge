@@ -214,6 +214,8 @@ app.post('/api/book-appointment', (req, res) => {
     });
 });
 
+
+
 // API endpoint to save emergency contact
 // API endpoint to save emergency contact
 app.post('/api/emergency-contacts', (req, res) => {
@@ -386,14 +388,6 @@ app.put('/api/medications/:id', (req, res) => {
   });
 });
 
-app.delete('/api/medications/:id', (req, res) => {
-  const { id } = req.params;
-  const query = 'DELETE FROM medications WHERE medication_id = ?';
-  connection.query(query, [id], (err) => {
-    if (err) return res.status(500).send(err);
-    res.status(204).send();
-  });
-});
 
 app.get('/api/medications/:patient_id', (req, res) => {
   const { patient_id } = req.params;
@@ -403,20 +397,92 @@ app.get('/api/medications/:patient_id', (req, res) => {
     res.json(results); // Make sure each result includes medication_id
   });
 });
-
-app.get('/api/appointments', (req, res) => {
+app.get('/api/appointments/:doctor_id', (req, res) => {
+  const { doctor_id } = req.params;
   const query = `
-    SELECT appointments.*, patients.fullName AS patientName 
-    FROM appointments 
-    JOIN patients ON appointments.patient_id = patients.patient_id;
+    SELECT 
+        appointments.appointment_id,
+        appointments.appointment_date,
+        appointments.appointment_time,
+        appointments.patient_id,
+        appointments.doctor_id,
+        patients.fullName
+    FROM 
+        appointments 
+    JOIN 
+        patients ON appointments.patient_id = patients.patient_id
+    WHERE 
+        appointments.doctor_id = ?;
   `;
   
-  connection.query(query, (error, results) => {
+  connection.query(query, [doctor_id], (error, results) => {
     if (error) {
       console.error('Database query error:', error);
-      return res.status(500).json({ error });
+      return res.status(500).json({ error: 'Error fetching appointments' });
     }
     res.json(results);
+  });
+});
+
+
+
+
+
+app.get('/api/appointments/:patient_id', (req, res) => {
+  const { patient_id } = req.params;
+  const query = 'SELECT appointment_date, appointment_time FROM appointments WHERE patient_id = ?';
+
+  connection.query(query, [patient_id], (err, results) => {
+    if (err) {
+      console.error('Database query error:', err);
+      return res.status(500).json({ error: 'Error fetching appointments' });
+    }
+    res.json(results);
+  });
+});
+
+// Backend API to fetch appointments for a specific doctor
+app.get('/api/appointments/', (req, res) => {
+  const { doctor_id } = req.params;
+  const query = `
+    SELECT a.appointment_date, a.appointment_time, p.name AS patient_name 
+    FROM appointments a
+    JOIN patients p ON a.patient_id = p.patient_id
+    WHERE a.doctor_id = ?`;
+
+  connection.query(query, [doctor_id], (err, results) => {
+    if (err) {
+      console.error('Database query error:', err);
+      return res.status(500).json({ error: 'Error fetching appointments' });
+    }
+
+    console.log('Appointments fetched:', results); // Log the fetched appointments
+    res.json(results);
+  });
+});
+
+
+
+app.delete('/api/delete-appointment/:appointment_id', (req, res) => {
+  const { appointment_id } = req.params;
+
+  if (!appointment_id) {
+    return res.status(400).json({ error: 'Appointment ID is required' });
+  }
+
+  console.log("Deleting appointment with ID:", appointment_id); // Log for verification
+
+  const query = 'DELETE FROM appointments WHERE appointment_id = ?';
+
+  connection.query(query, [appointment_id], (err, result) => {
+    if (err) {
+      console.error("Error during deletion:", err); // Log backend errors
+      return res.status(500).json({ error: 'An error occurred while attempting to delete the appointment' });
+    }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Appointment not found' });
+    }
+    res.json({ message: 'Appointment deleted successfully' });
   });
 });
 

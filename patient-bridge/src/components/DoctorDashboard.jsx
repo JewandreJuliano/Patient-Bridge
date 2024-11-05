@@ -1,4 +1,3 @@
-// Add imports and initial setup as per your existing code
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import { useNavigate } from 'react-router-dom';

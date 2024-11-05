@@ -1,0 +1,104 @@
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #007bff; /* Changed to a blue background */
+    padding: 15px 30px;
+    color: white; /* Changed text color to white */
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 40px; /* Increased icon size for better visibility */
+    margin-right: 15px;
+}
+
+.title {
+    font-size: 28px; /* Increased title size */
+    font-weight: bold; /* Made title bold */
+}
+
+.back-link {
+    text-decoration: none;
+    color: #fff; /* Changed back link color to white */
+    font-weight: 500; /* Made the back link slightly bolder */
+    padding: 10px 15px; /* Added padding for better click area */
+    border: 1px solid transparent; /* Added a border for hover effect */
+    border-radius: 5px; /* Added rounded corners */
+    transition: background-color 0.3s, color 0.3s; /* Transition effect */
+}
+
+.back-link:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    color: #fff; /* Keep text color white on hover */
+}
+
+.popup-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure popup is above other content */
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px; /* Adjust width as necessary */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative; /* Required for absolute positioning of close button */
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    float: right; /* Position close button to the right */
+    color: #000; /* Close button color */
+}
+
+h2 {
+    text-align: center; /* Center the heading */
+    margin-bottom: 20px; /* Space below the heading */
+    color: #333; /* Darker text color for contrast */
+}
+
+.error-message {
+    color: red;
+    text-align: center; /* Center the error message */
+    margin-top: 10px; /* Space above the error message */
+}
+
+#records-list {
+    margin-top: 20px; /* Spacing for records list */
+}
+
+.records-item {
+    padding: 10px 0; /* Spacing for individual records */
+    border-bottom: 1px solid #ddd; /* Divider line between records */
+}
+
+.records-item:last-child {
+    border-bottom: none; /* Remove last item border */
+}
+
+/* Additional styling for the loading state and empty messages */
+.loading-message {
+    text-align: center;
+}
+
+.empty-message {
+    text-align: center;
+    color: #555; /* Slightly muted color for empty state */
+}
