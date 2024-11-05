@@ -53,6 +53,9 @@ td {
   text-align: center;
 }
 
+h2 {
+  text-align: center;
+}
 .update-button {
   background-color: #28a745;
   color: white;

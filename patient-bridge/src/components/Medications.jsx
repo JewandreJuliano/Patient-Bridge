@@ -139,10 +139,10 @@ function Medications() {
       <header className="dashboard-header"> 
         <div className="logo-title">
           <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
-          <h1 className="title">Patient Bridge</h1>
+          <h1 className="title">PATIENT BRIDGE</h1>
         </div>
       </header>
-      <h2>Your Medications</h2>
+      <h2> Your Medications</h2>
       <div className="app-container">
 
         {isLoading && <p>Loading...</p>} {/* Loading indicator */}

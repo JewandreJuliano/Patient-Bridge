@@ -14,7 +14,6 @@ const EmergencyContacts = ({ patientId }) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const patient_id = user ? user.patient_id : null; // Get patient_id
 
-
   const handleSaveChanges = async () => {
     setIsLoading(true);
     setSuccessMessage('');
@@ -45,7 +44,7 @@ const EmergencyContacts = ({ patientId }) => {
         setRelationship('');
         setPhoneNumber('');
         setEmail('');
-        navigate('/patient-dashboard');
+        navigate('/patient-dashboard#!');
       } else {
         const error = await response.json();
         setErrorMessage(error.error || 'Error saving emergency contact');
@@ -56,6 +55,10 @@ const EmergencyContacts = ({ patientId }) => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleCancel = () => {
+    navigate('/patient-dashboard'); // Navigate back to the patient dashboard
   };
 
   return (
@@ -117,11 +120,14 @@ const EmergencyContacts = ({ patientId }) => {
           />
         </div>
 
-        <div>
-          <button type="button" onClick={handleSaveChanges} disabled={isLoading}>
-            {isLoading ? 'Saving...' : 'Save Changes'}
-          </button>
-        </div>
+        <div className="button-container">
+  <button type="button" onClick={handleSaveChanges} disabled={isLoading}>
+    {isLoading ? 'Saving...' : 'Save Changes'}
+  </button>
+  <button type="button" onClick={handleCancel} disabled={isLoading}>
+    Cancel
+  </button>
+</div>
       </div>
     </div>
   );
