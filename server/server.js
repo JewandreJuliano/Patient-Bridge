@@ -239,72 +239,6 @@ app.post('/api/emergency-contacts', (req, res) => {
   });
 });
 
-
-// In server.js or a separate medications route file
-app.get('/api/medications/:patientId', (req, res) => {
-  const { patientId } = req.params;
-  const query = 'SELECT * FROM medications WHERE patient_id = ?';
-  db.query(query, [patientId], (err, results) => {
-    if (err) return res.status(500).send(err);
-    res.json(results);
-  });
-});
-
-// In server.js or a separate medications route file
-
-// GET /api/medications/:patientId
-app.get('/api/medications/:patientId', (req, res) => {
-  const { patientId } = req.params;
-  const query = 'SELECT * FROM medications WHERE patient_id = ?';
-  
-  connection.query(query, [patientId], (err, results) => { // Changed db to connection
-    if (err) return res.status(500).send(err);
-    res.json(results);
-  });
-});
-
-// POST /api/medications
-app.post('/api/medications', async (req, res) => {
-  const { patient_id, name, dosage, time } = req.body;
-  try {
-      const result = await db.query('INSERT INTO medications (patient_id, name, dosage, time) VALUES (?, ?, ?, ?)', [patient_id, name, dosage, time]);
-      res.status(201).json({ success: true, message: 'Medication added successfully', medicationId: result.insertId });
-  } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: 'Error saving medication' });
-  }
-});
-
-
-// PUT /api/medications/:id
-app.put('/api/medications/:id', (req, res) => {
-  const medicationId = req.params.id;
-  const { name, dosage, time } = req.body; // Make sure the names match the incoming data
-  const query = 'UPDATE medications SET name = ?, dosage = ?, time = ? WHERE medication_id = ?';
-
-  connection.query(query, [name, dosage, time, medicationId], (err, results) => { // Changed db to connection
-      if (err) {
-          console.error('Error updating medication:', err);
-          return res.status(500).json({ message: 'Error updating medication' });
-      }
-      if (results.affectedRows === 0) {
-          return res.status(404).json({ message: 'Medication not found' });
-      }
-      res.json({ message: 'Medication updated successfully' });
-  });
-});
-
-// DELETE /api/medications/:id
-app.delete('/api/medications/:id', (req, res) => {
-  const { id } = req.params;
-  const query = 'DELETE FROM medications WHERE medication_id = ?';
-  
-  connection.query(query, [id], (err) => { // Changed db to connection
-    if (err) return res.status(500).send(err);
-    res.sendStatus(200);
-  });
-});
-
 // Update patient profile
 app.put('/api/patients/:id', (req, res) => {
   const { id } = req.params;
@@ -356,6 +290,53 @@ app.post('/api/update-doctor-profile', async (req, res) => {
     res.status(200).json({ message: 'Profile updated successfully!' });
   });
 });
+
+// Assuming `connection` is your MySQL connection object
+app.post('/api/add-medications', (req, res) => {
+  const { patient_id, name, dosage, time } = req.body;
+
+  console.log('Received data:', req.body); // Log the incoming data
+
+  const query = 'INSERT INTO medications (patient_id, name, dosage, time) VALUES (?, ?, ?, ?)';
+  connection.query(query, [patient_id, name, dosage, time], (err, result) => {
+    if (err) {
+      console.error('Error inserting medication:', err); // Log the error
+      return res.status(500).send('Error adding medication'); // Simplified error message for client
+    }
+    res.status(201).send({ medicationId: result.insertId, name, dosage, time });
+  });
+});
+
+app.put('/api/medications/:id', (req, res) => {
+  const { name, dosage, time } = req.body;
+  const { id } = req.params;
+  const query = 'UPDATE medications SET name = ?, dosage = ?, time = ? WHERE medication_id = ?';
+  connection.query(query, [name, dosage, time, id], (err) => {
+    if (err) return res.status(500).send(err);
+    res.status(200).send({ id, name, dosage, time });
+  });
+});
+
+app.delete('/api/medications/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'DELETE FROM medications WHERE medication_id = ?';
+  connection.query(query, [id], (err) => {
+    if (err) return res.status(500).send(err);
+    res.status(204).send();
+  });
+});
+
+app.get('/api/medications/:patient_id', (req, res) => {
+  const { patient_id } = req.params;
+  const query = 'SELECT medication_id, name, dosage, time FROM medications WHERE patient_id = ?';
+  connection.query(query, [patient_id], (err, results) => {
+    if (err) return res.status(500).json({ error: 'Error fetching medications' });
+    res.json(results); // Make sure each result includes medication_id
+  });
+});
+
+
+
 
 // Start the server
 const PORT = 5432; // Port number
