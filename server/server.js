@@ -239,6 +239,62 @@ app.post('/api/emergency-contacts', (req, res) => {
   });
 });
 
+// Forgot-password
+
+app.put('/api/forgot-password', async (req, res) => {
+    const { email, newPassword } = req.body;
+
+    // Hash the new password
+    const hashedPassword = bcrypt.hashSync(newPassword, 10);
+
+    // Query to check if the email exists in the patients table
+    const patientQuery = 'SELECT patient_id FROM patients WHERE email = ?';
+    const doctorQuery = 'SELECT doctor_id FROM doctors WHERE email = ?';
+    
+    // First, check if email exists in the patients table
+    connection.query(patientQuery, [email], (err, patientResult) => {
+        if (err) {
+            console.error('Error querying patients table:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        if (patientResult.length > 0) {
+            // Email found in patients table, update password
+            const updatePatientPassword = 'UPDATE patients SET password = ? WHERE email = ?';
+            connection.query(updatePatientPassword, [hashedPassword, email], (err, result) => {
+                if (err) {
+                    console.error('Error updating patient password:', err);
+                    return res.status(500).json({ error: 'Database error' });
+                }
+                return res.status(200).json({ message: 'Your password has been successfully reset!' });
+            });
+        } else {
+            // Check if email exists in the doctors table
+            connection.query(doctorQuery, [email], (err, doctorResult) => {
+                if (err) {
+                    console.error('Error querying doctors table:', err);
+                    return res.status(500).json({ error: 'Database error' });
+                }
+
+                if (doctorResult.length > 0) {
+                    // Email found in doctors table, update password
+                    const updateDoctorPassword = 'UPDATE doctors SET password = ? WHERE email = ?';
+                    connection.query(updateDoctorPassword, [hashedPassword, email], (err, result) => {
+                        if (err) {
+                            console.error('Error updating doctor password:', err);
+                            return res.status(500).json({ error: 'Database error' });
+                        }
+                        return res.status(200).json({ message: 'Your password has been successfully reset!' });
+                    });
+                } else {
+                    // Email not found in either table
+                    return res.status(404).json({ message: 'Email not found' });
+                }
+            });
+        }
+    });
+});
+
 // Update patient profile
 app.put('/api/patients/:id', (req, res) => {
   const { id } = req.params;

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; 
 import { useNavigate } from 'react-router-dom';
-import '../styles/LoginPage.css'; // Keeping your existing styles
+import '../styles/LoginPage.css';
 import { Link } from 'react-router-dom';
 import PatientSignUpPage from './PatientSignUpPage';
-import DoctorSignUpPage from './DoctorSignUpPage'; // Import DoctorSignUpPage
+import DoctorSignUpPage from './DoctorSignUpPage';
+import ForgotPassword from './ForgotPassword';
 
 const LoginPage = ({ isOpen, onClose }) => {
     const [email, setEmail] = useState('');
@@ -13,31 +14,37 @@ const LoginPage = ({ isOpen, onClose }) => {
     // State for handling popups
     const [isDoctorSignUpOpen, setIsDoctorSignUpOpen] = useState(false);
     const [isPatientSignUpOpen, setIsPatientSignUpOpen] = useState(false);
+    const [isForgotPasswordOpen, setIsForgotPasswordOpen] = useState(false);
 
-    // Open Doctor Sign Up Popup
     const handleOpenDoctorSignUp = () => {
         setIsDoctorSignUpOpen(true);
     };
 
-    // Close Doctor Sign Up Popup
     const handleCloseDoctorSignUp = () => {
         setIsDoctorSignUpOpen(false);
     };
 
-    // Open Patient Sign Up Popup
     const handleOpenPatientSignUp = () => {
         setIsPatientSignUpOpen(true);
     };
 
-    // Close Patient Sign Up Popup
     const handleClosePatientSignUp = () => {
         setIsPatientSignUpOpen(false);
+    };
+
+    // Open Forgot Password Form
+    const handleForgotPasswordClick = () => {
+        setIsForgotPasswordOpen(true);
+    };
+
+    // Close Forgot Password Form
+    const handleCloseForgotPassword = () => {
+        setIsForgotPasswordOpen(false);
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
     
-        // Prepare the request body
         const requestBody = { email, password };
     
         try {
@@ -52,16 +59,13 @@ const LoginPage = ({ isOpen, onClose }) => {
             const data = await response.json();
             if (response.ok) {
                 console.log('Login successful:', data);
-    
-                // Store the user information in localStorage
                 localStorage.setItem('user', JSON.stringify(data.user)); 
     
-                // If user type is 'patient', also save the patient ID
                 if (data.userType === 'patient') {
-                    localStorage.setItem('currentPatientId', data.user.patient_id); // Save patient ID
+                    localStorage.setItem('currentPatientId', data.user.patient_id);
                     navigate('/patient-dashboard');
                 } else if (data.userType === 'doctor') {
-                    localStorage.setItem('doctorId', data.user.doctorId); // Save doctor ID
+                    localStorage.setItem('doctorId', data.user.doctorId);
                     navigate('/doctor-dashboard'); 
                 }
             } else {
@@ -76,12 +80,12 @@ const LoginPage = ({ isOpen, onClose }) => {
     
     return (
         <>
-            {isOpen && (
+            {isOpen && !isForgotPasswordOpen && (
                 <div className="popup-container">
                     <div className="popup-content">
-                        <button className="close-btn" onClick={onClose}>
-                            X
-                        </button>
+                    <button style={{ fontSize: '10px', position: 'absolute', top: '10px', right: '10px' }} onClick={onClose}>
+  X
+</button>
                         <p className="login-title">WELCOME TO PATIENT BRIDGE</p>
                         <p className='sign-in-message'>Please sign into your account below</p>
                         <form className="login-form" onSubmit={handleSubmit}>
@@ -97,7 +101,6 @@ const LoginPage = ({ isOpen, onClose }) => {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="password">PASSWORD</label>
-                                
                                 <input
                                     type="password"
                                     id="password"
@@ -107,18 +110,23 @@ const LoginPage = ({ isOpen, onClose }) => {
                                 />
                             </div>
                             <button type="submit" className="login-btn">LOGIN</button>
-                            <a href="/forgot-password" className="forgot-password-link"> Forgot Password?</a>
+                            <span className="forgot-password-link" onClick={handleForgotPasswordClick}> Forgot Password?</span>
                             <div className="login-links">
                                 <div>
                                     New on our platform? Sign up as a  
                                     <Link to="#!" className="patient-signup" onClick={handleOpenPatientSignUp}> Patient </Link>
                                     or 
-                                     <Link to="#!" className="doctor-signup" onClick={handleOpenDoctorSignUp}> Doctor</Link>
+                                    <Link to="#!" className="doctor-signup" onClick={handleOpenDoctorSignUp}> Doctor</Link>
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
+            )}
+
+            {/* Render Forgot Password Form */}
+            {isForgotPasswordOpen && (
+                <ForgotPassword isOpen={isForgotPasswordOpen} onClose={handleCloseForgotPassword} />
             )}
 
             {/* Render Doctor Sign Up Popup */}
