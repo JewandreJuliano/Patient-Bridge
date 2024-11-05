@@ -72,11 +72,9 @@ const LandingPage = () => {
                 <div className="content">
                     <h1><span>Your Health,</span><br />In Your Hands</h1>
                     <p>
-                        In today's fast-paced world, access to prompt and efficient medical
-                        services is of paramount importance. When faced with a medical
-                        emergency or seeking immediate medical attention, the ability to
-                        receive quick medical services can significantly impact the outcome
-                        of a situation.
+                    Patient Bridge simplifies healthcare by making it easy to book appointments with trusted providers.
+                    Whether managing regular check-ups or urgent consultations,
+                    our platform helps you connect with the right care at the right time
                     </p>
                 </div>
                 <div className="image">

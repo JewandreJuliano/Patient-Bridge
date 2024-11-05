@@ -28,12 +28,8 @@ const DoctorDashboard = () => {
       setUsername(user.fullName || user.practiceName || 'Doctor');
     }
 
-    const today = new Date();
-    const upcomingAppointments = [
-      { id: 1, date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 2), patient: 'John Doe', time: '10:00 AM' },
-      { id: 2, date: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 5), patient: 'Jane Smith', time: '2:00 PM' },
-    ];
-    setAppointments(upcomingAppointments);
+    // Fetch appointments from backend if available; otherwise, initialize as empty array
+    setAppointments([]); // Empty array or fetch appointments from API
   }, []);
 
   const tileContent = ({ date, view }) => {
@@ -51,7 +47,7 @@ const DoctorDashboard = () => {
           <h1 className="title">PATIENT BRIDGE</h1>
         </div>
         <div className="nav-links">
-          <a href className="settings-button" onClick={() => setShowSettingsDropdown(!showSettingsDropdown)}>Settings</a>
+          <a href="#" className="settings-button" onClick={() => setShowSettingsDropdown(!showSettingsDropdown)}>Settings</a>
           {showSettingsDropdown && (
             <div className="settings-dropmenu">
               <a href="#" className="dropdown-item" onClick={() => navigate('/doctor-profile')}>Profile</a>
