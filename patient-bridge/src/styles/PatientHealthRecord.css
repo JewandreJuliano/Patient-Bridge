@@ -1,0 +1,146 @@
+/* Container for the Patient Health Record page */
+.patient-health-record-container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    background-color: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  li strong {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  li em {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  li span {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Button container to align buttons next to each other */
+  .button-container {
+    display: flex;
+    gap: 10px;  /* Add space between the buttons */
+    justify-content: flex-start;  /* Align buttons to the left */
+    margin-top: 20px;  /* Add space above the buttons */
+  }
+  
+  /* Save button */
+  .button-container button[type="submit"] {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    transition: background-color 0.3s;
+  }
+  
+  .button-container button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  /* Cancel button */
+  .button-container button[type="button"] {
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f44336;
+    color: white;
+    transition: background-color 0.3s;
+  }
+  
+  .button-container button[type="button"]:hover {
+    background-color: #e53935;
+  }
+  
+  /* Add Health Record form styles */
+  .add-record-form {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .add-record-form h4 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .add-record-form label {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  
+  .add-record-form input,
+  .add-record-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .add-record-form textarea {
+    height: 100px;
+    resize: vertical;
+  }
+  
+  .add-record-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .add-record-form button:hover {
+    background-color: #45a049;
+  }
+  
+  .add-record-form button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* No records found message */
+  .no-records-message {
+    font-size: 18px;
+    color: #777;
+    margin-top: 20px;
+  }
+  

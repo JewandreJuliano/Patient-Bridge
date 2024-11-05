@@ -41,9 +41,30 @@ const AppointmentList = ({ isOpen, onClose }) => {
     }
   }, [isOpen, doctor_id]);
 
+  const handleDeleteAppointment = async (appointment_id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`http://localhost:5432/api/delete-appointment/:appointment_id`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          setAppointments(appointments.filter(appointment => appointment.appointment_id !== appointment_id));
+          alert('Appointment deleted successfully');
+        } else {
+          alert('Error deleting appointment');
+        }
+      } catch (error) {
+        console.error('Error deleting appointment:', error);
+        alert('Error deleting appointment. Please try again.');
+      }
+    }
+  };
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toISOString().split('T')[0];
+    return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
   };
 
   return (
@@ -68,6 +89,12 @@ const AppointmentList = ({ isOpen, onClose }) => {
               {appointments.map((appointment, index) => (
                 <li key={index} className="records-item">
                   {formatDate(appointment.appointment_date)} at {appointment.appointment_time}
+                  <button
+                    onClick={() => handleDeleteAppointment(appointment.appointment_id)}
+                    className="delete-button"
+                  >
+                    Delete
+                  </button>
                 </li>
               ))}
             </ul>

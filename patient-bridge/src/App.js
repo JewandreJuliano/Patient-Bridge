@@ -17,6 +17,7 @@ import AboutUs from './components/AboutUs';
 import Medications from './components/Medications';
 import PatientAppointments from './components/PatientAppointments';
 import AppointmentList from './components/AppointmentList';
+import PatientHealthRecord from './components/PatientHealthRecord';
 
 const App = () => {
   // State to manage the medications across different components
@@ -46,6 +47,7 @@ const App = () => {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/patient-apts" element={<PatientAppointments />} />
         <Route path="/apt-list" element={<AppointmentList />} />
+        <Route path="/patient-health-record/:patientId" element={<PatientHealthRecord />} />
 
         {/* Track Medication Route */}
         <Route
