@@ -266,23 +266,34 @@ app.put('/api/patients/:id', (req, res) => {
 });
 
 // Define a route to update a doctor's profile
-app.post('/api/update-doctor-profile', async (req, res) => {
-  const { practiceName, practiceAddress, suburb, city, email, password, phoneNumber, specialty } = req.body;
+app.put('/api/update-doctor-profile', async (req, res) => {
+  const { practiceName, practiceAddress, suburb, city, email, password, phoneNumber, specialty, doctor_id } = req.body;
 
-  // Create a query to update the doctor's details
+  // Hash the password if it is provided
+  const hashedPassword = password ? await bcrypt.hash(password, 10) : null;
+
+  // Build the query dynamically based on whether the password is being updated
   const query = `
       UPDATE doctors 
-      SET practiceName = ?, practiceAddress = ?, suburb = ?, city = ?, email = ?, phoneNumber = ?, specialty = ?, password = ? 
-      WHERE doctor_id = ?`; // Make sure to include the doctor_id in your request body
+      SET 
+        practiceName = ?, 
+        practiceAddress = ?, 
+        suburb = ?, 
+        city = ?, 
+        email = ?, 
+        phoneNumber = ?, 
+        specialty = ?
+        ${hashedPassword ? ', password = ?' : ''}
+      WHERE doctor_id = ?
+  `;
 
-  // Assume doctor_id is sent in the request body
-  const doctorId = req.body.doctor_id; 
-
-  // Hash password only if it's being updated
-  let hashedPassword = password ? await bcrypt.hash(password, 10) : undefined;
+  // Build the values array conditionally
+  const values = [practiceName, practiceAddress, suburb, city, email, phoneNumber, specialty];
+  if (hashedPassword) values.push(hashedPassword);
+  values.push(doctor_id);
 
   // Execute the query
-  connection.query(query, [practiceName, practiceAddress, suburb, city, email, hashedPassword || null, phoneNumber, specialty, doctorId], (err, results) => {
+  connection.query(query, values, (err, results) => {
     if (err) {
       console.error('Error updating doctor profile:', err);
       return res.status(500).json({ error: 'Error updating doctor profile' });
@@ -290,6 +301,8 @@ app.post('/api/update-doctor-profile', async (req, res) => {
     res.status(200).json({ message: 'Profile updated successfully!' });
   });
 });
+
+
 
 // Assuming `connection` is your MySQL connection object
 app.post('/api/add-medications', (req, res) => {

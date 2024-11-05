@@ -117,7 +117,7 @@ function Medications() {
         if (response.ok) {
           setMedications(medications.filter((_, i) => i !== index));
         } else {
-          alert('Error deleting medication');
+          alert('Error deleting medication - Please refresh the page');
         }
       });
     }
