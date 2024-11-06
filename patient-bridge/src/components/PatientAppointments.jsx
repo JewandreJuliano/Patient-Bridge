@@ -15,7 +15,7 @@ function PatientAppointments() {
       setErrorMessage('');
       
       try {
-        const response = await fetch(`http://localhost:5432/api/appointments/${patient_id}`);
+        const response = await fetch(`http://localhost:5432/api/patient-appointments/${patient_id}`);
         
         if (response.ok) {
           const data = await response.json();
@@ -36,30 +36,22 @@ function PatientAppointments() {
     }
   }, [patient_id]);
 
-  // Function to handle appointment deletion
-  const handleDeleteAppointment = (appointment_id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
-    if (confirmDelete) {
-      deleteAppointment(appointment_id);
-    }
-  };
-
-  // Function to delete the appointment
+  // Function to delete an appointment
   const deleteAppointment = async (appointment_id) => {
     try {
-      const response = await fetch(`http://localhost:5432/api/delete-appointment/${appointment_id}`, {
+      const response = await fetch(`http://localhost:5432/api/appointments/${appointment_id}`, {
         method: 'DELETE',
       });
-
+      
       if (response.ok) {
+        // Update appointments state by removing the deleted appointment
         setAppointments(appointments.filter(appointment => appointment.appointment_id !== appointment_id));
-        alert('Appointment deleted successfully');
       } else {
-        alert('Error deleting appointment.');
+        setErrorMessage('Error deleting appointment');
       }
     } catch (error) {
       console.error('Error deleting appointment:', error);
-      alert('Error deleting appointment. Please try again.');
+      setErrorMessage('Error deleting appointment');
     }
   };
 
@@ -101,7 +93,7 @@ function PatientAppointments() {
                   <td>{appointment.appointment_time}</td>
                   <td>
                     <button
-                      onClick={() => handleDeleteAppointment(appointment.appointment_id)}
+                      onClick={() => deleteAppointment(appointment.appointment_id)}
                       className="delete-button"
                     >
                       Delete

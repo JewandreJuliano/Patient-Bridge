@@ -45,10 +45,10 @@ const AppointmentList = ({ isOpen, onClose }) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
     if (confirmDelete) {
       try {
-        const response = await fetch(`http://localhost:5432/api/delete-appointment/:appointment_id`, {
+        const response = await fetch(`http://localhost:5432/api/delete-appointment/${appointment_id}`, {
           method: 'DELETE',
         });
-
+  
         if (response.ok) {
           setAppointments(appointments.filter(appointment => appointment.appointment_id !== appointment_id));
           alert('Appointment deleted successfully');
@@ -61,6 +61,7 @@ const AppointmentList = ({ isOpen, onClose }) => {
       }
     }
   };
+  
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
