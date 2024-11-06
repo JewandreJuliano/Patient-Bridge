@@ -111,8 +111,8 @@ const LandingPage = () => {
                         </div>
                         <div className="benefit-item">
                             <img src="/assets/emergency.jpg" alt="Emergency Responses" className="benefit-icon" loading="lazy" />
-                            <h3>Emergency Responses</h3>
-                            <p>Contact emergency lines directly.</p>
+                            <h3>Emergency Contacts</h3>
+                            <p>Add your emergency contacts and access them on our app</p>
                         </div>
                     </div>
                 </section>

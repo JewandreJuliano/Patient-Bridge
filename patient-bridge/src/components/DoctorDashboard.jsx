@@ -26,17 +26,32 @@ const DoctorDashboard = () => {
     if (user) {
       setUsername(user.fullName || user.practiceName || 'Doctor');
     }
-
-    // Fetch appointments from backend if available; otherwise, initialize as empty array
-    setAppointments([]); // Empty array or fetch appointments from API
+  
+    const fetchAppointments = async () => {
+      try {
+        const response = await fetch(`http://localhost:5432/api/appointments/${user.doctor_id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setAppointments(data); // Set fetched appointments to state
+        }
+      } catch (error) {
+        console.error("Error fetching appointments:", error);
+      }
+    };
+  
+    fetchAppointments();
   }, []);
+  
 
   const tileContent = ({ date, view }) => {
     if (view === 'month') {
-      const appointmentDay = appointments.some(appointment => appointment.date.toDateString() === date.toDateString());
-      return appointmentDay ? <div className="highlight-circle"></div> : null;
+      const hasAppointment = appointments.some(
+        appointment => new Date(appointment.appointment_date).toDateString() === date.toDateString()
+      );
+      return hasAppointment ? <div className="highlight-circle"></div> : null;
     }
   };
+  
 
   return (
     <div className="dashboard">

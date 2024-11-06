@@ -72,7 +72,6 @@ const HelpPage = () => {
                 <p><strong>Find a Doctor:</strong></p>
                 <ol>
                     <li>Search for your preferred doctor by name or specialty via the search bar on your patient dashboard.</li>
-                    <li>View available time slots based on the doctor's schedule.</li>
                 </ol>
 
                 <p><strong>Book an Appointment:</strong></p>

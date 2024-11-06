@@ -250,14 +250,14 @@ ul li {
     margin: 0;
 }
 
-/* Calendar Highlight */
 .highlight-circle {
     background-color: #4A6A8D;
     height: 12px;
     width: 12px;
     border-radius: 50%;
     margin: auto;
-}
+  }
+  
 
 
 

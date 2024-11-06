@@ -15,8 +15,14 @@ const VerifyPractice = ({ isOpen, onClose }) => {
 
   const handleSave = () => {
     if (pdfFile) {
-      // Logic to save or upload the file
-      console.log("File saved:", pdfFile);
+      // Show confirmation dialog
+      const confirmSave = window.confirm("File saved successfully! Click OK to return to the dashboard.");
+      if (confirmSave) {
+        // Simulate save by logging to console
+        console.log("File saved:", pdfFile);
+        // Close popup and return to dashboard
+        onClose();
+      }
     } else {
       alert("Please upload a file before saving.");
     }
