@@ -388,6 +388,14 @@ app.put('/api/medications/:id', (req, res) => {
   });
 });
 
+app.delete('/api/medications/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'DELETE FROM medications WHERE medication_id = ?';
+  connection.query(query, [id], (err) => {
+    if (err) return res.status(500).send(err);
+    res.status(204).send();
+  });
+});
 
 app.get('/api/medications/:patient_id', (req, res) => {
   const { patient_id } = req.params;
