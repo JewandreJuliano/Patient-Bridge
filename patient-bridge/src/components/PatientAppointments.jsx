@@ -36,22 +36,24 @@ function PatientAppointments() {
     }
   }, [patient_id]);
 
-  // Function to delete an appointment
-  const deleteAppointment = async (appointment_id) => {
-    try {
-      const response = await fetch(`http://localhost:5432/api/appointments/${appointment_id}`, {
-        method: 'DELETE',
-      });
-      
-      if (response.ok) {
-        // Update appointments state by removing the deleted appointment
-        setAppointments(appointments.filter(appointment => appointment.appointment_id !== appointment_id));
-      } else {
-        setErrorMessage('Error deleting appointment');
+  const handleDeleteAppointment = async (appointment_id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
+    if (confirmDelete) {
+      try {
+        const response = await fetch(`http://localhost:5432/api/delete-appointment/${appointment_id}`, {
+          method: 'DELETE',
+        });
+  
+        if (response.ok) {
+          setAppointments(appointments.filter(appointment => appointment.appointment_id !== appointment_id));
+          alert('Appointment deleted successfully');
+        } else {
+          alert('Error deleting appointment');
+        }
+      } catch (error) {
+        console.error('Error deleting appointment:', error);
+        alert('Error deleting appointment. Please try again.');
       }
-    } catch (error) {
-      console.error('Error deleting appointment:', error);
-      setErrorMessage('Error deleting appointment');
     }
   };
 
@@ -93,7 +95,7 @@ function PatientAppointments() {
                   <td>{appointment.appointment_time}</td>
                   <td>
                     <button
-                      onClick={() => deleteAppointment(appointment.appointment_id)}
+                      onClick={() => handleDeleteAppointment(appointment.appointment_id)}
                       className="delete-button"
                     >
                       Delete

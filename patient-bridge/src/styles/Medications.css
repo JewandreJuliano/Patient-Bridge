@@ -34,9 +34,11 @@ button:hover {
 }
 
 table {
-  margin-top:25px;
-  width: 100%;
+  margin-top:50px;
+  margin: 0 auto;
+  width: 80%;
   border-collapse: collapse;
+  align-items: center;
 }
 .back-link {
   font-size: 18px; /* Adjust the size as needed */

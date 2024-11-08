@@ -66,55 +66,53 @@ const EmergencyContacts = ({ patientId }) => {
       <header className="dashboard-header"> 
         <div className="logo-title">
           <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
-          <h1 className="title">Patient Bridge</h1>
+          <h1 className="title">PATIENT BRIDGE</h1>
         </div>
       </header>
 
       <div className="profile-container"> 
-        <h2>Emergency Contact</h2>
+        <h2>EMERGENCY CONTACT</h2>
+        <p>Please enter your emergency contact's information below</p>
 
         {successMessage && <p className="success-message">{successMessage}</p>}
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 
         <div className="input-group">
-          <label htmlFor="emergencyFullName">Full Name</label>
+          <label htmlFor="emergencyFullName">FULL NAME</label>
           <input
             type="text"
             id="emergencyFullName"
-            placeholder="Full name"
+           
             value={contactName}
             onChange={(e) => setContactName(e.target.value)}
           />
         </div>
 
         <div className="input-group">
-          <label htmlFor="emergencyRelationship">Relationship</label>
+          <label htmlFor="emergencyRelationship">RELATIONSHIP</label>
           <input
             type="text"
             id="emergencyRelationship"
-            placeholder="Relationship"
             value={relationship}
             onChange={(e) => setRelationship(e.target.value)}
           />
         </div>
 
         <div className="input-group">
-          <label htmlFor="emergencyPhone">Phone Number</label>
+          <label htmlFor="emergencyPhone">PHONE NUMBER</label>
           <input
             type="tel"
             id="emergencyPhone"
-            placeholder="Phone number"
-            value={phoneNumber}
+                       value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
           />
         </div>
 
         <div className="input-group">
-          <label htmlFor="emergencyEmail">Email Address</label>
+          <label htmlFor="emergencyEmail">EMAIL</label>
           <input
             type="email"
             id="emergencyEmail"
-            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -122,10 +120,10 @@ const EmergencyContacts = ({ patientId }) => {
 
         <div className="button-container">
   <button type="button" onClick={handleSaveChanges} disabled={isLoading}>
-    {isLoading ? 'Saving...' : 'Save Changes'}
+    {isLoading ? 'Saving...' : 'SAVE CHANGES'}
   </button>
   <button type="button" onClick={handleCancel} disabled={isLoading}>
-    Cancel
+    CANCEL
   </button>
 </div>
       </div>
