@@ -15,7 +15,10 @@ const TrackMedicationPage = () => {
       if (response.ok) {
         const data = await response.json();
         setMedications(data);
-        setMedicationStatus(new Array(data.length).fill(false));
+        
+        // Check if we have any stored medication status
+        const storedStatus = JSON.parse(localStorage.getItem('medicationStatus')) || new Array(data.length).fill(false);
+        setMedicationStatus(storedStatus);
       } else {
         console.error('Error fetching medications');
       }
@@ -23,37 +26,22 @@ const TrackMedicationPage = () => {
     fetchMedications();
   }, [patient_id]);
 
-  const handleCheckboxChange = async (index) => {
-    const updatedStatus = medicationStatus.map((status, i) => 
-      i === index ? !status : status
-    );
-    
-    setMedicationStatus(updatedStatus);
+  // Handle the checkbox toggle and message display
+  const handleCheckboxChange = (index) => {
+    const newMedicationStatus = [...medicationStatus];
+    newMedicationStatus[index] = !newMedicationStatus[index];
 
-    const payload = {
-      patient_id: patient_id,
-      medication_id: medications[index].id,
-      taken: updatedStatus[index]
-    };
+    setMedicationStatus(newMedicationStatus);
 
-    try {
-      const response = await fetch('http://localhost:5432/api/medication-status', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (response.ok) {
-        setMessage(`Medication status updated: ${medications[index].name} marked as ${updatedStatus[index] ? 'taken' : 'not taken'}.`);
-      } else {
-        setMessage('Failed to update medication status. Please try again.');
-      }
-    } catch (error) {
-      console.error('Error posting medication status:', error);
-      setMessage('An error occurred while updating medication status.');
+    // Set the message based on the checkbox status
+    if (newMedicationStatus[index]) {
+      setMessage(`You have successfully taken your medication: ${medications[index].name}`);
+    } else {
+      setMessage('');
     }
+
+    // Store the updated status in localStorage
+    localStorage.setItem('medicationStatus', JSON.stringify(newMedicationStatus));
   };
 
   return (
@@ -69,7 +57,7 @@ const TrackMedicationPage = () => {
         <h2>Track Medications</h2>
         {message && <p className="status-message">{message}</p>}
         {medications.length === 0 ? (
-          <p>No medications added yet.</p>
+          <p>No medications to track. Please add a medication <a href='/medication'>here.</a></p>
         ) : (
           <ul className="medications-list">
             {medications.map((medication, index) => (
