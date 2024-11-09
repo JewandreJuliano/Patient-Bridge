@@ -388,14 +388,6 @@ app.put('/api/medications/:id', (req, res) => {
   });
 });
 
-app.delete('/api/medications/:id', (req, res) => {
-  const { id } = req.params;
-  const query = 'DELETE FROM medications WHERE medication_id = ?';
-  connection.query(query, [id], (err) => {
-    if (err) return res.status(500).send(err);
-    res.status(204).send();
-  });
-});
 
 app.get('/api/medications/:patient_id', (req, res) => {
   const { patient_id } = req.params;
@@ -405,6 +397,7 @@ app.get('/api/medications/:patient_id', (req, res) => {
     res.json(results); // Make sure each result includes medication_id
   });
 });
+
 app.get('/api/appointments/:doctor_id', (req, res) => {
   const { doctor_id } = req.params;
   const query = `
@@ -501,13 +494,10 @@ app.delete('/health-records/:recordId', (req, res) => {
   });
 });
 
-
-
-
-
-app.get('/api/patient-appointments/:patient_id', (req, res) => {
+// Patient appointment list 
+app.get('/api/appointments/patient/:patient_id', (req, res) => {
   const { patient_id } = req.params;
-  const query = 'SELECT appointment_date, appointment_time FROM appointments WHERE patient_id = ?';
+  const query = 'SELECT appointment_id, appointment_date, appointment_time FROM appointments WHERE patient_id = ?';
 
   connection.query(query, [patient_id], (err, results) => {
     if (err) {
@@ -518,6 +508,23 @@ app.get('/api/patient-appointments/:patient_id', (req, res) => {
   });
 });
 
+app.delete('/api/appointments/delete/:appointment_id', (req, res) => {
+  const { appointment_id } = req.params;
+  const query = 'DELETE FROM appointments WHERE appointment_id = ?';
+
+  connection.query(query, [appointment_id], (err, results) => {
+    if (err) {
+      console.error('Error deleting appointment:', err);
+      return res.status(500).json({ error: 'Error deleting appointment' });
+    }
+    
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: 'Appointment not found' });
+    }
+
+    res.json({ message: 'Appointment deleted successfully' });
+  });
+});
 
 // Backend API to fetch appointments for a specific doctor
 app.get('/api/appointments/', (req, res) => {
@@ -542,20 +549,20 @@ app.get('/api/appointments/', (req, res) => {
 // Backend API to delete an appointment
 app.delete('/api/delete-appointment/:appointment_id', (req, res) => {
   const { appointment_id } = req.params;
+  
+  // Delete from the appointments table
   const deleteAppointmentQuery = 'DELETE FROM appointments WHERE appointment_id = ?';
-
+  
   connection.query(deleteAppointmentQuery, [appointment_id], (err, results) => {
     if (err) {
       console.error('Error deleting appointment:', err);
       return res.status(500).json({ error: 'Error deleting appointment' });
     }
-    if (results.affectedRows === 0) {
-      return res.status(404).json({ error: 'Appointment not found' });
-    }
+
+    // Respond with success
     res.status(200).json({ message: 'Appointment deleted successfully' });
   });
 });
-
 
 
 

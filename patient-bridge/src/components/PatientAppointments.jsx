@@ -15,7 +15,7 @@ function PatientAppointments() {
       setErrorMessage('');
       
       try {
-        const response = await fetch(`http://localhost:5432/api/patient-appointments/${patient_id}`);
+        const response = await fetch(`http://localhost:5432/api/appointments/patient/${patient_id}`);
         
         if (response.ok) {
           const data = await response.json();
@@ -39,7 +39,7 @@ function PatientAppointments() {
   // Function to delete an appointment
   const deleteAppointment = async (appointment_id) => {
     try {
-      const response = await fetch(`http://localhost:5432/api/appointments/${appointment_id}`, {
+      const response = await fetch(`http://localhost:5432/api/appointments/delete/${appointment_id}`, {
         method: 'DELETE',
       });
       
