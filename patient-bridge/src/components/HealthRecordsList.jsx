@@ -21,10 +21,14 @@ const HealthRecordsList = ({ doctorId, isOpen, onClose }) => {
       .then((res) => res.json())
       .then((data) => {
         console.log('API Response:', data); // Log the response
-        // Check if data is an array and has valid patient info
         if (Array.isArray(data) && data.length > 0) {
-          console.log('Fetched Patients:', data); // Debugging log
-          setPatients(data); // Set patients state only if data is valid
+          // Remove duplicate patients by creating a unique list based on patient_id
+          const uniquePatients = data.filter(
+            (patient, index, self) =>
+              index === self.findIndex((p) => p.patient_id === patient.patient_id)
+          );
+          console.log('Filtered Unique Patients:', uniquePatients); // Debugging log
+          setPatients(uniquePatients); // Set patients state with unique patients only
         } else {
           console.error('Expected an array with patients, but got:', data);
           alert('No patients assigned to this doctor.');
@@ -89,7 +93,9 @@ const HealthRecordsList = ({ doctorId, isOpen, onClose }) => {
     isOpen && (
       <div className="popup-container">
         <div className="popup-content">
-          <button onClick={onClose}>X</button>
+        <button style={{ fontSize: '10px', position: 'absolute', top: '10px', right: '10px' }} onClick={onClose}>
+  X
+</button>
           <h2>Manage Health Records</h2>
 
           {/* Assigned Patients List */}
@@ -139,15 +145,18 @@ const HealthRecordsList = ({ doctorId, isOpen, onClose }) => {
                   value={newRecord.town}
                   onChange={(e) => setNewRecord({ ...newRecord, town: e.target.value })}
                 />
-                <button type="button" onClick={handleAddRecord}>
-                  Save Record
-                </button>
+                <div className="record-button">
+  <button type="button" onClick={handleAddRecord}>
+    Save Record
+  </button>
+  <button onClick={closeFormForCurrentPatient} className="close-form-btn">
+    Cancel
+  </button>
+</div>
               </form>
 
-              {/* Close Button for Current Patient */}
-              <button onClick={closeFormForCurrentPatient} className="close-form-btn">
-                Cancel
-              </button>
+              
+              
             </div>
           )}
         </div>

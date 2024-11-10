@@ -114,8 +114,8 @@ const DoctorAvailability = ({ isOpen, onClose }) => {
                         {availableDates.map(({ date, startTime, endTime }) => (
                             <div key={date} className="date-item">
                                 <span>{date} - {startTime} to {endTime}</span>
-                                <button onClick={() => editDate(date)}>Edit</button>
-                                <button onClick={() => removeDate(date)}>Remove</button>
+                                <button className='edit-btn'onClick={() => editDate(date)}>Edit</button>
+                                <button className='remove-btn' onClick={() => removeDate(date)}>Remove</button>
                             </div>
                         ))}
                     </div>

@@ -65,7 +65,6 @@
 
 .form-group input {
     width: 300px !important;
-    padding: 10px !important;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -74,7 +73,6 @@
 .password-container {
     display: flex;
     justify-content: space-between; /* Align items on the same line */
-    align-items: center; /* Center vertically */
     width: 100%; /* Match width of form group */
 }
 

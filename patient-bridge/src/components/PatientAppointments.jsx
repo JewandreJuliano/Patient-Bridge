@@ -38,22 +38,27 @@ function PatientAppointments() {
 
   // Function to delete an appointment
   const deleteAppointment = async (appointment_id) => {
+    // Show confirmation dialog
+    const userConfirmed = window.confirm("Are you sure you want to delete this appointment?");
+    
+    if (!userConfirmed) return; // If user cancels, exit the function
+
     try {
-      const response = await fetch(`http://localhost:5432/api/appointments/delete/${appointment_id}`, {
-        method: 'DELETE',
-      });
-      
-      if (response.ok) {
-        // Update appointments state by removing the deleted appointment
-        setAppointments(appointments.filter(appointment => appointment.appointment_id !== appointment_id));
-      } else {
-        setErrorMessage('Error deleting appointment');
-      }
+        const response = await fetch(`http://localhost:5432/api/appointments/delete/${appointment_id}`, {
+            method: 'DELETE',
+        });
+        
+        if (response.ok) {
+            // Update appointments state by removing the deleted appointment
+            setAppointments(appointments.filter(appointment => appointment.appointment_id !== appointment_id));
+        } else {
+            setErrorMessage('Error deleting appointment');
+        }
     } catch (error) {
-      console.error('Error deleting appointment:', error);
-      setErrorMessage('Error deleting appointment');
+        console.error('Error deleting appointment:', error);
+        setErrorMessage('Error deleting appointment');
     }
-  };
+};
 
   // Function to format date to YYYY-MM-DD
   const formatDate = (dateString) => {

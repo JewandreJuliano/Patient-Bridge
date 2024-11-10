@@ -18,6 +18,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+
 .close-btn {
   background: transparent;
   border: none;
@@ -70,3 +71,30 @@
 .patient-item button:hover {
   background-color: #0056b3;
 }
+
+.record-button {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px; /* Space between buttons */
+  margin-top: 15px; /* Optional: Add some space above the buttons */
+}
+
+.record-button button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.record-buttonbutton:first-child {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.record-button button:first-child:hover {
+  background-color: #0056b3;
+}
+
+
+

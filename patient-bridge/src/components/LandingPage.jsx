@@ -70,7 +70,7 @@ const LandingPage = () => {
 
             <header className="header2">
                 <div className="content">
-                    <h1><span>Your Health,</span><br />In Your Hands</h1>
+                    <h1 className='landing-head'><span>Your Health,</span><br />In Your Hands</h1>
                     <p>
                     Patient Bridge simplifies healthcare by making it easy to book appointments with trusted providers.
                     Whether managing regular check-ups or urgent consultations,

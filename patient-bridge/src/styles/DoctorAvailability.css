@@ -19,15 +19,6 @@
     position: relative;
 }
 
-.close-btn {
-    background: none;
-    border: none;
-    font-size: 20px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-}
 
 h2 {
     margin: 0 0 15px 0;
@@ -42,6 +33,19 @@ p {
     margin-bottom: 15px;
 }
 
+/* Styles for Edit and Remove buttons */
+.edit-btn, .remove-btn {
+    background-color: #2c3e50 !important;
+    color: white;
+    padding: 6px 12px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .edit-btn:hover, .remove-btn:hover {
+    background-color: #1f2a37; /* Darker shade on hover */
+  }
 .time-inputs {
     display: flex;
     justify-content: space-between;
@@ -69,14 +73,11 @@ p {
 }
 
 .date-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 5px 0;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #e0e0e0;
+    border: none;
+    padding: 5px 10px;
     border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
 }
 
 .date-item button {

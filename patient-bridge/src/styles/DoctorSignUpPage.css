@@ -62,10 +62,10 @@
 
 .doctor-form-group input {
     width: 175px;
-    padding: 5px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 5px;
+    height: 10px;
 }
 
 .doctor-signup-form {
