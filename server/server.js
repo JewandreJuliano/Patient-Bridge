@@ -481,18 +481,24 @@ app.put('/health-records/:recordId', (req, res) => {
   );
 });
 
-app.delete('/health-records/:recordId', (req, res) => {
-  const recordId = req.params.recordId;
-  connection.query('DELETE FROM health_records WHERE record_id = ?', [recordId], (err, result) => {
+app.delete('/api/medications/delete/:medication_id', (req, res) => {
+  const { medication_id } = req.params;
+  const query = 'DELETE FROM medications WHERE medication_id = ?';
+
+  connection.query(query, [medication_id], (err, results) => {
     if (err) {
-      return res.status(500).json({ error: err.message });
+      console.error('Error deleting medication:', err);
+      return res.status(500).json({ error: 'Error deleting medication' });
     }
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ error: 'Record not found' });
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: 'Medication not found' });
     }
-    res.json({ message: 'Record deleted successfully' });
+
+    res.json({ message: 'Medication deleted successfully' });
   });
 });
+
 
 // Patient appointment list 
 app.get('/api/appointments/patient/:patient_id', (req, res) => {

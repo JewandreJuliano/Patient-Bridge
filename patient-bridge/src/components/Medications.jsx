@@ -111,7 +111,7 @@ function Medications() {
     const confirmDelete = window.confirm("Are you sure you want to delete this medication?");
     if (confirmDelete) {
       const medication = medications[index];
-      fetch(`http://localhost:5432/api/medications/${medication.medication_id}`, {
+      fetch(`http://localhost:5432/api/medications/delete/${medication.medication_id}`, {
         method: 'DELETE',
       }).then(response => {
         if (response.ok) {
