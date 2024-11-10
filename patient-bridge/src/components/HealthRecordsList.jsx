@@ -55,7 +55,7 @@ const HealthRecordsList = ({ doctorId, isOpen, onClose }) => {
       .then((data) => {
         if (data.message) {
           alert(data.message);
-          resetForm();
+          resetForm(); // Reset form after saving successfully
         } else {
           alert('Error adding health record.');
         }
@@ -81,9 +81,9 @@ const HealthRecordsList = ({ doctorId, isOpen, onClose }) => {
     setSelectedPatient(null);
   };
 
-  // Debugging log to check if patients are set correctly
-  console.log('Selected Patient:', selectedPatient);  // Debugging log
-  console.log('Patients:', patients);  // Check what patients data looks like
+  const closeFormForCurrentPatient = () => {
+    resetForm(); // Reset the form and clear the patient data
+  };
 
   return (
     isOpen && (
@@ -100,8 +100,6 @@ const HealthRecordsList = ({ doctorId, isOpen, onClose }) => {
                 <li key={patient.patient_id}>
                   <button 
                     onClick={() => {
-                      // Debugging log for onClick
-                      console.log('Button clicked for patient:', patient);
                       setSelectedPatient(patient);  // Set the selected patient
                     }}
                   >
@@ -145,6 +143,11 @@ const HealthRecordsList = ({ doctorId, isOpen, onClose }) => {
                   Save Record
                 </button>
               </form>
+
+              {/* Close Button for Current Patient */}
+              <button onClick={closeFormForCurrentPatient} className="close-form-btn">
+                Cancel
+              </button>
             </div>
           )}
         </div>
