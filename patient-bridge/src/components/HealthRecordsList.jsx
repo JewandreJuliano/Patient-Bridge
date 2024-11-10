@@ -1,146 +1,150 @@
-import React, { useState } from 'react';
-import '../styles/HealthRecordsList.css';
+import React, { useState, useEffect } from 'react';
 
-const HealthRecordsList = ({ isOpen, onClose }) => {
-  const [selectedPatientId, setSelectedPatientId] = useState(null);
+const HealthRecordsList = ({ doctorId, isOpen, onClose }) => {
+  const [patients, setPatients] = useState([]); // Store the list of patients
+  const [selectedPatient, setSelectedPatient] = useState(null);
   const [newRecord, setNewRecord] = useState({
-    procedure: '',
-    visit_date: '',
-    notes: '',
-    dentist_name: ''
+    illness_name: '',
+    diagnosis_date: '',
+    treatment_details: '',
+    town: '',
   });
 
-  // Hardcoded patient data
-  const patients = [
-    { id: 1, patientName: 'John Doe' },
-    { id: 2, patientName: 'Jane Smith' },
-    { id: 3, patientName: 'Emily Davis' },
-  ];
+  useEffect(() => {
+    if (!doctorId) {
+      console.error('doctorId is missing');
+      return; // Prevent API call if doctorId is missing
+    }
 
-  // Hardcoded dental records associated with each patient
-  const dentalRecordsData = {
-    1: [
-      { record_id: 1, procedure: 'Tooth Extraction', visit_date: '2023-07-12', notes: 'Successful extraction of upper molar.', dentist_name: 'SmileHub' },
-      { record_id: 2, procedure: 'Teeth Cleaning', visit_date: '2023-08-05', notes: 'Routine cleaning; no issues.', dentist_name: 'SmileHub' },
-    ],
-    2: [
-      { record_id: 3, procedure: 'Cavity Filling', visit_date: '2023-06-20', notes: 'Filled two small cavities.', dentist_name: 'SmileHub' },
-    ],
-    3: [
-      { record_id: 4, procedure: 'Root Canal', visit_date: '2023-09-10', notes: 'Completed root canal on lower left molar.', dentist_name: 'SmileHub' },
-    ],
-  };
+    // Fetch patients assigned to the doctor
+    fetch(`http://localhost:5432/api/patients-assigned/${doctorId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('API Response:', data); // Log the response
+        // Check if data is an array and has valid patient info
+        if (Array.isArray(data) && data.length > 0) {
+          console.log('Fetched Patients:', data); // Debugging log
+          setPatients(data); // Set patients state only if data is valid
+        } else {
+          console.error('Expected an array with patients, but got:', data);
+          alert('No patients assigned to this doctor.');
+        }
+      })
+      .catch((err) => {
+        console.error('Error fetching patients:', err);
+        alert('Error fetching patients');
+      });
+  }, [doctorId]);
 
-  // Retrieve health records for the selected patient
-  const dentalRecords = selectedPatientId ? dentalRecordsData[selectedPatientId] : [];
-
-  // Handle patient selection
-  const handlePatientClick = (id) => {
-    setSelectedPatientId(id);
-  };
-
-  // Handle adding a new dental record (for demonstration, only updates local state)
   const handleAddRecord = () => {
-    if (!newRecord.procedure || !newRecord.visit_date || !newRecord.notes || !newRecord.dentist_name) return;
+    if (!isFormValid()) return;
 
-    const newRecordData = {
+    const recordData = {
+      patient_id: selectedPatient.patient_id,
       ...newRecord,
-      record_id: Date.now(), // Unique ID for new record
     };
-    
-    // Add the new record to the hardcoded dental records for this patient
-    dentalRecordsData[selectedPatientId].push(newRecordData);
-    setNewRecord({ procedure: '', visit_date: '', notes: '', dentist_name: '' });
+
+    fetch('/api/add-health-record', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(recordData),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message) {
+          alert(data.message);
+          resetForm();
+        } else {
+          alert('Error adding health record.');
+        }
+      });
   };
+
+  const isFormValid = () => {
+    const { illness_name, diagnosis_date, treatment_details, town } = newRecord;
+    if (!illness_name || !diagnosis_date || !treatment_details || !town || !selectedPatient) {
+      alert('Please fill in all fields.');
+      return false;
+    }
+    return true;
+  };
+
+  const resetForm = () => {
+    setNewRecord({
+      illness_name: '',
+      diagnosis_date: '',
+      treatment_details: '',
+      town: '',
+    });
+    setSelectedPatient(null);
+  };
+
+  // Debugging log to check if patients are set correctly
+  console.log('Selected Patient:', selectedPatient);  // Debugging log
+  console.log('Patients:', patients);  // Check what patients data looks like
 
   return (
     isOpen && (
       <div className="popup-container">
         <div className="popup-content">
-          <button
-            style={{ fontSize: '10px', position: 'absolute', top: '10px', right: '10px' }}
-            onClick={onClose}
-          >
-            X
-          </button>
+          <button onClick={onClose}>X</button>
           <h2>Manage Health Records</h2>
 
-          {!selectedPatientId ? (
-            <div>
-              <h3>Select a Patient</h3>
-              <ul>
-                {patients.map((patient) => (
-                  <li key={patient.id}>
-                    <button onClick={() => handlePatientClick(patient.id)}>
-                      {patient.patientName}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : (
-            <div>
-              <h3>Health Records for {patients.find((p) => p.id === selectedPatientId)?.patientName}</h3>
-              <button onClick={() => setSelectedPatientId(null)}>Back to Patient List</button>
-
-              {/* Form for adding new dental records */}
-              <div className="dental-record-form">
-                <h4>Add New Health Record</h4>
-                <form onSubmit={(e) => e.preventDefault()}>
-                  <label>
-                    Procedure:
-                    <input
-                      type="text"
-                      value={newRecord.procedure}
-                      onChange={(e) => setNewRecord({ ...newRecord, procedure: e.target.value })}
-                      placeholder="Procedure"
-                    />
-                  </label>
-                  <label>
-                    Visit Date:
-                    <input
-                      type="date"
-                      value={newRecord.visit_date}
-                      onChange={(e) => setNewRecord({ ...newRecord, visit_date: e.target.value })}
-                    />
-                  </label>
-                  <label>
-                    Notes:
-                    <textarea
-                      value={newRecord.notes}
-                      onChange={(e) => setNewRecord({ ...newRecord, notes: e.target.value })}
-                      placeholder="Notes"
-                    />
-                  </label>
-                  <label>
-                    Dentist Name:
-                    <input
-                      type="text"
-                      value={newRecord.dentist_name}
-                      onChange={(e) => setNewRecord({ ...newRecord, dentist_name: e.target.value })}
-                      placeholder="Dentist Name"
-                    />
-                  </label>
-                  <button type="button" onClick={handleAddRecord}>
-                    Save Record
+          {/* Assigned Patients List */}
+          <h3>Assigned Patients</h3>
+          <ul>
+            {patients.length ? (
+              patients.map((patient) => (
+                <li key={patient.patient_id}>
+                  <button 
+                    onClick={() => {
+                      // Debugging log for onClick
+                      console.log('Button clicked for patient:', patient);
+                      setSelectedPatient(patient);  // Set the selected patient
+                    }}
+                  >
+                    {patient.fullName} {/* Display the patient's full name */}
                   </button>
-                </form>
-              </div>
+                </li>
+              ))
+            ) : (
+              <li>No patients available</li>
+            )}
+          </ul>
 
-              {/* Display list of dental records */}
-              <div id="dental-records-list">
-                {dentalRecords.length > 0 ? (
-                  <ul>
-                    {dentalRecords.map((record) => (
-                      <li key={record.record_id} className="record-item">
-                        <strong>{record.procedure}</strong> - {record.notes} <em>({record.visit_date})</em> - <span>Dentist: {record.dentist_name}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>No dental records found for this patient.</p>
-                )}
-              </div>
+          {/* Add Record Form */}
+          {selectedPatient && (
+            <div>
+              <h3>Add Record for {selectedPatient.fullName}</h3> {/* Show selected patient's name */}
+              <form>
+                <input
+                  type="text"
+                  placeholder="Illness Name"
+                  value={newRecord.illness_name}
+                  onChange={(e) => setNewRecord({ ...newRecord, illness_name: e.target.value })}
+                />
+                <input
+                  type="date"
+                  value={newRecord.diagnosis_date}
+                  onChange={(e) => setNewRecord({ ...newRecord, diagnosis_date: e.target.value })}
+                />
+                <textarea
+                  placeholder="Treatment Details"
+                  value={newRecord.treatment_details}
+                  onChange={(e) => setNewRecord({ ...newRecord, treatment_details: e.target.value })}
+                />
+                <input
+                  type="text"
+                  placeholder="Town"
+                  value={newRecord.town}
+                  onChange={(e) => setNewRecord({ ...newRecord, town: e.target.value })}
+                />
+                <button type="button" onClick={handleAddRecord}>
+                  Save Record
+                </button>
+              </form>
             </div>
           )}
         </div>

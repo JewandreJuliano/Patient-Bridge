@@ -398,6 +398,24 @@ app.get('/api/medications/:patient_id', (req, res) => {
   });
 });
 
+app.delete('/api/medications/delete/:medication_id', (req, res) => {
+  const { medication_id } = req.params;
+  const query = 'DELETE FROM medications WHERE medication_id = ?';
+
+  connection.query(query, [medication_id], (err, results) => {
+    if (err) {
+      console.error('Error deleting medication:', err);
+      return res.status(500).json({ error: 'Error deleting medication' });
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).json({ error: 'Medication not found' });
+    }
+
+    res.json({ message: 'Medication deleted successfully' });
+  });
+});
+
 app.get('/api/appointments/:doctor_id', (req, res) => {
   const { doctor_id } = req.params;
   const query = `
@@ -439,31 +457,6 @@ app.post('/health-records', (req, res) => {
   );
 });
 
-app.get('/api/health-records/:patientId', (req, res) => {
-  const patientId = req.params.patientId;
-
-  // Update the SQL query to fetch all health records for a specific patient
-  const query = `
-    SELECT hr.*, 
-           CONCAT(p.first_name, ' ', p.last_name) AS fullName 
-    FROM health_records hr
-    JOIN patients p ON hr.patient_id = p.patient_id
-    WHERE hr.patient_id = ?
-  `;
-
-  connection.query(query, [patientId], (err, results) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    if (results.length === 0) {
-      return res.status(404).json({ error: 'No health records found for this patient' });
-    }
-    res.json(results); // Return all records for the patient
-  });
-});
-
-
-
 // Update health record
 app.put('/health-records/:recordId', (req, res) => {
   const { illness_name, diagnosis_date, treatment_details, town } = req.body;
@@ -479,24 +472,6 @@ app.put('/health-records/:recordId', (req, res) => {
       res.json({ message: 'Record updated successfully' });
     }
   );
-});
-
-app.delete('/api/medications/delete/:medication_id', (req, res) => {
-  const { medication_id } = req.params;
-  const query = 'DELETE FROM medications WHERE medication_id = ?';
-
-  connection.query(query, [medication_id], (err, results) => {
-    if (err) {
-      console.error('Error deleting medication:', err);
-      return res.status(500).json({ error: 'Error deleting medication' });
-    }
-
-    if (results.affectedRows === 0) {
-      return res.status(404).json({ error: 'Medication not found' });
-    }
-
-    res.json({ message: 'Medication deleted successfully' });
-  });
 });
 
 
@@ -552,7 +527,7 @@ app.get('/api/appointments/', (req, res) => {
   });
 });
 
-// Backend API to delete an appointment
+// Backend API to delete an appointment from doctor side
 app.delete('/api/delete-appointment/:appointment_id', (req, res) => {
   const { appointment_id } = req.params;
   
@@ -570,6 +545,46 @@ app.delete('/api/delete-appointment/:appointment_id', (req, res) => {
   });
 });
 
+// Endpoint to get patients assigned to a doctor by doctorId
+app.get('/api/patients-assigned/:doctorId', (req, res) => {
+  const doctorId = req.params.doctorId;
+
+  // Adjust the query to select fullName from the patients table
+  const query = `
+    SELECT p.patient_id, p.fullName
+    FROM patients p
+    JOIN appointments a ON p.patient_id = a.patient_id
+    WHERE a.doctor_id = ?
+  `;
+
+  connection.query(query, [doctorId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'No patients assigned to this doctor' });
+    }
+    res.json(results); // Return the patients assigned to the doctor
+  });
+});
+
+
+// Endpoint to add a health record for a selected patient
+app.post('/api/add-health-record', (req, res) => {
+  const { patient_id, illness_name, diagnosis_date, treatment_details, town } = req.body;
+
+  const query = `
+    INSERT INTO health_records (patient_id, illness_name, diagnosis_date, treatment_details, town)
+    VALUES (?, ?, ?, ?, ?);
+  `;
+
+  connection.query(query, [patient_id, illness_name, diagnosis_date, treatment_details, town], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error adding health record' });
+    }
+    res.json({ message: 'Health record added successfully' });
+  });
+});
 
 
 

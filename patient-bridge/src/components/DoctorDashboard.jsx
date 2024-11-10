@@ -20,11 +20,13 @@ const DoctorDashboard = () => {
   const [isHealthRecordsListOpen, setIsHealthRecordsListOpen] = useState(false);
   const [isVerifyPracticeOpen, setIsVerifyPracticeOpen] = useState(false);
   const [isAvailabiltyListOpen, setIsAvailabiltyListOpen] = useState(false);
+  const [doctorId, setDoctorId] = useState(null);  // Store doctorId here
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       setUsername(user.fullName || user.practiceName || 'Doctor');
+      setDoctorId(user.doctor_id);  // Save doctorId from the user data
     }
   
     const fetchAppointments = async () => {
@@ -39,9 +41,10 @@ const DoctorDashboard = () => {
       }
     };
   
-    fetchAppointments();
-  }, []);
-  
+    if (doctorId) {
+      fetchAppointments(); // Fetch appointments only after doctorId is set
+    }
+  }, [doctorId]);
 
   const tileContent = ({ date, view }) => {
     if (view === 'month') {
@@ -51,7 +54,6 @@ const DoctorDashboard = () => {
       return hasAppointment ? <div className="highlight-circle"></div> : null;
     }
   };
-  
 
   return (
     <div className="dashboard">
@@ -106,7 +108,11 @@ const DoctorDashboard = () => {
 
       <PatientListPopup isOpen={isPatientListOpen} onClose={() => setIsPatientListOpen(false)} />
       <AppointmentList isOpen={isAppointmentListOpen} onClose={() => setIsAppointmentListOpen(false)} />
-      <HealthRecordsList isOpen={isHealthRecordsListOpen} onClose={() => setIsHealthRecordsListOpen(false)} />
+      <HealthRecordsList 
+        isOpen={isHealthRecordsListOpen} 
+        onClose={() => setIsHealthRecordsListOpen(false)} 
+        doctorId={doctorId}  // Pass doctorId to HealthRecordsList
+      />
       <VerifyPractice isOpen={isVerifyPracticeOpen} onClose={() => setIsVerifyPracticeOpen(false)} />
       <DoctorAvailability isOpen={isAvailabiltyListOpen} onClose={() => setIsAvailabiltyListOpen(false)} />
 
