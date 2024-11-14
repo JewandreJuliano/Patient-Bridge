@@ -10,46 +10,46 @@
     justify-content: center;
 }
 
-.back-to-land{
+.back-to-land {
     font-size: 20px;
-    margin-left: 900px; /* Push the button to the far right */
+    margin-left: 900px;
     text-decoration: none;
     color: white;
 }
 
 .aboutus-sidebar {
-    width: 200px; /* Slightly wider for better content fit */
+    width: 200px;
     position: fixed;
-    top: 120px; /* Below header */
+    top: 120px;
     left: 20px;
     height: 100%;
     background-color: #2c3e50;
     padding: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    z-index: 100; /* Ensure sidebar is above other content */
+    z-index: 100;
 }
 
 .aboutus-sidebar h3 {
     margin-top: 0;
-    color: white; /* Make section headers visible */
+    color: white;
 }
 
 .aboutus-sidebar a {
     display: block;
-    padding: 12px; /* Increased padding for touch targets */
-    margin-bottom: 10px; /* Increased margin for separation */
-    color: #ffffff; /* White text for better contrast */
+    padding: 12px;
+    margin-bottom: 10px;
+    color: #ffffff;
     text-decoration: none;
     transition: background 0.3s, color 0.3s;
 }
 
 .aboutus-sidebar a:hover {
-    background-color: #1abc9c; /* Change to a vibrant color on hover */
-    color: #ffffff; /* Maintain text color on hover */
+    background-color: #1abc9c;
+    color: #ffffff;
 }
 
 .aboutus-sidebar a.active {
-    background-color: #16a085; /* Active link indication */
+    background-color: #16a085;
 }
 
 .logo-title {
@@ -71,9 +71,9 @@
 .aboutus-content {
     margin-top: 20px;
     padding: 20px;
-    margin-left: 240px; /* Space for the sidebar */
-    border-radius: 5px; /* Rounded corners */
-    background-color: white; /* White background for content */
+    margin-left: 240px;
+    border-radius: 5px;
+    background-color: white;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 

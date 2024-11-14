@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/PatientDashboard.css';
+import NotificationPref from './NotificationPref';
 
 const PatientDashboard = () => {
   const navigate = useNavigate();
@@ -10,7 +11,16 @@ const PatientDashboard = () => {
   const [doctors, setDoctors] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [isNotifOpen, setIsNotifOpen] = useState(false); // State for login popup
 
+
+  const handleOpenNotif = () => {
+    setIsNotifOpen(true); // Open login popup
+};
+
+const handleCloseNotif = () => {
+    setIsNotifOpen(false); // Close login popup
+};
   // Memoized fetchPatientData function
   const fetchPatientData = useCallback(async () => {
     if (currentPatientId) {
@@ -123,7 +133,7 @@ const PatientDashboard = () => {
             {showSettingsDropdown && (
               <div className='settings-dropmenu'>
                 <a href="/profile" className='dropdown-item' onClick={handleProfileClick}>Profile</a>
-                <a href='/notification-preferences' className='dropdown-item'>Notification Preferences</a>
+                <a href='#!' className='dropdown-item' onClick={handleOpenNotif}>Notification Preferences</a>
                 <a href="/emergency-contact" className='dropdown-item' onClick={handleEmergencyContactClick}>Emergency Contact</a>
                 <a href='/' className='dropdown-item'>Logout</a>
               </div>
@@ -195,7 +205,9 @@ const PatientDashboard = () => {
           </div>
         </section>
       </main>
-
+      {isNotifOpen && (
+        <NotificationPref isOpen={isNotifOpen} onClose={handleCloseNotif} />
+      )}
       <footer className="footer">
         <div className="footer-content">
           <p>© 2024 Patient Bridge. All rights reserved.</p>

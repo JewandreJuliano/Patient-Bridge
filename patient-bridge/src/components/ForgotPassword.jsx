@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import '../styles/ForgotPassword.css'; // Assuming CSS file is already imported
+import '../styles/ForgotPassword.css'; 
 
 const ForgotPassword = ({ isOpen, onClose }) => {
     const [email, setEmail] = useState('');

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/DoctorCard.css'; // Create this CSS file for styles
+import '../styles/DoctorCard.css'; 
 
 const DoctorCard = ({ doctor, onSelect }) => {
   const [isOpen, setIsOpen] = useState(false);

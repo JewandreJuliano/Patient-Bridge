@@ -38,10 +38,10 @@ const BookAppointment = () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                patient_id: patient_id, // Use the retrieved patient ID
-                doctor_id: doctor.doctor_id, // Pass the doctor's ID
-                appointment_date: moment(selectedDate).format("YYYY-MM-DD"), // Format the date for MySQL
-                appointment_time: selectedTime, // Time in HH:MM format
+                patient_id: patient_id, 
+                doctor_id: doctor.doctor_id,
+                appointment_date: moment(selectedDate).format("YYYY-MM-DD"), 
+                appointment_time: selectedTime, 
             }),
         });
 
@@ -61,7 +61,6 @@ const BookAppointment = () => {
 
   return (
     <div>
-      {/* Header Section */}
       <header className="dashboard-header">
         <div className="logo-title">
           <img src="/assets/patient-bridge-icon.png" alt="Company Icon" className="icon" />
@@ -75,8 +74,8 @@ const BookAppointment = () => {
         <div className="booking-content">
           {doctor && (
             <div className="doctor-info">
-              <h2>Doctor's Name: {doctor.practiceName}</h2> {/* Display doctor's name */}
-              <p>Specialty: {doctor.specialty}</p> {/* Display doctor's specialty */}
+              <h2>Doctor's Name: {doctor.practiceName}</h2> 
+              <p>Specialty: {doctor.specialty}</p> 
             </div>
           )}
 

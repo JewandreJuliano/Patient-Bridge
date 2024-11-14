@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styles/DoctorSignUpPage.css'; // Import CSS file for styling
+import '../styles/DoctorSignUpPage.css'; 
 import LoginPage from './LoginPage';
 
 const DoctorSignUpPage = ({ isOpen, onClose }) => {

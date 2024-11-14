@@ -21,7 +21,7 @@ const DoctorProfile = () => {
   const user = JSON.parse(localStorage.getItem('user'));
   const doctor_id = user ? user.doctor_id : null; 
 
-  // Only set initial data from localStorage once
+  
   useEffect(() => {
     if (user) {
       setDoctor({
@@ -34,13 +34,13 @@ const DoctorProfile = () => {
         specialty: user.specialty || '',
       });
     }
-  }, []); // Empty dependency array ensures this runs only once
+  }, []); 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setDoctor((prev) => ({
       ...prev,
-      [name]: value // Update the field in doctor state
+      [name]: value 
     }));
   };
 
@@ -53,18 +53,18 @@ const DoctorProfile = () => {
     const updatedData = {
       ...doctor,
       password: password || undefined, // Only send password if it is provided
-      doctor_id, // Ensure doctor_id is included in the data sent to the API
+      doctor_id, 
     };
   
     try {
-      const response = await axios.put(`http://localhost:5432/api/update-doctor-profile`, updatedData); // Match the endpoint here
+      const response = await axios.put(`http://localhost:5432/api/update-doctor-profile`, updatedData); 
       alert(response.data.message);
   
-      // Update local storage with new doctor data
+      
       const updatedUser = { ...user, ...updatedData };
       localStorage.setItem('user', JSON.stringify(updatedUser));
   
-      navigate('/doctor-dashboard'); // Redirect after saving
+      navigate('/doctor-dashboard'); 
     } catch (error) {
       console.error('Error saving doctor details:', error);
       alert('Error saving doctor details');

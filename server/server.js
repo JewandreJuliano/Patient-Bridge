@@ -217,7 +217,6 @@ app.post('/api/book-appointment', (req, res) => {
 
 
 // API endpoint to save emergency contact
-// API endpoint to save emergency contact
 app.post('/api/emergency-contacts', (req, res) => {
   const { patient_id, contact_name, relationship, phone_number, email } = req.body;
 
@@ -230,7 +229,6 @@ app.post('/api/emergency-contacts', (req, res) => {
   const sql = 'INSERT INTO emergency_contacts (patient_id, contact_name, relationship, phone_number, email) VALUES (?, ?, ?, ?, ?)';
   const values = [patient_id, contact_name, relationship, phone_number, email];
 
-  // Use 'connection' instead of 'db' if that’s what you’re defining
   connection.query(sql, values, (error, results) => {
     if (error) {
       console.error('Error saving emergency contact:', error);
@@ -361,8 +359,6 @@ app.put('/api/update-doctor-profile', async (req, res) => {
 });
 
 
-
-// Assuming `connection` is your MySQL connection object
 app.post('/api/add-medications', (req, res) => {
   const { patient_id, name, dosage, time } = req.body;
 

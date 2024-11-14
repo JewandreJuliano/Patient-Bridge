@@ -34,7 +34,7 @@ const DoctorDashboard = () => {
         const response = await fetch(`http://localhost:5432/api/appointments/${user.doctor_id}`);
         if (response.ok) {
           const data = await response.json();
-          setAppointments(data); // Set fetched appointments to state
+          setAppointments(data); 
         }
       } catch (error) {
         console.error("Error fetching appointments:", error);
